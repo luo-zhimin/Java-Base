@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.io.BufferedOutputStream</OriginalElement>
+  <nodes>
+    <node x="301.2222082800264" y="94.69181094211405">java.io.Closeable</node>
+    <node x="-32.717646872338264" y="324.64231960037824">java.io.BufferedOutputStream</node>
+    <node x="-113.1257131499018" y="118.45570166636594">java.io.Flushable</node>
+    <node x="74.56285309261472" y="188.16494142814454">java.io.FilterOutputStream</node>
+    <node x="183.36691046565835" y="-13.640859187095458">java.lang.AutoCloseable</node>
+    <node x="73.094175593791" y="75.1485175110437">java.io.OutputStream</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.io.OutputStream" target="java.io.Flushable" relationship="REALIZATION">
+      <point x="-81.5" y="19.0" />
+      <point x="63.0" y="-11.807184155322233" />
+    </edge>
+    <edge source="java.io.Closeable" target="java.lang.AutoCloseable" relationship="INTERFACE_GENERALIZATION">
+      <point x="-25.355297814368043" y="-14.0" />
+      <point x="74.5" y="14.0" />
+    </edge>
+    <edge source="java.io.OutputStream" target="java.io.Closeable" relationship="REALIZATION">
+      <point x="81.5" y="7.043293431070339" />
+      <point x="-64.0" y="0.0" />
+    </edge>
+    <edge source="java.io.FilterOutputStream" target="java.io.OutputStream" relationship="GENERALIZATION">
+      <point x="-54.96867749882372" y="-38.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="java.io.BufferedOutputStream" target="java.io.FilterOutputStream" relationship="GENERALIZATION">
+      <point x="84.78049996495298" y="-60.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="1.5" showDependencies="false" x="168.0" y="225.5" />
+  <SelectedNodes>
+    <node>java.io.OutputStream</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>字段</Category>
+    <Category>构造函数</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.io.InputStreamReader</OriginalElement>
+  <nodes>
+    <node x="372.6590221577085" y="171.31314371639692">java.lang.Readable</node>
+    <node x="123.3856938353702" y="57.50738395919804">java.io.Reader</node>
+    <node x="-65.41064155401115" y="115.19798783098273">java.io.Closeable</node>
+    <node x="-100.84971822124402" y="-13.535550649703026">java.lang.AutoCloseable</node>
+    <node x="-32.969657463156096" y="260.08108948983977">java.io.InputStreamReader</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.io.Closeable" target="java.lang.AutoCloseable" relationship="INTERFACE_GENERALIZATION">
+      <point x="-17.439076667232868" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.io.InputStreamReader" target="java.io.Reader" relationship="GENERALIZATION">
+      <point x="65.8553512985263" y="-71.0" />
+      <point x="0.0" y="70.99999999999999" />
+    </edge>
+    <edge source="java.io.Reader" target="java.lang.Readable" relationship="REALIZATION">
+      <point x="94.0" y="56.805759757198885" />
+      <point x="-61.5" y="0.0" />
+    </edge>
+    <edge source="java.io.Reader" target="java.io.Closeable" relationship="REALIZATION">
+      <point x="-94.0" y="0.6906038717846883" />
+      <point x="64.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="0.9450800915331807" showDependencies="false" x="207.5000000000001" y="204.5" />
+  <SelectedNodes>
+    <node>java.io.InputStreamReader</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>字段</Category>
+    <Category>构造函数</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.io.BufferedInputStream</OriginalElement>
+  <nodes>
+    <node x="22.0" y="301.8846154460185">java.io.FilterInputStream</node>
+    <node x="81.5" y="75.88461580302669">java.io.Closeable</node>
+    <node x="-106.5" y="438.8846154460184">java.io.BufferedInputStream</node>
+    <node x="30.99999999999997" y="164.88461569745618">java.io.InputStream</node>
+    <node x="63.5" y="-13.115383960361868">java.lang.AutoCloseable</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.io.Closeable" target="java.lang.AutoCloseable" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.io.FilterInputStream" target="java.io.InputStream" relationship="GENERALIZATION">
+      <point x="-2.8421709430404007E-14" y="-38.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="java.io.InputStream" target="java.io.Closeable" relationship="REALIZATION">
+      <point x="2.8421709430404007E-14" y="-38.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.io.BufferedInputStream" target="java.io.FilterInputStream" relationship="GENERALIZATION">
+      <point x="0.0" y="-126.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="1.0689655172413792" showDependencies="false" x="155.5" y="348.50000000000006" />
+  <SelectedNodes>
+    <node>java.io.BufferedInputStream</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>字段</Category>
+    <Category>构造函数</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

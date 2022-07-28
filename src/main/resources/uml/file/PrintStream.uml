@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.io.PrintStream</OriginalElement>
+  <nodes>
+    <node x="647.9428894051177" y="48.19206093446718">java.lang.Appendable</node>
+    <node x="207.24145308021934" y="36.997946710355606">java.io.Flushable</node>
+    <node x="-99.64340378093749" y="155.03325183672214">java.io.FilterOutputStream</node>
+    <node x="459.51616736792585" y="74.87561433926055">java.io.Closeable</node>
+    <node x="411.1041560862282" y="-13.799554336231097">java.lang.AutoCloseable</node>
+    <node x="230.82763059619893" y="125.47757706948138">java.io.OutputStream</node>
+    <node x="454.15317606194185" y="237.44799180718087">java.io.PrintStream</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.io.OutputStream" target="java.io.Flushable" relationship="REALIZATION">
+      <point x="-42.086177515979585" y="-26.5" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.io.Closeable" target="java.lang.AutoCloseable" relationship="INTERFACE_GENERALIZATION">
+      <point x="-30.41201128169763" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.io.PrintStream" target="java.io.Closeable" relationship="REALIZATION">
+      <point x="-169.00017606194186" y="8.192819109353877E-6" />
+      <point x="424.0" y="362.948" />
+      <point x="424.0" y="88.876" />
+      <point x="-64.00016736792585" y="3.856607394538969E-4" />
+    </edge>
+    <edge source="java.io.OutputStream" target="java.io.Closeable" relationship="REALIZATION">
+      <point x="81.50036940380107" y="4.229305186242982E-4" />
+      <point x="424.0" y="151.978" />
+      <point x="424.0" y="88.876" />
+      <point x="-64.00016736792585" y="3.856607394538969E-4" />
+    </edge>
+    <edge source="java.io.PrintStream" target="java.lang.Appendable" relationship="REALIZATION">
+      <point x="104.78971334317583" y="-125.5" />
+      <point x="0.0" y="19.0" />
+    </edge>
+    <edge source="java.io.FilterOutputStream" target="java.io.OutputStream" relationship="GENERALIZATION">
+      <point x="135.0" y="-19.0" />
+      <point x="-81.5" y="10.55567476724076" />
+    </edge>
+    <edge source="java.io.PrintStream" target="java.io.FilterOutputStream" relationship="GENERALIZATION">
+      <point x="-169.0" y="15.00000819281911" />
+      <point x="35.35659621906251" y="377.948" />
+      <point x="0.0" y="26.5" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="1.4550669216061185" showDependencies="false" x="364.0" y="247.50000000000006" />
+  <SelectedNodes>
+    <node>java.io.PrintStream</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>构造函数</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

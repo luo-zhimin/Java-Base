@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.lang.Class</OriginalElement>
+  <nodes>
+    <node x="166.0" y="66.0">java.lang.reflect.GenericDeclaration</node>
+    <node x="58.99999999999997" y="66.0">java.lang.reflect.Type</node>
+    <node x="249.5" y="-14.0">java.lang.reflect.AnnotatedElement</node>
+    <node x="-99.0" y="66.0">java.io.Serializable</node>
+    <node x="120.99999999999997" y="146.0">java.lang.Class</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.lang.Class" target="java.lang.reflect.GenericDeclaration" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="183.5" y="120.0" />
+      <point x="264.5" y="120.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.lang.Class" target="java.lang.reflect.AnnotatedElement" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="183.49999999999997" y="120.0" />
+      <point x="394.25" y="120.0" />
+      <point x="48.25" y="14.0" />
+    </edge>
+    <edge source="java.lang.reflect.GenericDeclaration" target="java.lang.reflect.AnnotatedElement" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="264.5" y="14.0" />
+      <point x="-48.25" y="14.0" />
+    </edge>
+    <edge source="java.lang.Class" target="java.io.Serializable" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="183.5" y="120.0" />
+      <point x="-30.0" y="120.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.lang.Class" target="java.lang.reflect.Type" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="183.5" y="120.0" />
+      <point x="102.49999999999997" y="120.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="1.0" showDependencies="false" x="158.5" y="80.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

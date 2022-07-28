@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.io.PrintWriter</OriginalElement>
+  <nodes>
+    <node x="12.802656730588609" y="255.7864252037038">java.io.PrintWriter</node>
+    <node x="129.4518012454977" y="120.56692638772063">java.io.Writer</node>
+    <node x="332.53642947349954" y="109.99538354208283">java.lang.Appendable</node>
+    <node x="144.44113895191998" y="32.1513928304086">java.io.Flushable</node>
+    <node x="-58.84365986933378" y="78.6922075107952">java.io.Closeable</node>
+    <node x="-81.1985657135549" y="-18.230730735322418">java.lang.AutoCloseable</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.io.Closeable" target="java.lang.AutoCloseable" relationship="INTERFACE_GENERALIZATION">
+      <point x="-4.354905844221122" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.io.PrintWriter" target="java.io.Writer" relationship="GENERALIZATION">
+      <point x="50.149144514909096" y="-114.5" />
+      <point x="0.0" y="37.5" />
+    </edge>
+    <edge source="java.io.Writer" target="java.io.Flushable" relationship="REALIZATION">
+      <point x="15.0" y="-37.5" />
+      <point x="8.510662293577724" y="14.0" />
+    </edge>
+    <edge source="java.io.Writer" target="java.io.Closeable" relationship="REALIZATION">
+      <point x="0.0" y="-37.5" />
+      <point x="200.9518012454977" y="92.49538354208283" />
+      <point x="64.0" y="-0.19682396871236563" />
+    </edge>
+    <edge source="java.io.Writer" target="java.lang.Appendable" relationship="REALIZATION">
+      <point x="71.5" y="-29.071542845637794" />
+      <point x="-80.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="1.4790076335877862" showDependencies="false" x="215.5" y="243.0" />
+  <SelectedNodes>
+    <node>java.io.PrintWriter</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>构造函数</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
