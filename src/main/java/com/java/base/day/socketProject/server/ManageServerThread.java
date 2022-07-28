@@ -6,7 +6,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.java.base.day.socketProgect.server;
+package com.java.base.day.socketProject.server;
 
 import java.util.HashMap;
 import java.util.Set;

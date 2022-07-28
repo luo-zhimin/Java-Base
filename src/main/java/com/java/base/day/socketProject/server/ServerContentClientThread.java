@@ -6,10 +6,10 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.java.base.day.socketProgect.server;
+package com.java.base.day.socketProject.server;
 
-import com.java.base.day.socketProgect.constant.CommonConstant;
-import com.java.base.day.socketProgect.entry.Message;
+import com.java.base.day.socketProject.constant.CommonConstant;
+import com.java.base.day.socketProject.entry.Message;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;

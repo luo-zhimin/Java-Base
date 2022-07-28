@@ -1,12 +1,21 @@
-package com.java.base.day.socketProgect.util;
+/*
+ * Copyright (c) 2022. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
+package com.java.base.day.socketProject.util;
 
 
 /**
-	工具类的作用:
-	处理各种情况的用户输入，并且能够按照程序员的需求，得到用户的控制台输入。
-*/
+ * 工具类的作用:
+ * 处理各种情况的用户输入，并且能够按照程序员的需求，得到用户的控制台输入。
+ */
 
-import java.util.*;
+import java.util.Scanner;
+
 /**
 
 	

@@ -6,7 +6,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.java.base.day.socketProgect.constant;
+package com.java.base.day.socketProject.constant;
 
 /**
  * Created by IntelliJ IDEA.

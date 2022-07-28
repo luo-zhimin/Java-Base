@@ -6,7 +6,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.java.base.day.socketProgect.entry;
+package com.java.base.day.socketProject.entry;
 
 import lombok.Data;
 import lombok.ToString;

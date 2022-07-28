@@ -6,11 +6,11 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.java.base.day.socketProgect.client;
+package com.java.base.day.socketProject.client;
 
 import com.java.base.day.socket.util.StreamUtils;
-import com.java.base.day.socketProgect.constant.CommonConstant;
-import com.java.base.day.socketProgect.entry.Message;
+import com.java.base.day.socketProject.constant.CommonConstant;
+import com.java.base.day.socketProject.entry.Message;
 import lombok.SneakyThrows;
 
 import java.io.File;
