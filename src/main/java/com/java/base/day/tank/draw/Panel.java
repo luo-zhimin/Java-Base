@@ -17,7 +17,6 @@ import java.net.URL;
  * 定义一个面板 panel 需要继承JPanel
  */
 public class Panel extends JPanel {
-//盘闹
 
     /**
      * 绘图的方法

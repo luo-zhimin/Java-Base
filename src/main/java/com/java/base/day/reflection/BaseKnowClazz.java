@@ -27,7 +27,7 @@ public class BaseKnowClazz {
 
     /**
      * 反射之前 可以实现 ->准备反射说明
-     * reflection 润凡蓝k神
+     * reflection
      */
     @Test
     void reflectionQuestion() throws

@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2022. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
 package com.java.base.day.generic;
 
 import java.util.ArrayList;
@@ -15,7 +23,7 @@ import java.util.HashSet;
 public class BaseGeneric {
     public static void main(String[] args) {
         /*
-         * 泛型[栽奈瑞k]
+         * 泛型
          *   问题：
          *   1）不能对加入到集合ArrayList中的数据类型进行约束（不安全）
          *   2）遍历的时候，需要进行类型转换，如果集合中的数据量较大，对效率有影响

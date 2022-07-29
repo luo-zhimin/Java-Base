@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2022. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
 package com.java.base.day.collectionAndMap.collection;
 
 import java.util.ArrayList;
@@ -79,7 +87,7 @@ public class BaseCollection {
         //是否为空
         System.out.println(list.isEmpty());
 
-        System.out.println("interator start...");//哎特瑞特
+        System.out.println("interator start...");
         List books = new ArrayList();
         books.add(new Book("三国志", 22.2));
         books.add(new Book("三国演义", 18.2));

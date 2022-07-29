@@ -45,7 +45,7 @@ FROM student;
 SELECT avg(math)
 FROM student;
 -- 求一个班级总分平均分
-SELECT avg(chinese + english + math)
+SELECT format(avg(chinese + english + math), 2) avgScore
 FROM student;
 
 -- max/min
@@ -68,13 +68,13 @@ ORDER BY deptno;
 
 -- 显示每个部门的每种岗位的平均工资和最低工资?
 
-SELECT AVG(sal), min(sal), deptno, job
+SELECT format(AVG(sal), 2), min(sal), deptno, job
 FROM emp
 GROUP BY deptno, job
 ORDER BY deptno;
 
 -- 显示平均工资低于2000的部门号和它的平均工资//别名
-SELECT AVG(sal) avg_sal, deptno
+SELECT format(AVG(sal), 2) avg_sal, deptno
 FROM emp
 GROUP BY deptno
 HAVING avg_sal < 2000;
@@ -149,6 +149,36 @@ select concat(lcase(substring(ename, 1, 1)), substring(ename, 2)) as newName
 from emp;
 select concat(lcase(left(ename, 1)), right(ename, (length(ename) - 1)))
 from emp;
+
+-- 数学函数
+# 详情
+# ABS(num) 绝对值
+select abs(-10) number
+from dual;
+-- 10
+# BIN(decimal_number) 十进制转二进制
+select bin(10)
+from dual;
+-- binary 0000 1010
+# ceiling(number2) 向上取整，得到比num2大的最小整数
+select ceiling(1.1) number
+from dual;
+-- 2
+# CONV(number2,from_base,to_base) 进制转换  from_base (number2进制)来源进制 to_base(要转化成什么进制)
+select conv(8, 10, 2)
+from dual; -- convert 8 是16进制 转换成为 2进制
+select conv(15, 16, 2)
+from dual;
+# FLOOR (number2) 向下取整，得到比 num2小的最大整数
+select floor(-1.1)
+from dual;
+-- 2
+# FORMAT (number,decimal_places ) 保留小数位数 四舍五入
+select format(11.4567899, 2) number
+from dual;
+# HEX (DecimalNumber) 转十六进制
+select hex(16)
+from dual;
 /*
  * Copyright (c) 2022. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
@@ -156,6 +186,22 @@ from emp;
  * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
+
+-- 16->1
+# LEAST (number , number2 [...]) 求最小值
+select least(11, 232, 4545, 1) minNumber
+from dual;
+# MOD (numerator ,denominator ) 求余
+select mod(10, 3)
+from dual;
+-- 1 => (10%3)
+# RAND([seed]) RAND([seed]) 其范围为0≤v≤1.0
+# 使用rand()每次返回一个 0≤v≤1.0 的随机数
+# 使用rand(seed) 返回随机数 范围0≤v≤1.0 如果seed不变 该随机数不变
+select rand(3)
+from dual;
+# rand（）返回一个随机浮点值v，范围在0到1之间（即，其范围为0≤v≤1.0）。若已指定一个整数参数N 则它被用作种子值，用来产生重复序列
+
 
 -- question ONLY_FULL_GROUP_BY 问题 临时修改
 -- SELECT @@sql_mode;
