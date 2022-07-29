@@ -154,16 +154,13 @@ from emp;
 # 详情
 # ABS(num) 绝对值
 select abs(-10) number
-from dual;
--- 10
+from dual; -- 10
 # BIN(decimal_number) 十进制转二进制
 select bin(10)
-from dual;
--- binary 0000 1010
+from dual; -- binary 0000 1010
 # ceiling(number2) 向上取整，得到比num2大的最小整数
 select ceiling(1.1) number
-from dual;
--- 2
+from dual; -- 2
 # CONV(number2,from_base,to_base) 进制转换  from_base (number2进制)来源进制 to_base(要转化成什么进制)
 select conv(8, 10, 2)
 from dual; -- convert 8 是16进制 转换成为 2进制
@@ -171,36 +168,125 @@ select conv(15, 16, 2)
 from dual;
 # FLOOR (number2) 向下取整，得到比 num2小的最大整数
 select floor(-1.1)
-from dual;
--- 2
+from dual; -- 2
 # FORMAT (number,decimal_places ) 保留小数位数 四舍五入
 select format(11.4567899, 2) number
-from dual;
+from dual; -- 11.46
 # HEX (DecimalNumber) 转十六进制
 select hex(16)
-from dual;
-/*
- * Copyright (c) 2022. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
-
--- 16->1
+from dual; -- 16->1
 # LEAST (number , number2 [...]) 求最小值
 select least(11, 232, 4545, 1) minNumber
 from dual;
 # MOD (numerator ,denominator ) 求余
 select mod(10, 3)
-from dual;
--- 1 => (10%3)
+from dual; -- 1 => (10%3)
 # RAND([seed]) RAND([seed]) 其范围为0≤v≤1.0
-# 使用rand()每次返回一个 0≤v≤1.0 的随机数
-# 使用rand(seed) 返回随机数 范围0≤v≤1.0 如果seed不变 该随机数不变
+# 1.使用rand()每次返回一个 0≤v≤1.0 的随机数
+# 2.使用rand(seed) 返回随机数 范围0≤v≤1.0 如果seed不变 该随机数不变
 select rand(3)
 from dual;
 # rand（）返回一个随机浮点值v，范围在0到1之间（即，其范围为0≤v≤1.0）。若已指定一个整数参数N 则它被用作种子值，用来产生重复序列
+
+
+-- 日期函数
+# 创建相关测试表
+# 新闻表
+create table news (
+    id int,
+    content varchar(30),
+    sendTime datetime
+);
+# 第一组
+# 详情
+# CURRENT_DATE( ) 当前日期
+# date 年-月-日 yyyy-MM-dd
+select current_date() from dual; -- 2022-07-29
+# CURRENT_TIME( ) 当前时间
+select current_time() from dual; -- 22:49:55
+# CURRENT_TIMESTAMP() 当前时间戳
+# timestamp 年-月-日 时:分:秒 yyyy-MM-dd HH:mm:ss
+select current_timestamp() from dual; -- 2022-07-29 22:50:32
+
+insert into news values (1,'爆笑新闻',current_timestamp());
+select * from news;
+
+# 第二组
+insert into news values (2,'上海新闻',now());
+insert into news values (3,'北京新闻',current_timestamp());
+# DATE (datetime) 返回datetime的日期部分
+select date(now()) from dual;
+# DATE_ADD(date2,INTERVAL d_value d_type) 在date2中加上日期或时间
+select date_add(now(),interval 10 minute) afterTime from dual; -- 2022-07-29 23:20:44  10 minute 后
+# DATE_SUB(date2,INTERVAL d_value d_type) 在date2上减去一个时间
+select date_sub(now(),interval 10 minute) beforeTime from dual; -- 2022-07-29 23:01:52 10 minute 前
+# DATEDIFF (date1,date2) 两个日期差（结果是天）
+select datediff(now(),date_add(now(),interval 1 year)) day from dual; -- -365 现在和一年后比较
+select datediff(now(),date_sub(now(),interval 1 year)) day from dual; -- 365 现在和一年前比较
+
+# exercise
+# 1.显示所有留言信息，发布日期只显示日期，不用显示时间.
+select id,content,date(sendTime) as sendTime from news;
+# 2.请查询在10分钟内发布的帖子
+select * from news where date_sub(now(),interval 10 minute)<=sendTime;
+select * from news where date_add(sendTime,interval 10 minute)<=now();
+# 3.请在mysql的sql语句中求出2011-11-11和1990-1-1相差多少天
+select datediff('2011-11-11','1990-1-1') day from dual;
+# 4.请用mysql的sql语句求出你活了多少天
+select datediff(date(now()),'1998-03-26') day from dual;
+# 5.如果你能活80岁，求出你还能活多少天.
+select datediff(date_add('1958-03-26',interval 80 year ),now()) day from dual;
+
+# 第二组细节说明
+# 1.DATE_ADD（）中的 interval后面可以是 year minute second day 等.
+# 2.DATE_SUB（）中的 interval 后面可以是 year minute second hour day 等.
+# 3.DATEDIFF（date1，date2）得到的是天数，而且是date1-date2的天数，因此可以取负数
+# 4.这四个函数的日期类型可以是 date，datetime或者timestamp
+
+# 第三组
+# TIMEDIFF(date1,date2) 两个时间差（多少小时多少分钟多少秒）
+select timediff(now(),'2022-07-29 22:51:50') time from dual; -- 00:41:25
+# NOW()当前时间年月日
+select now() from dual;
+# YEAR|Month|DAY|DATE(datetime) FROM_UNIXTIME() unix_timestamp();
+select year(now()),month(now()),day(now()),hour(now()),minute(now()),second(now()) from dual;
+select date_format(from_unixtime(1659109065721/1000),'%Y-%m-%d %H:%i:%s');
+select unix_timestamp() from dual; -- 1659109731 生成当前时间的时间戳 返回的是1970-1-1 到现在的秒数
+select from_unixtime(unix_timestamp()) time from dual;
+select from_unixtime(1659109065721/1000,'%Y-%m-%d %H:%i:%s') time from dual;
+
+# 补充 常用符号标识
+# %a：缩写星期名
+# %b：缩写月名
+# %c：月，数值
+# %D：带有英文前缀的月中的天
+# %d：月的天，数值(00-31)
+# %e：月的天，数值(0-31)
+# %f：微秒
+# %H：小时 (00-23)
+# %h：小时 (01-12)
+# %I：小时 (01-12)
+# %i：分钟，数值(00-59)
+# %j：年的天 (001-366)
+# %k：小时 (0-23)
+# %l：小时 (1-12)
+# %M：月名
+# %m：月，数值(00-12)
+# %p：AM 或 PM
+# %r：时间，12-小时（hh:mm:ss AM 或 PM）
+# %S：秒(00-59)
+# %s：秒(00-59)
+# %T：时间, 24-小时 (hh:mm:ss)
+# %U：周 (00-53) 星期日是一周的第一天
+# %u：周 (00-53) 星期一是一周的第一天
+# %V：周 (01-53) 星期日是一周的第一天，与 %X 使用
+# %v：周 (01-53) 星期一是一周的第一天，与 %x 使用
+# %W：星期名
+# %w：周的天 （0=星期日, 6=星期六）
+# %X：年，其中的星期日是周的第一天，4 位，与 %V 使用
+# %x：年，其中的星期一是周的第一天，4 位，与 %v 使用
+# %Y：年，4 位
+# %y：年，2 位
 
 
 -- question ONLY_FULL_GROUP_BY 问题 临时修改
