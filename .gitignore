@@ -1,3 +1,5 @@
-# 项目排除路径
+# exclude project path
 /target/
 /.idea
+# exclude iml + ipr + iws file
+/Java-Base.*
