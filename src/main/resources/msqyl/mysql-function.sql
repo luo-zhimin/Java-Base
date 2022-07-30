@@ -25,16 +25,16 @@ GROUP BY `name`;
 
 -- sum
 -- ■统计一个班级数学总成绩
-SELECT sum(math) math
+SELECT sum(math) as math
 FROM student;
 -- ■统计一个班级语文、英语、数学各科的总成绩
-SELECT sum(chinese) chinese, SUM(math) math, SUM(english) english
+SELECT sum(chinese) as chinese, SUM(math) as math, SUM(english) as english
 FROM student;
 -- ■统计一个班级语文、英语、数学的成绩总和
 SELECT SUM(chinese + math + english) score
 FROM student;
 -- ■统计一个班级语文成绩平均分
-SELECT sum(chinese) / COUNT(*) math
+SELECT sum(chinese) / COUNT(*) as math
 FROM student;
 -- SELECT AVG(chinese) avgChinese from student;
 -- 注意∶sum仅对数值起作用，其他没有意义
@@ -313,7 +313,26 @@ select version();
 insert into users (id, name, pwd) VALUES (1,'测试',md5(123456));
 select * from users where name='测试' and pwd=md5('123456');
 
+-- 流程控制函数
+# 详情
+# IF(expr1,expr2,expr3) 如果expr1为True，则返回expr2否则返回expr3
+select if(true,'上海','北京') address from dual; -- 上海
+# IFNULL(expr1,expr2) 如果expr1不为空NULL，则返回expr1，否则返回expr2
+select ifnull(null,'星期天') from dual; -- 星期天
+select ifnull(replace('','',null),'星期天') test from dual; -- 星期天
+# SELECT CASE WHEN expr1 THEN expr2 WHEN expr3 THEN expr4 ELSE expr5 END∶【类似多重分支.】 如果expr1为TRUE，则返回expr2，如果expr2 为true，返回expr4，否则返回expr5
+select case when true then '上海'
+            when false then '北京'
+            else '天津' end address
+from dual;
 
+# 查询emp表,如果comm是null,则显示0.0
+select ifnull(comm,0.0) as comm from emp;
+# 如果emp表的job是CLERK则显示职员，如果是MANAGER则显示经理
+select
+    case when job='CLERK' then '职员'
+         when job = 'MANAGER' then '经理'
+         else job end as job from emp;
 
 
 -- question ONLY_FULL_GROUP_BY 问题 临时修改
