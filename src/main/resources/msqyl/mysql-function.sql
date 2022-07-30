@@ -288,6 +288,33 @@ select from_unixtime(1659109065721/1000,'%Y-%m-%d %H:%i:%s') time from dual;
 # %Y：年，4 位
 # %y：年，2 位
 
+-- 加密和系统函数
+# 创建测试用户表
+create table users(
+    id int,
+    name varchar(30) not null default '',
+    pwd char(32) not null default ''
+);
+# USER() 查询用户
+select user(); -- current user
+# DATABASE() 数据库名称
+select database(); -- current database
+# MD5(str) 为字符串算出一个MD532的字符串，（用户密码）加密
+select md5(123456) md5 from dual; -- e10adc3949ba59abbe56e057f20f883e
+# PASSWORD(str) 从原文密码str计算并返回密码字符串，通常用于对mysql 数据库的用户密码加密
+select user,Host,authentication_string from mysql.user;
+# mysql 5.7.9 之后取消了password 函数
+# mysql 中文文档地址 https://docs.gitcode.net/mysql/guide/general-information/mysql-nutshell.html
+select password('11') from dual; -- *0801D10217B06C5A9F32430C1A34E030D41A0257
+# 8.0 update user password
+# alter user'' identified with mysql_native_password by '';
+select version();
+
+insert into users (id, name, pwd) VALUES (1,'测试',md5(123456));
+select * from users where name='测试' and pwd=md5('123456');
+
+
+
 
 -- question ONLY_FULL_GROUP_BY 问题 临时修改
 -- SELECT @@sql_mode;

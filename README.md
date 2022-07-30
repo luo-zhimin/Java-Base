@@ -4,10 +4,11 @@ java基础 变量、结构控制、多线程、集合、泛型、反射、file�
 
 * 推荐
 
-  > 1.(多用户即时通讯系统) file + socket 实现了发送离线发送文件 私聊 新闻推送等 使用了socket(tcp)+多线程+oop，在socketProject下
-
+  > 1.(多用户即时通讯系统) file + socket 实现了发送离线发送文件 私聊 新闻推送等 使用了socket(tcp)+多线程+oop，在socketProject下<br><br>
+  > 2.mysql (基础查询(curd)->函数->索引->多表->事务.....) 在resource 的 mysql 目录下
 # 笔记分享
 
-> 语雀地址： https://www.yuque.com/books/share/2401b162-4e19-4a11-9c26-c44507206b3a?# 《后端》
-
+> 1.语雀地址： https://www.yuque.com/books/share/2401b162-4e19-4a11-9c26-c44507206b3a?# 《后端》<br><br>
+> 2.mysql 8.0中文文档地址: https://docs.gitcode.net/mysql/guide/general-information/mysql-nutshell.html
+>
 [//]: # (<img src='' alt="路线图"/>)
