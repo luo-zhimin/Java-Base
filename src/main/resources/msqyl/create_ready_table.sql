@@ -52,7 +52,7 @@ CREATE TABLE salgrade
 (
     grade MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 comment '工资级别',
     losal DECIMAL(17, 2)     NOT NULL comment '该级别的最低工资',
-    hisal DECIMAL(17, 2)     NOT NULL  comment '该级别的最高工资'
+    hisal DECIMAL(17, 2)     NOT NULL comment '该级别的最高工资'
 );
 INSERT INTO salgrade
 VALUES (1, 700, 1200);
@@ -64,3 +64,25 @@ INSERT INTO salgrade
 VALUES (4, 2001, 3000);
 INSERT INTO salgrade
 VALUES (5, 3001, 9999);
+
+-- student
+CREATE TABLE `student`
+(
+    `id`      int         NOT NULL DEFAULT '1',
+    `NAME`    varchar(20) NOT NULL DEFAULT '',
+    `chinese` float       NOT NULL DEFAULT '0',
+    `english` float       NOT NULL DEFAULT '0',
+    `math`    float       NOT NULL DEFAULT '0'
+) ENGINE = InnoDB comment '学生表';
+
+
+INSERT INTO `student`
+VALUES (1, '韩顺平', 89, 78, 90),
+       (2, '张飞', 67, 98, 56),
+       (3, '宋江', 87, 78, 77),
+       (4, '关羽', 88, 98, 90),
+       (5, '赵云', 82, 84, 67),
+       (6, '欧阳锋', 55, 85, 45),
+       (7, '黄蓉', 75, 65, 30),
+       (8, '韩信', 45, 65, 99);
+
