@@ -9,8 +9,8 @@
 /*部门表*/
 CREATE TABLE dept
 (
-    deptno MEDIUMINT UNSIGNED NOT NULL DEFAULT 0,
-    dname  VARCHAR(20)        NOT NULL DEFAULT '',
+    deptno MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 comment '部门编号',
+    dname  VARCHAR(20)        NOT NULL DEFAULT '' comment '部门名字',
     loc    VARCHAR(13)        NOT NULL DEFAULT ''
 );
 INSERT INTO dept
@@ -21,23 +21,16 @@ VALUES (10, 'ACCOUNTING', 'NEW YORK'),
 -- 员工表
 CREATE TABLE emp
 (
-    empno    MEDIUMINT UNSIGNED NOT NULL DEFAULT 0,
-/*编号*/
-    ename    VARCHAR(20)        NOT NULL DEFAULT '',
-/*名字*/
-    job      VARCHAR(9)         NOT NULL DEFAULT '',
-/*工作*/
-    mgr      MEDIUMINT UNSIGNED,
-/*上级编号*/
-    hiredate DATE               NOT NULL,
-/*入职时间*/
-    sal      DECIMAL(7, 2)      NOT NULL,
-/*薪水*/
-    comm     DECIMAL(7, 2),
-/*红利 奖金*/
-    deptno   MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 /*部门编号*/
-
+    empno    MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 comment '编号',
+    ename    VARCHAR(20)        NOT NULL DEFAULT '' comment '名字',
+    job      VARCHAR(9)         NOT NULL DEFAULT '' comment '工作',
+    mgr      MEDIUMINT UNSIGNED comment '上级编号',
+    hiredate DATE               NOT NULL comment '入职时间',
+    sal      DECIMAL(7, 2)      NOT NULL comment '薪水',
+    comm     DECIMAL(7, 2) comment '红利 奖金',
+    deptno   MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 comment '部门编号'
 );
+
 -- 添加测试数据
 INSERT INTO emp
 VALUES (7369, 'SMITH', 'CLERK', 7902, '1990-12-17', 800.00, NULL, 20),
@@ -57,9 +50,9 @@ VALUES (7369, 'SMITH', 'CLERK', 7902, '1990-12-17', 800.00, NULL, 20),
 #工资级别表
 CREATE TABLE salgrade
 (
-    grade MEDIUMINT UNSIGNED NOT NULL DEFAULT 0, /*工资级别*/
-    losal DECIMAL(17, 2)     NOT NULL, /* 该级别的最低工资 */
-    hisal DECIMAL(17, 2)     NOT NULL /* 该级别的最高工资*/
+    grade MEDIUMINT UNSIGNED NOT NULL DEFAULT 0 comment '工资级别',
+    losal DECIMAL(17, 2)     NOT NULL comment '该级别的最低工资',
+    hisal DECIMAL(17, 2)     NOT NULL  comment '该级别的最高工资'
 );
 INSERT INTO salgrade
 VALUES (1, 700, 1200);
