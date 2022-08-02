@@ -184,3 +184,25 @@ create table `purchase`
 desc goods;
 desc customer;
 desc purchase;
+
+-- 自增长
+# auto_increment
+
+-- 创建测试表
+create table `auto_table`(
+  id int primary key auto_increment,
+  name varchar(32) not null default ''
+);
+
+desc auto_table;
+
+insert into auto_table values (null,'auto_table1');
+select * from auto_table;
+
+# 详情
+# 1.一般来说自增长是和primary key 配合使用的
+# 2.自增长也可以单独使用【但是需要配合一个unique】
+# 3.自增长修饰的字段为整数型的（虽然小数也可以但是非常非常少这样使用）
+# 4.自增长默认从1开始，可以通过如下命令修改alter table 表名 auto_increment=新的开始值；
+alter table auto_table auto_increment=5;
+# 5.如果你添加数据时，给自增长字段（列）指定的有值，则以指定的值为准，如果指定了自增长，一般来说，就按照自增长的规则来添加数据.
