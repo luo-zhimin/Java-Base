@@ -206,3 +206,34 @@ select * from auto_table;
 # 4.自增长默认从1开始，可以通过如下命令修改alter table 表名 auto_increment=新的开始值；
 alter table auto_table auto_increment=5;
 # 5.如果你添加数据时，给自增长字段（列）指定的有值，则以指定的值为准，如果指定了自增长，一般来说，就按照自增长的规则来添加数据.
+
+
+-- 索引
+-- 先执行creat_many_data.sql 生成数据 800w
+-- 主键索引 唯一索引(unique) 普通索引(index) 全文索引
+select COUNT(*) from tmp.emp;
+select * from tmp.emp limit 1;
+-- 没有索引  emp.ibd 文件大小 537.96 mb
+-- 索引本身也会暂用空间
+-- 创建索引 empno 后  emp.ibd 文件大小 672.1 mb
+-- 创建索引 ename 后  emp.ibd 文件大小 856.7 mb
+select * from tmp.emp where empno=123456; -- 2 s 286 ms
+
+# empno_index 索引名称
+# ON emp (ename) : 表示在 emp 表的 empno 列创建索引
+
+-- 创建索引
+create index empno_index on tmp.emp(empno);
+-- 创建索引后
+explain select * from tmp.emp where empno=1234568; -- 37ms
+
+-- 创建索引前
+select * from tmp.emp where ename='zIQisn'; -- 2 s 386 ms
+-- 后
+select * from tmp.emp where ename='zIQisn'; -- 40ms
+
+-- 创建索引
+create index ename_index on tmp.emp(ename);
+
+-- 查看索引
+show index in tmp.emp;
