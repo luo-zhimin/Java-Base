@@ -82,22 +82,105 @@ desc unique_table;
 -- 创建测试表
 # 主表
 create table classRoom(
-    id int primary key ,
-    name varchar(30)
+    id int primary key comment '班级编号', -- 必须具有主键约束或是unique约束
+    name varchar(30) not null default ''
 );
 # 从表
 create table classStudent
 (
-    id   int primary key,
+    id            int primary key comment '学生编号',
     class_room_id int,
-    name varchar(30)
+    name          varchar(30),
+    -- 指定外键关系
+    foreign key (class_room_id) references classRoom (id)
 );
+
+-- 测试数据
+insert into classRoom values (1,'java'),(2,'web');
+insert into classStudent values (1,1,'tom'),(2,2,'jerry');
+insert into classStudent values (3,1,'smith');
+-- fail because classRoom 3 is not find
+insert into classStudent values (3,3,'jack');
+select * from classStudent;
 
 -- 细节说明
 # 1.外键指向的表的字段，要求是 primary key 或者是 unique
 # 2.表的类型是innodb，这样的表才支持外键
 # 3.外键字段的类型要和主键字段的类型一致（长度可以不同）
+-- classStudent class_room_id int --> classRoom id int primary key
+-- foreign key (class_room_id) references classRoom (id)
 # 4.外键字段的值，必须在主键字段中出现过，或者为null【前提是外键字段允许为null】
 # 5.一旦建立主外键的关系，数据不能随意删除了
+-- 已经使用了的外键不可以随意删除或者更新 主表
+-- Cannot delete or update a parent row: a foreign key constraint fails
+delete from classRoom where id=1;
+-- 从表 success
+delete from classStudent where id=3;
 
-# check
+desc classRoom;
+desc classStudent;
+
+# check 强制约束
+-- 注意
+# oracle 和 sql server均支持check，但是mysql5.7 目前还不支持check，只做语法校验，但不会生效
+# 在mysql中实现check的功能，一般是在程序中控制，或者通过触发器完成
+
+-- 建立测试表
+create table `check_user`(
+  id int primary key ,
+  name varchar(30),
+  sex char(5) comment 'man/woman' check ( sex in ('man','woman')),
+  salary double comment '薪水' check ( salary between 1000 and 2000)
+);
+# 基本语法 列名 类型 check （check条件）
+# 用于强制行数据必须满足的条件，假定在sal列上定义了check约束，并要求sal列值在1000~2000之间如果不再1000~2000之间就会提示出错
+-- Check constraint 'check_user_chk_1' is violated
+insert into check_user values (1,'student','cat',500); -- fail
+-- Check constraint 'check_user_chk_2' is violated fail
+insert into check_user values (1,'student','man',500);
+-- success
+insert into check_user values (1,'student','man',1111);
+
+select * from check_user;
+
+-- exercise
+-- require
+# 现有一个商店的数据库shop_db，记录客户及其购物情况，由下面三个表组成
+# 商品goods（商品号goods_id，商品名goods_name，单价unit_price，商品类别category，供应商provider）
+# 客户customer（客户号customer_id，姓名name，住址address，电邮email,性别sex，身份证card_id）
+# 购买purchase（购买订单号order_id，客户号customer_id，商品号goods_id，购买数量nums）
+# 客户的性别【男【女】 单价unit_price在1.0-9999.99之间
+create database shop_db;
+
+create table `goods`(
+  goods_id int primary key comment '商品号',
+  goods_name varchar(30) not null comment '商品名',
+  unit_prise double check ( unit_prise between 1.0 and 9999.99) comment '单价',
+  category int not null default 0 comment '商品类别',
+  provider varchar(32) not null default '' comment '供应商'
+) comment '商品';
+
+create table `customer`(
+    customer_id int primary key comment '客户号',
+    name varchar(32) not null default '' comment '姓名',
+    address varchar(64) comment '地址',
+    email varchar(64) unique comment '电子邮件',
+    sex char(1) check ( sex in ('男','女')) comment '性别',
+    card_id char(18) comment '身份证'
+) comment '客户';
+# 购买订单号order_id，客户号customer_id，商品号goods_id，购买数量nums
+create table `purchase`
+(
+    order_id int primary key comment '订单号',
+    customer_id        int  comment '客户号',
+    goods_id     int comment '商品号',
+    nums       varchar(64) comment '购买数量',
+    -- 建立外键
+    foreign key (customer_id) references customer(customer_id),
+    foreign key (goods_id) references goods(goods_id)
+) comment '购买';
+
+-- 查看
+desc goods;
+desc customer;
+desc purchase;
