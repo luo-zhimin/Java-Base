@@ -237,3 +237,115 @@ create index ename_index on tmp.emp(ename);
 
 -- 查看索引
 show index in tmp.emp;
+
+select ename,COUNT(*) count from tmp.emp group by ename having count>1 ;
+
+-- 索引原理
+# 没有索引为什么会慢因为全表扫描
+# 使用索引为什么会快形成一个索引的数据结构，比如二叉树
+# 索引的代价
+#   磁盘占用
+#   对dml（update delete insert）语句的效率影响
+
+-- 索引类型
+# 1.主键索引，主键自动的为主索引（类型Primary key）
+# 2.唯一索引（UNIQUE）
+# 3.普通索引（INDEX）
+# 4.全文索引（FULLTEXT）【适用于MyISAM】
+#     一般开发，不使用mysql自带的全文索引，而是使用∶全文搜索Solr和ElasticSearch（ES）
+create table `primary_index`(
+    id int primary key, -- 主键 同时也是索引 称为主键索引
+    name varchar(32) unique -- 唯一约束 同时也是唯一索引
+);
+
+-- 索引使用
+-- 查看
+show indexes in tmp.emp;
+-- 添加索引
+-- 测试表
+create table `index_table`(
+    id int ,
+    name varchar(32)
+);
+-- 查询是否有索引
+show index from index_table;
+
+-- 普通索引
+# create [UNIQUE] index index_name on tbl_name (col name[(length)][ASCDESC],……);
+# alter table table_name ADD INDEX[index_name](index col name,...)
+-- 主键索引
+# ALTER TABLE 表名 ADD PRIMARY KEY（列名，…）
+
+# 添加唯一索引
+create unique index id_unique on index_table(id);
+# 添加普通索引
+create index id_index on index_table(id);
+-- 选择
+# 如果某列的值是不会重复的 优先考虑唯一索引 否则 普通索引
+alter table index_table add index id_index(id);
+# 添加主键索引
+alter table index_table add primary key (id);
+
+-- 删除索引
+-- index
+# DROP INDEX index_name ON tbl_name;
+# alter table table_name drop index index_name;
+-- primary index
+# alter table tb drop primary key;
+
+-- index
+drop index id_unique on index_table;
+alter table index_table drop index id_index;
+-- primary
+alter table index_table drop primary key;
+
+-- 修改索引 先删除 在创建
+
+-- 查询索引
+# show index(es) from table_name;
+# show keys from table_name;
+# desc table_name;
+show index from index_table;
+show indexes from index_table;
+show keys from tmp.emp;
+desc tmp.emp;
+
+# index exercise
+# require
+# 创建一张订单表order（id号，商品名，订购人，数量）.要求id号为主键，请使用2种方式来创建主键
+create table `order`(
+    id int ,
+    goods_name varchar(32) not null,
+    buy_people varchar(20),
+    number int,
+    primary key (id)
+);
+alter table `order` add primary key (id);
+# 创建一张特价菜谱表menu（id号，菜谱名，厨师，点餐人身份证，价格）.要求id号为主键，点餐人身份证是 unique 请使用两种方式来创建unique
+create table `menu`(
+    id int,
+    name varchar(32),
+    cook varchar(32),
+    buy_id_card char(18) unique ,
+    prise int
+);
+alter table menu add unique index card_unique(buy_id_card);
+show index in menu;
+# 创建一张运动员表sport_man （id号， 名字， 特长）. 要求id号为主键，名字为普通索引， 请使用2种方式来创建索引
+create table `sport_man`(
+    id int primary key ,
+    name varchar(32) not null ,
+    specialty varchar(32) comment '特长'
+);
+-- 普通索引
+create index specialty_index on sport_man(specialty);
+alter table sport_man add index specialty_index(specialty);
+alter table sport_man add primary key (id);
+
+show indexes in sport_man;
+
+-- 哪些列上适合使用索引
+# 1.较频繁的作为查询条件字段应该创建索引
+# 2.唯一性太差的字段不适合单独创建索引，即使频繁作为查询条件
+# 3.更新非常频繁的字段不适合创建索引
+# 4.不会出现在WHERE子句中字段不该创建索引
