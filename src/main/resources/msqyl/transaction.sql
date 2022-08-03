@@ -66,3 +66,70 @@ commit ;
 # 6.开始一个事务start transaction， set autocommit=off；(开始事务方式)
 
 select * from transaction_table;
+
+
+-- 事务隔离级别
+# 1.多个连接开启各自事务操作数据库中数据时， 数据库系统要负责隔离操作，以保证各个连接在获取数据时的准确性。（通俗解释）
+# 2.如果不考虑隔离性，可能会引发如下问题∶脏读 不可重复读 幻读
+# 脏读 （dirty read）∶ 当一个事务读取另一个事务尚未提交的改变（update，insert，delete）时，产生脏读
+# 不可重复读（non repeatable read）∶ 同一查询在同一事务中多次进行，由于其他提交事务所做的修改或删除，每次返回不同的结果集，此时发生不可重复读。
+# 幻读（phantom read）∶ 同一查询在同一事务中多次进行，由于其他提交事务所做的插入操作，每次返回不同的结果集，此时发生幻读
+
+-- 设置事务隔离级别
+# 查看当前会话的隔离级别 default REPEATABLE-READ(可重复读)
+# 新版本 @@transaction_isolation 旧版本 @@tx_isolation
+SELECT @@transaction_isolation;
+# 查看当前系统的隔离级别
+select @@global.transaction_isolation;
+# 3.设置当前会话隔离级别
+# set session transaction isolation level repeatable read;
+# 4. 设置系统当前隔离级别
+# set global transaction isolation level repeatable read;
+# 5. mysql默认的事务隔离级别是 repeatable read，一般情况下，没有特殊要求，没有必要修改（因为该级别可以满足绝大部分项目需求）
+
+# ● 全局修改，修改my.ini配置文件，在最后加上
+#可选参数有∶READ-UNCOMMITTED，READ-COMMITTED，REPEATABLE-READ,SERIALIZABLE. [mysqld]
+# transaction-isolation=REPEATABLE-READ
+
+-- 打开mysql一个控制台 查看其隔离级别
+# mysql> select @@transaction_isolation;
+# +-------------------------+
+# | @@transaction_isolation |
+# +-------------------------+
+# | REPEATABLE-READ         |
+# +-------------------------+
+-- 设置该会话隔离级别 读未提交
+set session transaction isolation level read uncommitted ;
+select @@transaction_isolation;
+-- 开启一个事务
+start transaction;
+create table `account`(
+    id int,
+    name varchar(32),
+    money int
+) comment '账户';
+
+-- mysql 控制台未提交事务 脏读(第一次查询) 幻读(多次查询返回结果不一样) 不可重复读(每次查询结果不一样 其他事务进行了修改/删除)
+select * from account; -- 100 2条数据 id=1->800
+commit ;
+
+-- 设置该会话隔离级别 读已提交
+set session transaction isolation level read committed ;
+select @@transaction_isolation;
+-- 开始一个事务
+start transaction ;
+-- 查询 没有读取 未提交事务 没有产生脏读 mysql 控制台提交事务 可以查询 产生幻读 和 不可重复读
+select * from account;
+commit ;
+
+-- 设置该会话隔离级别 可重复读
+set session transaction isolation level repeatable read ;
+start transaction;
+select * from account;
+commit ;
+
+-- 设置该会话隔离级别 可 串行化
+set session transaction isolation level serializable ;
+start transaction ;
+-- 开始之后有操作 除非提交事务 不然会一直锁起来 超时
+select * from account;
