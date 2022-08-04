@@ -82,14 +82,21 @@ SELECT @@transaction_isolation;
 # 查看当前系统的隔离级别
 select @@global.transaction_isolation;
 # 3.设置当前会话隔离级别
-# set session transaction isolation level repeatable read;
+set session transaction isolation level repeatable read;
 # 4. 设置系统当前隔离级别
-# set global transaction isolation level repeatable read;
+set global transaction isolation level repeatable read;
 # 5. mysql默认的事务隔离级别是 repeatable read，一般情况下，没有特殊要求，没有必要修改（因为该级别可以满足绝大部分项目需求）
 
 # ● 全局修改，修改my.ini配置文件，在最后加上
 #可选参数有∶READ-UNCOMMITTED，READ-COMMITTED，REPEATABLE-READ,SERIALIZABLE. [mysqld]
 # transaction-isolation=REPEATABLE-READ
+
+create table `account`
+(
+    id    int,
+    name  varchar(32),
+    money int
+) comment '账户';
 
 -- 打开mysql一个控制台 查看其隔离级别
 # mysql> select @@transaction_isolation;
@@ -103,11 +110,6 @@ set session transaction isolation level read uncommitted ;
 select @@transaction_isolation;
 -- 开启一个事务
 start transaction;
-create table `account`(
-    id int,
-    name varchar(32),
-    money int
-) comment '账户';
 
 -- mysql 控制台未提交事务 脏读(第一次查询) 幻读(多次查询返回结果不一样) 不可重复读(每次查询结果不一样 其他事务进行了修改/删除)
 select * from account; -- 100 2条数据 id=1->800
@@ -133,3 +135,13 @@ set session transaction isolation level serializable ;
 start transaction ;
 -- 开始之后有操作 除非提交事务 不然会一直锁起来 超时
 select * from account;
+
+-- ACID
+# 1. 原子性（Atomicity）
+# 原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。
+# 2. 一致性（Consistency）
+# 事务必须使数据库从一个一致性状态变换到另外一个一致性状态
+# 3.隔离性（Isolation）
+# 事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离。
+# 4.持久性（Durability）
+# 持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响
