@@ -251,9 +251,17 @@ insert into department values (006,'物理系');
 insert into department values (007,'天文');
 # 学生张三退学，请更新相关的表
 -- 找到对应的班级人数-1
+-- 需要开启事务
+start transaction;
 select class_id from student where name='张三';
 delete from student where name='张三';
+savepoint `delete`;
 update class set num=num-1 where class_id = (select class_id from student where name='张三');
+savepoint `update`;
+-- 判断是否需要回滚
+ -- rollback to `delete`;
+-- 提交之后便会释放锁 释放节点 确认好再去提交事务
+commit ;
 select * from class;
 
 -- insert into student values (8101,'张三',18,101);
