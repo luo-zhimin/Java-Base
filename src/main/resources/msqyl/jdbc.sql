@@ -15,3 +15,9 @@ create table `actor`(
 select VERSION();
 
 select * from actor;
+
+insert into news values (4, '热点新闻',now()),(5, '热带新闻',now()),(6, '热点新闻一',now()),(7, '热点新闻二',now()),(8, '热点新闻三',now());
+update news set content='上海新闻热单发送' where id=2;
+delete from news where id=3;
+select * from news;
+
