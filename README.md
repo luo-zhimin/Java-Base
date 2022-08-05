@@ -10,6 +10,9 @@ java基础 变量、结构控制、多线程、集合、泛型、反射、file�
 
 # 笔记分享
 > 1.语雀地址： https://www.yuque.com/books/share/2401b162-4e19-4a11-9c26-c44507206b3a?# 《后端》<br><br>
-> 2.mysql 8.0中文文档地址: https://docs.gitcode.net/mysql/guide/general-information/mysql-nutshell.html
->
+> 2.mysql 8.0中文文档地址: https://docs.gitcode.net/mysql/guide/general-information/mysql-nutshell.html <br><br>
+> 3.jdbc驱动下载选择对应的(你本地mysql)版本 选择 Platform Independent https://downloads.mysql.com/archives/c-j <br><br>
+> 
+> 
+
 [//]: # (<img src='' alt="路线图"/>)
