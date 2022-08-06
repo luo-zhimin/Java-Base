@@ -157,5 +157,9 @@ class JDBCExercise{
         int ui = statement.executeUpdate(updateNews);
         int di = statement.executeUpdate(deleteNews);
         System.out.println(i > 0 && ui > 0 && di > 0 ? "successful" : "fail");
+
+        //close
+        statement.close();
+        connection.close();
     }
 }

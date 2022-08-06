@@ -21,3 +21,20 @@ update news set content='上海新闻热单发送' where id=2;
 delete from news where id=3;
 select * from news;
 
+-- sql 注入
+create table `admin`(
+  name varchar(32) not null unique ,
+  password varchar(32) not null default ''
+);
+
+-- 添加测试数据
+insert into admin values ('tom','123');
+
+-- normal find
+select * from admin where name='tom' and password='123';
+
+-- sql 注入
+-- 输入用户名 1' or  密码 or '1'='1 万能密码 'true的条件'
+-- 后面输入一个true的条件 前面 or 拼接
+select * from admin where name='1' or' and password=' or '1'='1';
+
