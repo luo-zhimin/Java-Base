@@ -39,3 +39,11 @@ select * from admin where name='tom' and password='123';
 select * from admin where name='1' or' and password=' or '1'='1';
 
 select * from admin;
+-- jdbc batch
+select * from admin where name='tom2';
+select count(*) from admin;
+
+-- jdbc 事务
+select * from account;
+alter table account modify id int primary key auto_increment;
+alter table account modify money double not null default 0;
