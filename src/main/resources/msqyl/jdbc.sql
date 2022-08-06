@@ -38,3 +38,4 @@ select * from admin where name='tom' and password='123';
 -- 后面输入一个true的条件 前面 or 拼接
 select * from admin where name='1' or' and password=' or '1'='1';
 
+select * from admin;
