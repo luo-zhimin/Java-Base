@@ -4,10 +4,13 @@
 
 package com.java.base.day.jdbc;
 
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
+import javax.sql.DataSource;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -129,4 +132,30 @@ public class JdbcConnectPool {
         long end = System.currentTimeMillis();
         System.out.println("c3p0 配置文件 连接mysql 耗时 "+(end-start));//463ms
     }
+
+
+    /**
+     * druid 使用
+     */
+    @Test
+    @SneakyThrows
+    void druid(){
+        //加入maven依赖
+        //加入配置文件
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("src/main/resources/druid.properties"));
+
+        //创建一个指定参数的数据库连接池
+        DataSource dataSource = DruidDataSourceFactory.createDataSource(properties);
+
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 5000; i++) {
+            Connection connection = dataSource.getConnection();
+//            System.out.println("连接ok~~");
+            connection.close();
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("druid 配置文件 连接mysql 耗时 "+(end-start));//477
+    }
+
 }

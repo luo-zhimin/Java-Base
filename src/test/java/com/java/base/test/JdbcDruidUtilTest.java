@@ -1,5 +1,5 @@
 /*
- * Copyright (c) luoZhiMin 2022.8.6.9.25.53
+ * Copyright (c) luoZhiMin 2022.8.7.6.59.42
  */
 
 package com.java.base.test;
@@ -11,23 +11,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import static com.java.base.day.jdbc.util.JdbcUtil.closeConnect;
-import static com.java.base.day.jdbc.util.JdbcUtil.getConnect;
+import static com.java.base.day.jdbc.util.JdbcDruidUtil.closeDruidConnection;
+import static com.java.base.day.jdbc.util.JdbcDruidUtil.getDruidConnection;
+
 
 /**
  * Created by IntelliJ IDEA.
- * 测试 jdbc util方法
+ * druid util test
  * @Author : 志敏.罗
- * @create 2022/8/6 21:25
+ * @create 2022/8/7 18:59
  */
-public class JdbcUtilTest {
+public class JdbcDruidUtilTest {
 
     @Test
     @SneakyThrows
-    void utilSelectTest(){
-        //获取连接
-        Connection connect = getConnect();
-        System.out.println("运行类型 = "+connect.getClass());//class com.mysql.cj.jdbc.ConnectionImpl
+    void druidSelect(){
+        Connection connect = getDruidConnection();
+        System.out.println("运行类型 = "+connect.getClass());//class com.alibaba.druid.pool.DruidPooledConnection
         String select = "select * from news";
         PreparedStatement preparedStatement = connect.prepareStatement(select);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -38,23 +38,19 @@ public class JdbcUtilTest {
             System.out.println(id+"\t"+content+"\t"+sendTime);
         }
         //close
-        closeConnect(connect,resultSet,preparedStatement);
+        closeDruidConnection(connect,resultSet,preparedStatement);
     }
 
-    /**
-     * update insert delete
-     * ->use update
-     */
     @Test
     @SneakyThrows
-    void utilDmlTest(){
-        Connection connect = getConnect();
+    void druidDml(){
+        Connection connect = getDruidConnection();
         String update = "update news set content=? where id=?";
         PreparedStatement preparedStatement = connect.prepareStatement(update);
-        preparedStatement.setString(1,"军事新闻");
+        preparedStatement.setString(1,"druid新闻");
         preparedStatement.setInt(2,2);
         int rows = preparedStatement.executeUpdate();
         System.out.println(rows>0?"successful":"fail");
-        closeConnect(connect,null,preparedStatement);
+        closeDruidConnection(connect,null,preparedStatement);
     }
 }
