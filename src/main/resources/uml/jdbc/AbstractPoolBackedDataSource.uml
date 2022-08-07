@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource</OriginalElement>
+  <nodes>
+    <node x="-116.5" y="-14.0">com.mchange.v2.c3p0.impl.IdentityTokenized</node>
+    <node x="31.999999999999943" y="220.0">com.mchange.v2.c3p0.impl.PoolBackedDataSourceBase</node>
+    <node x="277.0" y="142.0">javax.naming.Referenceable</node>
+    <node x="-150.0" y="64.0">com.mchange.v2.c3p0.impl.AbstractIdentityTokenized</node>
+    <node x="116.0" y="142.0">java.io.Serializable</node>
+    <node x="-143.0" y="142.0">com.mchange.v2.c3p0.impl.IdentityTokenResolvable</node>
+    <node x="570.625" y="64.0">java.sql.Wrapper</node>
+    <node x="339.625" y="64.0">javax.sql.CommonDataSource</node>
+    <node x="143.99999999999994" y="298.0">com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource</node>
+    <node x="439.875" y="220.0">com.mchange.v2.c3p0.PooledDataSource</node>
+    <node x="466.375" y="142.0">javax.sql.DataSource</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource" target="com.mchange.v2.c3p0.PooledDataSource" relationship="REALIZATION">
+      <point x="75.0" y="-14.0" />
+      <point x="369.0" y="273.0" />
+      <point x="537.375" y="273.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.mchange.v2.c3p0.impl.AbstractIdentityTokenized" target="com.mchange.v2.c3p0.impl.IdentityTokenized" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.mchange.v2.c3p0.impl.PoolBackedDataSourceBase" target="java.io.Serializable" relationship="REALIZATION">
+      <point x="67.75" y="-14.0" />
+      <point x="235.24999999999994" y="200.0" />
+      <point x="272.49999999999994" y="200.0" />
+      <point x="272.49999999999994" y="190.0" />
+      <point x="186.5" y="190.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.mchange.v2.c3p0.impl.PoolBackedDataSourceBase" target="javax.naming.Referenceable" relationship="REALIZATION">
+      <point x="67.75" y="-14.0" />
+      <point x="235.24999999999994" y="200.0" />
+      <point x="272.49999999999994" y="200.0" />
+      <point x="272.49999999999994" y="190.0" />
+      <point x="358.5" y="190.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.mchange.v2.c3p0.impl.PoolBackedDataSourceBase" target="com.mchange.v2.c3p0.impl.IdentityTokenResolvable" relationship="GENERALIZATION">
+      <point x="-67.75" y="-14.0" />
+      <point x="99.74999999999994" y="200.0" />
+      <point x="-23.5" y="200.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.mchange.v2.c3p0.impl.IdentityTokenResolvable" target="com.mchange.v2.c3p0.impl.AbstractIdentityTokenized" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.mchange.v2.c3p0.PooledDataSource" target="javax.sql.DataSource" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource" target="com.mchange.v2.c3p0.impl.PoolBackedDataSourceBase" relationship="GENERALIZATION">
+      <point x="-75.0" y="-14.0" />
+      <point x="218.99999999999994" y="273.0" />
+      <point x="167.49999999999994" y="273.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="javax.sql.DataSource" target="java.sql.Wrapper" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="537.375" y="117.0" />
+      <point x="629.625" y="117.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="javax.sql.DataSource" target="javax.sql.CommonDataSource" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="537.375" y="117.0" />
+      <point x="445.125" y="117.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="1.0" showDependencies="false" x="269.5" y="156.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
