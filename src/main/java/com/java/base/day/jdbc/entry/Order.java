@@ -1,5 +1,5 @@
 /*
- * Copyright (c) luoZhiMin 2022.8.7.9.11.19
+ * Copyright (c) luoZhiMin 2022.8.8.11.54.46
  */
 
 package com.java.base.day.jdbc.entry;
@@ -13,17 +13,15 @@ import lombok.ToString;
  * Created by IntelliJ IDEA.
  *
  * @Author : 志敏.罗
- * @create 2022/8/7 21:11
+ * @create 2022/8/8 11:54
  */
 @Data
 @ToString
-@NoArgsConstructor //反射需要
+@NoArgsConstructor
 @AllArgsConstructor
-public class Actor {
+public class Order {
     private Long id;
     private String name;
-    private String sex;
-    //需要驼峰映射
-    private String born_date;
-    private String phone;
+    private String buy_people;
+    private Integer number;
 }

@@ -47,3 +47,11 @@ select count(*) from admin;
 select * from account;
 alter table account modify id int primary key auto_increment;
 alter table account modify money double not null default 0;
+
+-- basicDao
+select * from goods;
+select * from `order`;
+select * from actor;
+-- 添加测试数据
+insert into goods values (1,'mac','9999',0,'USA');
+insert into `order` values (1,'mac','me',1);

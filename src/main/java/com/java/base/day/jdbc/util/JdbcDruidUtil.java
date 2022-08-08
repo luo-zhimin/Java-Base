@@ -58,6 +58,6 @@ public class JdbcDruidUtil {
         if (connection != null) {
             connection.close();
         }
-        System.out.println("druid close....");
+//        System.out.println("druid close....");
     }
 }

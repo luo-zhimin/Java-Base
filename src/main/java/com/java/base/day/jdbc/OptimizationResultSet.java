@@ -13,7 +13,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class OptimizationResultSet {
             long id = resultSet.getLong("id");
             String name = resultSet.getString("name");
             String sex = resultSet.getString("sex");
-            Date bornDate = resultSet.getDate("born_date");
+            String bornDate = resultSet.getString("born_date");
             String phone = resultSet.getString("phone");
 //            System.out.println(id+"\t"+name+"\t"+sex+"\t"+bornDate+"\t"+phone);
             //把得到的记录封装到一个actor对象里面 在放入到List里面
