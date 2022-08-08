@@ -76,4 +76,6 @@ create table if not exists bill
     billDate      datetime    not null,#订单日期
     state         varchar(50) not null default '' # 状态 '未结账' , '已经结账', '挂单'
 ) charset = utf8;
-
+-- e10adc3949ba59abbe56e057f20f883e
+select md5('123456') from dual;
+select * from employee where empId = 666 and pwd= md5('123456');
