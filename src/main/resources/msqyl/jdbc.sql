@@ -8,7 +8,7 @@ create table `actor`(
     id int primary key auto_increment,
     name varchar(32) not null default '',
     sex char(1) not null default '女',
-    born_date datetime,
+    born_date date,
     phone char(12)
 ) comment '演员表';
 

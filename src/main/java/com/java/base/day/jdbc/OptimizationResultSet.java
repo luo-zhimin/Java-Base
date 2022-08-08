@@ -159,4 +159,32 @@ public class OptimizationResultSet {
                 .query(connect, select, new ScalarHandler<>(),1);
         System.out.println(actor);
     }
+
+    /**
+     * apache dbutils + druid --> dml{insert-update-delete}
+     */
+    @Test
+    @SneakyThrows
+    void testApacheUtiilsDml(){
+
+        Connection connect = getDruidConnection();
+        //使用DBUtils 类和接口 加入相关依赖 pom.xml
+        //创建一个queryRunner
+        QueryRunner queryRunner = new QueryRunner();
+        String insert = "insert into actor values (null,?,?,date(now()),?)";
+        String update = "update actor set born_date=? where id=?";
+        String delete = "delete from actor where id=?";
+        //可以执行相关语句
+        //返回受影响的行数
+        //insert
+//        int rows = queryRunner
+//                .update(connect, insert, "关晓彤", "女", "1100");
+        //update
+        int rows = queryRunner
+                .update(connect, update, "1997-9-17",2);
+        //delete
+//        int rows = queryRunner
+//                .update(connect, delete, 2);
+        System.out.println(rows>0?"successful":"fail");
+    }
 }

@@ -59,6 +59,14 @@
             <version>4.4</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>8.0.29</version>-->
+<!--        </dependency>-->
+
+
         <dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
@@ -91,6 +99,7 @@
 <!--            <id>central</id>-->
 <!--            <name>central repository</name>-->
 <!--            <url>https://maven.aliyun.com</url>-->
+<!--            <url>https://mvnrepository.com</url>-->
 <!--            <layout>default</layout>-->
 <!--            <releases>-->
 <!--                <enabled>true</enabled>-->
