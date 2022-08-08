@@ -26,5 +26,5 @@ public class Menu {
 
     private String type;
 
-    private Double prise;
+    private Double price;
 }

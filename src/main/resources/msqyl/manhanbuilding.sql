@@ -14,6 +14,8 @@ create table if not exists employee
     job   varchar(50) not null default '' #岗位
 ) charset = utf8;
 
+alter table employee modify empId int not null default 0 unique;
+
 insert into employee
 values (null, '6668612', md5('123456'), '张三丰', '经理');
 insert into employee
@@ -33,7 +35,7 @@ create table if not exists diningTable
 ) charset = utf8;
 
 insert into diningTable
-values (null, '空', '', '');
+values (null, '空', '', ''),(null, '空', '', ''),(null, '空', '', ''),(null, '空', '', ''),(null, '空', '', '');
 
 -- 之前有menu table
 -- rename table menu to menu_card;
@@ -79,3 +81,8 @@ create table if not exists bill
 -- e10adc3949ba59abbe56e057f20f883e
 select md5('123456') from dual;
 select * from employee where empId = 666 and pwd= md5('123456');
+select * from diningTable;
+select * from menu;
+update diningTable set state='' , orderName='',orderTel='' where id='';
+select * from bill;
+insert into bill values (null,?,?,?,?,?,now(),?)

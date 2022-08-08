@@ -71,11 +71,24 @@ public class BasicDao<T> {
         List<T> result;
         Connection connection = getDruidConnection();
         try {
-            result = queryRunner.query(connection,query,new BeanListHandler<>(clazz),params);
+            result = queryRunner.query(connection, query, new BeanListHandler<>(clazz), params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        closeDruidConnection(connection,null,null);
+        closeDruidConnection(connection, null, null);
+        return result;
+    }
+
+
+    public List<T> queryMulti(String query, Class<T> clazz) {
+        List<T> result;
+        Connection connection = getDruidConnection();
+        try {
+            result = queryRunner.query(connection, query, new BeanListHandler<>(clazz));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        closeDruidConnection(connection, null, null);
         return result;
     }
 
