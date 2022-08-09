@@ -23,7 +23,7 @@ public class Bill {
 
     private Long id;
 
-    private Long billId;
+    private String billId;
 
     private Long menuId;
 

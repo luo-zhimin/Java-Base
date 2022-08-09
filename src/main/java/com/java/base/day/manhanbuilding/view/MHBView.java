@@ -9,6 +9,7 @@ import com.java.base.day.manhanbuilding.service.DiningTableService;
 import com.java.base.day.manhanbuilding.service.MenuService;
 import com.java.base.day.manhanbuilding.service.UserService;
 import com.java.base.day.socketProject.util.Utility;
+import org.junit.platform.commons.util.StringUtils;
 
 /**
  * Created by IntelliJ IDEA.
@@ -129,7 +130,7 @@ public class MHBView {
                                         break;
                                     }
                                     //check table
-                                    if (!diningTableService.checkTable(tableId)) {
+                                    if (!diningTableService.checkTable(tableId,1)) {
                                         break;
                                     }
 
@@ -162,9 +163,36 @@ public class MHBView {
                                     break;
                                 case "5":
                                     System.out.println("查看账单");
+                                    billService.showBills();
+                                    System.out.println("=====显示完毕=====");
                                     break;
                                 case "6":
-                                    System.out.println("结账");
+                                    System.out.println("=====结账服务======");
+                                    //update bill table
+                                    System.out.print("请选择要结账的餐桌编号(-1退出)：");
+                                    tableId = Utility.readInt(3);
+                                    if (tableId==-1){
+                                        System.out.println("====取消结账====");
+                                        break;
+                                    }
+                                    if (!diningTableService.checkTable(tableId,2)){
+                                        break;
+                                    }
+                                    System.out.print("结账方式(现金/支付宝/微信)回车表示退出：");
+                                    String state = Utility.readString(3,"");
+                                    if (StringUtils.isBlank(state)){
+                                        System.out.println("====取消结账====");
+                                        break;
+                                    }
+                                    System.out.print("确认是否结账(Y/N)：");
+                                    save = Utility.readChar();
+                                    if (save=='N'){
+                                        System.out.println("====取消结账====");
+                                        break;
+                                    }
+                                    if (billService.checkOut(tableId,state)) {
+                                        System.out.println("===结账完成===");
+                                    }
                                     break;
                                 case "9":
                                     System.out.println("===退出系统===");

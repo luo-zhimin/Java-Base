@@ -24,10 +24,16 @@ public class MenuService {
         menuDao = new MenuDao();
     }
 
+    /**
+     * @return 所有的菜单
+     */
     private List<Menu> getMenus(){
         return menuDao.queryMulti("select * from menu", Menu.class);
     }
 
+    /**
+     * 展示所有的菜单
+     */
     public void showMenus(){
         if (CollectionUtils.isNotEmpty(getMenus())){
             System.out.println("菜品编号"+"\t"+"菜品名"+"\t"+"类别"+"\t\t\t"+"价格");
@@ -37,11 +43,18 @@ public class MenuService {
         }
     }
 
-
+    /**
+     * @param id 菜单编号
+     * @return 根据餐桌编号得到餐桌
+     */
     public Menu getMenuById(int id){
         return menuDao.querySingle("select * from menu where id=?", Menu.class, id);
     }
 
+    /**
+     * @param menuId 菜单编号
+     * @return 检查菜单是否存在
+     */
     public Boolean checkMenu(int menuId){
         return getMenuById(menuId) == null;
     }

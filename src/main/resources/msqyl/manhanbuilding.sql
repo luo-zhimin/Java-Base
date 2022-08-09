@@ -85,4 +85,5 @@ select * from diningTable;
 select * from menu;
 update diningTable set state='' , orderName='',orderTel='' where id='';
 select * from bill;
-insert into bill values (null,?,?,?,?,?,now(),?)
+insert into bill values (null,?,?,?,?,?,now(),?);
+update bill set state='' where diningTableId='' and state='';
