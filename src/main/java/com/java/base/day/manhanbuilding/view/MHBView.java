@@ -23,6 +23,12 @@ public class MHBView {
         new MHBView().menuView();
     }
 
+    /*
+        todo 事务考虑 threadLocal 或者 框架 transactional
+        可以进行拓展 菜单 多表考虑 视图.... 多表查询 多表名字可以不一样
+        但是需要注意起别名
+     */
+
     private static final UserService userService;
 
     private static final DiningTableService diningTableService;
@@ -163,7 +169,8 @@ public class MHBView {
                                     break;
                                 case "5":
                                     System.out.println("查看账单");
-                                    billService.showBills();
+                                    //billService.showBills();
+                                    billService.showBillResponse(); // 拓展 多表
                                     System.out.println("=====显示完毕=====");
                                     break;
                                 case "6":

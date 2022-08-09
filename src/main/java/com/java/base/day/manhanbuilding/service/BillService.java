@@ -5,9 +5,12 @@
 package com.java.base.day.manhanbuilding.service;
 
 import com.java.base.day.manhanbuilding.dao.BillDao;
+import com.java.base.day.manhanbuilding.dao.MultiResponseDao;
 import com.java.base.day.manhanbuilding.entry.Bill;
 import com.java.base.day.manhanbuilding.entry.Menu;
+import com.java.base.day.manhanbuilding.entry.MultiResponse;
 import org.apache.commons.collections4.CollectionUtils;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +27,10 @@ public class BillService {
     private static final MenuService menuService;
     private static final DiningTableService diningTableService;
 
+    private static final MultiResponseDao responseDao;
+
     static {
+        responseDao = new MultiResponseDao();
         billDao = new BillDao();
         menuService = new MenuService();
         diningTableService = new DiningTableService();
@@ -115,5 +121,29 @@ public class BillService {
             return diningTableService.updateTableState(tableId, "空");
         }
         return false;
+    }
+
+    /**
+     * @return 得到账单的具体信息
+     */
+    private List<MultiResponse> getBillResponse(){
+        return responseDao.queryMulti("select b.id, menuId,name, nums, money, diningTableId," +
+                " state from bill b inner join menu m on b.menuId=m.id", MultiResponse.class);
+    }
+
+    public void showBillResponse(){
+        if (CollectionUtils.isNotEmpty(getBillResponse())){
+            System.out.println("编号" + "\t\t" + "菜品号" + "\t" + "菜品名" + "\t" + "菜品量" + "\t" + "金额" + "\t\t"
+                    + "桌号" + "\t\t" + "状态");
+            getBillResponse().forEach(bill -> {
+                System.out.println(bill.getId() + "\t\t" + bill.getMenuId() + "\t\t"+bill.getName()+ "\t\t" + bill.getNums() + "\t" + bill.getMoney()
+                        + "\t" + bill.getDiningTableId() + "\t\t" + bill.getState());
+            });
+        }
+    }
+
+    @Test
+    void t(){
+        showBillResponse();
     }
 }
