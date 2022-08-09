@@ -87,3 +87,4 @@ update diningTable set state='' , orderName='',orderTel='' where id='';
 select * from bill;
 insert into bill values (null,?,?,?,?,?,now(),?);
 update bill set state='' where diningTableId='' and state='';
+select b.id, menuId,name, nums, money, diningTableId, state from bill b inner join menu m on b.menuId=m.id;
