@@ -10,7 +10,6 @@ import com.java.base.day.manhanbuilding.entry.Bill;
 import com.java.base.day.manhanbuilding.entry.Menu;
 import com.java.base.day.manhanbuilding.entry.MultiResponse;
 import org.apache.commons.collections4.CollectionUtils;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.UUID;
@@ -140,10 +139,5 @@ public class BillService {
                         + "\t" + bill.getDiningTableId() + "\t\t" + bill.getState());
             });
         }
-    }
-
-    @Test
-    void t(){
-        showBillResponse();
     }
 }
