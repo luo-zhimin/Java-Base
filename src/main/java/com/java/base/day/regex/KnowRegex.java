@@ -96,7 +96,10 @@ public class KnowRegex {
         Pattern pattern = Pattern.compile("(\\d\\d)(\\d\\d)");
         Matcher matcher = pattern.matcher(content);
         while (matcher.find()){
-            System.out.println(matcher.group());
+            System.out.println("找到全部 "+matcher.group());
+            System.out.println("找到第一组 "+matcher.group(1));
+            System.out.println("找到第二组 "+matcher.group(2));
+            System.out.println();
         }
 
         /*
@@ -126,6 +129,10 @@ public class KnowRegex {
             }
             1.根据 groups[0] 和 groups[1] 的记录位置，从content开始截取 子字符串 返回【0，4)
             2.再次执行 find 仍然按照上面来
+
+            总结：
+                如果regex有()即分组，取出匹配规制 group[0]表示匹配到的自字符串 group[1]....
+                但是分组 数不可以越界
          */
     }
 }
