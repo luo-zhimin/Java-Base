@@ -89,12 +89,12 @@ public class TankPanel extends JPanel implements KeyListener, Runnable {
         }
 
         //init image
-        image1 = Toolkit.getDefaultToolkit().getImage(TankPanel.class.getResource("/bomb_1.gif"));
-        image2 = Toolkit.getDefaultToolkit().getImage(TankPanel.class.getResource("/bomb_2.gif"));
-        image3 = Toolkit.getDefaultToolkit().getImage(TankPanel.class.getResource("/bomb_3.gif"));
+        image1 = Toolkit.getDefaultToolkit().getImage(TankPanel.class.getResource("/tank/bomb_1.gif"));
+        image2 = Toolkit.getDefaultToolkit().getImage(TankPanel.class.getResource("/tank/bomb_2.gif"));
+        image3 = Toolkit.getDefaultToolkit().getImage(TankPanel.class.getResource("/tank/bomb_3.gif"));
 
         //播放音乐
-        new AePlayWave(TankPanel.class.getResource("/111.wav").getFile()).start();
+        new AePlayWave(TankPanel.class.getResource("/tank/111.wav").getFile()).start();
     }
 
     @Override
