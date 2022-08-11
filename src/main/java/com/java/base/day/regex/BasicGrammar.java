@@ -83,4 +83,56 @@ public class BasicGrammar {
         }
     }
 
+
+    /**
+     * 选择匹配符
+     *  匹配某个字符串的时候是选择性的，即∶既可以匹配这个，又可以匹配那个
+     * ｜ 匹配“|”之前或之后的表达式 ab|cd  ab或者cd
+     */
+    @Test
+    void grammar03(){
+
+        String content = "dasdadsad 特殊 测试 加油";
+        String regex ="sa|测|加";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            System.out.println("找到 ： "+matcher.group(0));
+        }
+    }
+
+
+    /**
+     * 限定符
+     *  用于指定其前面的字符和组合项连续出现多少次
+     *  * 指定字符重复0次或n次（无要求）零到多 (abc)* 仅包含任意个abc的字符串，等效于\w*
+     *  + 指定字符重复1次或n次（至少一次）m+(abc)* 以至少1个m开头，后接abc的字符指定字符
+     *  ? 指定字符重复1次或n次（最多一次 0到1）m+abc 以至少1个m开头，后接ab或abc的字符指定字符
+     *  {n} 只能输入n个字符 由abcd中字母组成的任意长度为3的字abc、dbc
+     *  {n,} 指定至少n个匹配 [abcd]{3,} 由abcd中字母组成的任意长度不小于3的字符串
+     *  {n,m} 指定至少n个但不多于m个 [abcd]{3,5} 由abcd中字母组成的任意长度不小于3，不大于5的字符串
+     */
+    @Test
+    void grammar04(){
+        String content = "a211111aaaaaahello";
+//        String regex ="a{3}";//匹配 aaa
+//        String regex ="1{4}";//匹配 1111
+//        String regex ="\\d{2}";//匹配 俩位的任意的数字
+        // Java匹配 默认是贪婪匹配 即尽可能匹配多的
+//        String regex ="a{3,4}";//匹配 aaa 或者 aaaa
+//        String regex ="1{4,5}";//匹配 4个1 或者 5个1
+//        String regex ="\\d{2,5}";//匹配 2位数｜3位数｜4｜5
+        //+
+//        String regex ="1+";//匹配 多个1个1或者多个1
+//        String regex ="\\d+";//匹配 多个1个数字或者多个数字
+        //*
+//        String regex ="1*";//匹配 0个1 或者多个1
+        //?
+        String regex ="a2?";//匹配 a的后面有一个2 或者没有2
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            System.out.println("找到 ： "+matcher.group(0));
+        }
+    }
 }
