@@ -108,7 +108,7 @@ public class BasicGrammar {
      *  * 指定字符重复0次或n次（无要求）零到多 (abc)* 仅包含任意个abc的字符串，等效于\w*
      *  + 指定字符重复1次或n次（至少一次）m+(abc)* 以至少1个m开头，后接abc的字符指定字符
      *  ? 指定字符重复1次或n次（最多一次 0到1）m+abc 以至少1个m开头，后接ab或abc的字符指定字符
-     *  {n} 只能输入n个字符 由abcd中字母组成的任意长度为3的字abc、dbc
+     *  {n} 只能输入n个字符 [abcd]{3} 由abcd中字母组成的任意长度为3的字abc、dbc
      *  {n,} 指定至少n个匹配 [abcd]{3,} 由abcd中字母组成的任意长度不小于3的字符串
      *  {n,m} 指定至少n个但不多于m个 [abcd]{3,5} 由abcd中字母组成的任意长度不小于3，不大于5的字符串
      */
@@ -131,6 +131,94 @@ public class BasicGrammar {
         String regex ="a2?";//匹配 a的后面有一个2 或者没有2
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            System.out.println("找到 ： "+matcher.group(0));
+        }
+    }
+
+
+    /**
+     * 定位符
+     *  规定要匹配的字符串出现的位置，比如在字符串的开始还是在结束的位置
+     *  ^ 指定起始字符 ^[0-9]+[a-z]*  以至少1个数字开头，后接任意个小写字母的字符串
+     *  $ 指定结束字符 ^[0-9]\\-[a-z]+$ 以1个数字开头后接连字符“-”，并以至少1个小写字母结尾的字符串
+     *  \\b 匹配目标字符串的边界 han\\b 这里说的字符串的边界指的是子串间有空格，或者是目标字符串的结束位置
+     *  \\B 匹配目标字符串的非边界 和\b的含义刚刚相反
+     */
+    @Test
+    void grammar05(){
+        String content = "123dada fad";
+//        String content = "hanshunping sphan nnhan";
+//        String regex ="^[0-9]+[a-z]*";//以至少1个数字开头，后接任意个小写字母的字符串
+//        String regex ="^\\d+[a-z]+$";//至少1个小写字母结尾的字符串
+        String regex ="a\\b";//匹配 边界的
+//        String regex ="a\\B";//匹配 非边界的
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            System.out.println("找到 ： "+matcher.group(0));
+        }
+    }
+
+    /**
+     * 非贪婪匹配
+     */
+    @Test
+    void grammar06(){
+        String content ="hello1231 sda";//默认是贪婪匹配
+        String regex ="\\d+?";//非贪婪匹配
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+        }
+    }
+    /**
+     * 常用分组:
+     *  pattern 非命名捕获。捕获匹配的子字符串。编号为零的第一个捕获是由整个正则表达式模式匹配的文本，其它捕获结果则根据左括号的顺序从1开始自动编号
+     *  (?<name>pattern) 命名捕获。将匹配的子字符串捕获到一个组名称或编号名称中。用于name 的字符串不能包含任何标点符号，并且不能以数字开头。可以使用单引号替代尖括号，例如（?'name'）
+     * 特别分组:
+     * (?:pattern) 匹配pattern但不捕获该匹配的子表达式，即它是一个非捕获匹配，不存储供以后使用的匹配。这对于用"or"字符（）组合模式部件的情况很有用
+     *     例如， 'industr（?∶y|ies）是比'industry|industries'更经济的表达式。
+     * (?=pattern) 它是一个非捕获匹配。例如，"Windows（?=95|98|NT|2000）'匹配"Windows 2000"中的"Windows"，但不匹配"Windows 3.1"中的"Windows"
+     * (?!pattern) 该表达式匹配不处于匹配pattern的字符串的起始点的搜索字符串。它是一个非捕获匹配。例如，"Windows（?!95|98|NT|2000）'
+     *  匹配"Windows 3.1"中的"Windows"，但不匹配"Windows 2000"中的"Windows"。
+     */
+    @Test
+    void group(){
+        String content ="dadakdjkjwxcada wwq21314 qwjql";
+        /*
+            非命名分组
+             1.通过group(0)匹配到字符串
+             2.通过group(1)匹配到字符串的第一组
+             3.通过group(2)匹配到字符串的第二组
+             ......
+           命名分组
+
+         */
+        //非命名分组
+//        String regex = "(\\d\\d)(\\d\\d)";//匹配四个数字
+        //命名分组(常用分组)
+//        String regex = "(?<h>\\d\\d)(?<g>\\d\\d)";//匹配四个数字
+
+        //非捕获 分组
+        content ="你好 啦啦啦撒的 的的确确 hello 今天好 ";
+        String regex ="你好|hello|的确";
+        //非捕获 一 ?: 二 ?=  三 ?!
+        regex = "(?:你|今天)好";
+        regex = "你(?=好)";
+//        regex = "(?!你)好";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+
+//        while (matcher.find()) {
+//            System.out.println("找到 ： "+matcher.group(0));
+//            System.out.println("找到第一组 ： "+matcher.group(1));
+//            System.out.println("找到第一组(通过组名) ： "+matcher.group("h"));
+//            System.out.println("找到第二组 ： "+matcher.group(2));
+//            System.out.println("找到第二组(通过组名) ： "+matcher.group("g"));
+//        }
+
         while (matcher.find()) {
             System.out.println("找到 ： "+matcher.group(0));
         }
