@@ -146,4 +146,64 @@ public class RegexExercise {
         content = Pattern.compile("(.)\\1+").matcher(content).replaceAll("$1");
         System.out.println(content);
     }
+
+
+    /**
+     * 验证电子邮件格式
+     */
+    @Test
+    void exercise_03(){
+        //验证电子邮件格式
+        //只能有一个@
+        //2.@前面是用户名，可以是a-z A-Z 0-9_-字符
+        //3.@后面是域名，并且域名只能是英文字母，比如 sohu.com或者 tsinghua.org.cn
+        String email ="179867_-aa7862@qq.ww.com";// ([A-z|\d|_|-]) \w
+        Pattern pattern = Pattern.compile("^([\\w|_|-])+@([a-z]+\\.)+c(om|n)$");
+        Matcher matcher = pattern.matcher(email);
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+        }
+    }
+
+    /**
+     * 验证是不是整数或者小数
+     */
+    @Test
+    void exercise_04(){
+        String number ="123 -345 34.89 -87.9 -0.01 0.45";
+        number ="0.98";
+        //考虑正数 负数
+        /*
+            先写简单表达式
+            根据实际拓展(考虑负) [-+]?(正数|负数)  (\.\d+)?小数 一次或者多次
+         */
+        Pattern pattern = Pattern.compile("^[-+]?([1-9](\\d)*|0?)(\\.\\d+)?$");
+        Matcher matcher = pattern.matcher(number);
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+        }
+    }
+
+
+    /**
+     * url 验证
+     */
+    @Test
+    void exercise_05(){
+        //https://stool.chinaz.com/tools/pagecode.aspx
+        //http://www.sohu.com:8080/abc/index.html
+        //https://www.yuque.com/wunian-xhpcz/slcgd6/lpdyc8
+        /*
+            协议
+            域名
+            端口
+            参数
+         */
+        String url="https://www.google.com/search?q=java8%E4%B8%8B%E8%BD%BD&oq=&aqs=chrome.1.69i59i450l8.24458233j0j7&sourceid=chrome&ie=UTF-8";
+        Pattern pattern = Pattern.compile("^((http|https)://)(\\w+\\.)+(\\w+)(:\\d+)?(/[\\w.\\-&=?%]+)*$");
+        Matcher matcher = pattern.matcher(url);
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+        }
+    }
 }
