@@ -80,4 +80,70 @@ public class RegexExercise {
             System.out.println("不符合");
         }
     }
+
+
+    /*
+        分组、捕获、反向引用(应用)
+        分组
+            我们可以用圆括号组成一个比较复杂的匹配模式，那么一个圆括号的部分我们可以看作是一个子表达式/一个分组
+         捕获
+            把正则表达式中子表达式/分组匹配的内容，保存到内存中以数字编号或显式命名的组里，方便后面引用，从左向右，以分组的左括号为标志，第一个出现的分组的组号为1，第二个为2，以此类推。组0代表的是整个正则式
+        反向引用
+           圆括号的内容被捕获后，可以在这个括号后被使用，从而写出一个比较实用的匹配模式，这个我们称为反向引用，这种引用既可以是在正则表达式内部，也可以是在正则表达式外部， 内部反向引用 \\分组号，外部反向引用 $分组号
+     */
+
+    /**
+     * 反向引用
+     */
+    @Test
+    void exercise_02(){
+        //1.要匹配两个连续的相同数字 (\\d)\\1
+        //2.要匹配五个连续的相同数字 (\\d)\\1{4}
+        //3.要匹配个位与千位相同，十位与百位相同的数5225，1551 (\\d)(\\d)\\2\\1
+
+        //请在字符串中检索商品编号，形式如∶12321-3339911这样的号码，要求满足前面是一个五位数，然后一个-号，然后是一个九位数，连续的每三位要相同
+
+        String content ="hello java tom11 smith12 jerry001 john1997 j8776 99999 88888 44444";
+        content = "12321-3339911";
+        String regex = "(\\d)\\1";//两个连续的相同数字
+        regex = "(\\d)\\1{4}";//五个连续的相同数字
+        regex ="(\\d)(\\d)\\2\\d";
+        regex = "\\d{5}-(\\d)\\1{2}(\\d)\\2(\\d)\\3";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            //default group(0)
+            System.out.println("find: "+matcher.group());
+        }
+    }
+
+    /**
+     * 结巴程序去重
+     */
+    @Test
+    void set(){
+        String content ="我....我要....学学学学....编程java!";
+//        String regex="\\.";//去除 . 号
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher matcher = pattern.matcher(content);
+//        content = matcher.replaceAll("");
+//        System.out.println(content);
+//        //去掉重复的字
+//        //使用 (.)\\1+ 匹配一到多
+//        //替换 $1 外部匹配
+//        regex="(.)\\1+";//分组的捕获内容记录到 $1
+//        pattern = Pattern.compile(regex);
+//        matcher = pattern.matcher(content);
+//        while (matcher.find()) {
+//            System.out.println("找到："+matcher.group());
+//        }
+//
+//        content = matcher.replaceAll("$1");
+//        System.out.println("2. "+content);
+
+        content=content.replaceAll("\\.","");
+        //使用一条语句
+        content = Pattern.compile("(.)\\1+").matcher(content).replaceAll("$1");
+        System.out.println(content);
+    }
 }

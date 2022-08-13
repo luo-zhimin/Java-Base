@@ -173,6 +173,7 @@ public class BasicGrammar {
             System.out.println(matcher.group());
         }
     }
+
     /**
      * 常用分组:
      *  pattern 非命名捕获。捕获匹配的子字符串。编号为零的第一个捕获是由整个正则表达式模式匹配的文本，其它捕获结果则根据左括号的顺序从1开始自动编号
