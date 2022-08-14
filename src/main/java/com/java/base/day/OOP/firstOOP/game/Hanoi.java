@@ -8,6 +8,10 @@
 
 package com.java.base.day.OOP.firstOOP.game;
 
+/**
+ * 汉诺塔 <br/><br/>
+ * <img width="450" height="418" src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1653580257293-f953709f-9b3c-4f31-84db-5fff03a3d2bd.png" alt="汉诺塔">
+ */
 public class Hanoi {
 
     public static void main(String[] args) {

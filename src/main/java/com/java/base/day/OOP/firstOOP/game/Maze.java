@@ -8,6 +8,10 @@
 
 package com.java.base.day.OOP.firstOOP.game;
 
+/**
+ * 老鼠找迷宫 <br/><br/>
+ * <img width="450" height="418" src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1653577460841-016afb50-5aba-4e5f-a3d6-a53d6bfc8a87.png" alt="老鼠找迷宫">
+ */
 public class Maze {
     public static void main(String[] args) {
         /*

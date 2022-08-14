@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -42,22 +43,23 @@ public class HorseChessBoard {
     private static boolean finished = false;//记录马儿是否结束
 
     public static void main(String[] args) {
-        int row = 5;
-        int column = 5;
+        //2行2列时间最长  25031
+        int row = 2;
+        int column = 2;
         long start = System.currentTimeMillis();
         traversalHorseChessBoard(chessBoard,row-1,column-1,1);
         long end = System.currentTimeMillis();
-        System.out.println("耗时 "+(end-start));
+        System.out.println("耗时 "+(end-start));//没有优化前1069  优化->13ms
         //输出
-        writeHorse(chessBoard);
+        writeHorse();
     }
 
 
     /**
-     * 输出当前棋盘情况 <br>
+     * 输出当前棋盘情况
      */
-    private static void writeHorse(int[][] chessBoard) {
-        for (int[] rows : chessBoard) {
+    private static void writeHorse() {
+        for (int[] rows : HorseChessBoard.chessBoard) {
             for (int step : rows) {
                 //马儿应该走的第几步
                 System.out.print(step + "\t");
@@ -66,7 +68,15 @@ public class HorseChessBoard {
         }
     }
 
-    //编写方法 获取当前位置 得到下面所有的所有的点
+    //编写方法 获取当前位置 得到下面所有的所有的点 -> 排序 小到大 优化思路：减少回溯的次数 (选择他节点位置少的先走)
+    private static void sort(List<Point> points){
+        points.sort(new Comparator<Point>() {
+            @Override
+            public int compare(Point o1, Point o2) {
+                return next(o1).size()-next(o2).size();
+            }
+        });
+    }
 
     /**
      * 当前位置图 <br>
@@ -128,11 +138,11 @@ public class HorseChessBoard {
     public static void traversalHorseChessBoard(int[][] chessBoard, int row, int column, int step) {
         //记录step -> chessBoard
         chessBoard[column][row] = step;
-//        writeHorse(chessBoard);
         //把这个位置记录已经访问 第几个点 下标 索引 ->(1,1) 1行1列 第一行的所有的点+第二行开始的点到现在位置的点的数 (6+1)
         visited[column * x + row] = true; //row * x + column
         //获取下一个位置下面所有的点
         List<Point> points = next(new Point(row,column));
+        sort(points);//排序
         //遍历
         while (CollectionUtils.isNotEmpty(points)) {
             //取出第一个位置 oldValue
