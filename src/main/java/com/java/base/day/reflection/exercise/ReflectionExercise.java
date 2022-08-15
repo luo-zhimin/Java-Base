@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -70,6 +71,40 @@ public class ReflectionExercise {
         createNewFile.invoke(file);
         System.out.println("successful create file by reflection");
     }
+
+
+    /**
+     * 获取指定的结构 方法 构造器
+     */
+    @Test
+    @SneakyThrows
+    void exercise02(){
+        Class<reflectionTest> reflectionTestClass = reflectionTest.class;
+        reflectionTest instance = reflectionTestClass.newInstance();
+        //获取指定的属性
+        Field name = reflectionTestClass.getDeclaredField("name");
+        //private need accessible true
+        name.setAccessible(true);
+        //clazz update name
+        name.set(instance,"clazz update name");
+        //获取对象的值
+        System.out.println("filed -> "+name.get(instance));
+        //获取指定的方法
+        Method declaredMethod = reflectionTestClass.getDeclaredMethod("getName");
+        Object invoke = declaredMethod.invoke(instance);
+        System.out.println("methods->  "+invoke);
+        //获取指定的构造器
+        Constructor<reflectionTest> declaredConstructor = reflectionTestClass.getDeclaredConstructor(String.class, Integer.class);
+        System.out.println("Constructor-> "+declaredConstructor);
+        //static or final static field or methods
+        Field staticFinalHobby = reflectionTestClass.getDeclaredField("address");
+        staticFinalHobby.setAccessible(true);
+        staticFinalHobby.set(instance,"clazz static final update address");
+        System.out.println(staticFinalHobby.get(instance));
+        //method
+        Method getStaticAge = reflectionTestClass.getDeclaredMethod("getStaticAge",int.class);
+        System.out.println(getStaticAge.invoke(instance,10));
+    }
 }
 @AllArgsConstructor
 @NoArgsConstructor
@@ -77,7 +112,19 @@ class reflectionTest{
     private String name="hello kitty";
     public Integer age = 10;
 
+    private static String address = "reflectionTest shanghai";
+
+    private final static String hobby="computer reflectionTest";
+
     public String getName() {
-        return name;
+        return name+" reflectionTest";
+    }
+
+    private String getAge(){
+        return age+" reflectionTest ";
+    }
+
+    static Integer getStaticAge(int age){
+        return age;
     }
 }

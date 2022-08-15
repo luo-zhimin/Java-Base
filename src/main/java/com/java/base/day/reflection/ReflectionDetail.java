@@ -60,6 +60,8 @@ public class ReflectionDetail {
         properties.load(Files.newInputStream(Paths.get("/Users/luozhimin/Desktop/Java/Java-Base/src/main/resources/test.properties")));
         String method = properties.getProperty("method");
         String classFullPath = properties.getProperty("classFullPath");
+        //classLoad 加载 properties对象
+        //ReflectionDetail.class.getClassLoader().getResourceAsStream("");
 
         //reflection
         Class<?> aClass = Class.forName(classFullPath);//加载 load class
