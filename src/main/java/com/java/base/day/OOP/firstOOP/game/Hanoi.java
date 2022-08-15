@@ -10,7 +10,8 @@ package com.java.base.day.OOP.firstOOP.game;
 
 /**
  * 汉诺塔 <br/><br/>
- * <img width="450" height="418" src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1653580257293-f953709f-9b3c-4f31-84db-5fff03a3d2bd.png" alt="汉诺塔">
+ * <img width="450" height="418" src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1653580257293-f953709f-9b3c-4f31-84db-5fff03a3d2bd.png" alt="汉诺塔"><br/>
+ * @see <a href="https://zhangxiaoleiwk.gitee.io/h.html">...</a>
  */
 public class Hanoi {
 
@@ -26,7 +27,13 @@ public class Hanoi {
 
 class HH {
 
-    //number 多少个盘子 a b c 柱子
+    /**
+     * 打印的number是第几个盘子移动的过程
+     * @param number 几个盘子
+     * @param a 柱子
+     * @param b 柱子
+     * @param c 柱子
+     */
     public void move(int number,char a,char b,char c){
         //只有一个盘子
         if (number == 1){
@@ -34,11 +41,11 @@ class HH {
         }else {
             //多个盘子 可以看成俩个 上面一个和下面所有
             //1，先移动上面所有的盘子到b 借助c
-            move(number-1,a,c,b);
+            move(number-1,a,c,b);//a->b(借用c)
             //2.最下面直接到到c
             System.out.println(number+"-"+a+"->"+c);
             //3.在把b上面所有的盘子移动到b 借助a
-            move(number-1,b,a,c);
+            move(number-1,b,a,c);//b->c(借用a)
         }
     }
 }

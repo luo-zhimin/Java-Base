@@ -31,13 +31,13 @@ public class Maze {
 
 class TT {
     //找迷宫路径 map 地图 x j 老鼠的位置 初始before(1,1)  (6,5)over
-    //0 default 1 error 2 success 3 run error  over == 2 success
+    //(0 default) (1 error) (2 success) (3 run error)  (over == 2 success)
     //老鼠找路的策略 下 右 上 左
     int sum = 0 ;
     public boolean findRoad(int[][] map, int x, int j) {
         sum ++;
         if (map[6][5] == 2) {
-            System.out.println("sum="+sum);
+            System.out.println("find road successful use sum= "+sum);
             return true;
         } else {
             if (map[x][j] == 0) {
@@ -97,6 +97,10 @@ class TT {
         }
     }
 
+    /**
+     * 初始化障碍物(一般+特殊处理)
+     * @param maze map
+     */
     public void marge(int[][] maze) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
