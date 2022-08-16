@@ -74,7 +74,7 @@ public class LambdaDetail {
             语法格式五 lambda 需要俩个或者俩个以上的参数时 多条执行语句 并且可以有返回值
             语法格式六 lambda 体只有一条语句时 return 与 大括号 都可以省略
          lambda表达式的本质
-            作为接口 实例对象存在
+            作为函数式接口 实例对象存在
      */
     @Test
     void lambda_grammar(){
