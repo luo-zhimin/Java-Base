@@ -78,7 +78,7 @@ class ProxyFactory {
         /*
                  newProxyInstance(ClassLoader loader,类加载器
                                   Class<?>[] interfaces, 该类实现的所有的接口
-                                  InvocationHandler h)
+                                  InvocationHandler h) 调用处理程序 invoke 真正执行动态代理效果
          */
         MyInvocationHandler handler = new MyInvocationHandler();
         handler.bind(object);
@@ -97,7 +97,7 @@ class MyInvocationHandler implements InvocationHandler{
     //将被代理类要执行的方法 声明在invoke里面
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        //method 代理类对象调用的方法，此方法被代理类对象调用方法 代理类->同时调用
+        //method 代理类对象调用的方法，此方法也就作为 被代理类对象要调用的方法
         // object 被代理的对象
         if (args!=null && args.length>0) {
             System.out.println(Arrays.toString(args));
