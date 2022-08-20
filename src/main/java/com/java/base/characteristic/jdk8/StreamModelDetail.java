@@ -7,18 +7,20 @@ package com.java.base.characteristic.jdk8;
 import com.java.base.characteristic.jdk8.entry.User;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
  * Created by IntelliJ IDEA.
- * stream API
+ * stream API -- 中间操作
  * @Author : 志敏.罗
  * @create 2022/8/16 23:28
  */
-public class StreamDetail {
+public class StreamModelDetail {
 
     /*
         新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中 提供了一种
@@ -37,7 +39,11 @@ public class StreamDetail {
 
         中间操作
             筛选+切片(过滤-截断-跳过-筛选)
+            映射(map(=>list.add())--flatMap(=>list.addAll()))
+            排序(sort() -- sort(Comparator))
 
+        终止操作
+            匹配与查找(allMatch()--anyMatch()--noneMatch()--findFirst()--findAny())
      */
 
 
@@ -81,7 +87,7 @@ public class StreamDetail {
     }
 
 
-    //-----------Stream 中间操作
+    //-----------Stream 中间操作  筛选+切片(过滤-截断-跳过-筛选)
     @Test
     void  test_05(){
         List<User> users = User.getUsers();
@@ -101,6 +107,63 @@ public class StreamDetail {
         //添加重复数据
         users.add(new User(3,"杨超越","北京"));
         users.stream().distinct().forEach(System.out::println);
+    }
 
+    /**
+     * 映射
+     */
+    @Test
+    void  test_06(){
+        //
+        List<String> strings = Arrays.asList("aa", "bb", "cc", "dd");
+        
+        strings.stream().map(s -> s.toUpperCase(Locale.ROOT)).forEach(System.out::println);
+        System.out.println();
+        //获取用户长度大于3的用户
+        List<User> users = User.getUsers();
+        //一
+        users.stream().filter(user -> user.getName().length()>=3).forEach(System.out::println);
+        System.out.println();
+        //二
+        users.stream().map(User::getName).filter(n->n.length()>=3).forEach(System.out::println);
+        System.out.println();
+        //
+        Stream<Stream<Character>> streamStream = strings.stream().map(this::fromStringToStream);
+        streamStream.forEach(s->{
+            s.forEach(System.out::println);
+        });
+        System.out.println();
+        /*
+            flatMap 接收一个函数作为参数 将流中的每个值换成另一个流，然后所有的流连接成一个流
+         */
+        Stream<Character> characterStream = strings.stream().flatMap(this::fromStringToStream);
+        characterStream.forEach(System.out::println);
+
+    }
+    
+    //转换 string -> Character -> Stream<Character>
+    private Stream<Character> fromStringToStream(String s){
+        ArrayList<Character> list = new ArrayList<>();
+        for (char c : s.toCharArray()) {
+            list.add(c);
+        }
+        return list.stream();
+    }
+
+    /**
+     * 排序
+     */
+    @Test
+    void  test_07(){
+        List<Integer> integers = Arrays.asList(1, 3, 2, 44, 22, 111, 32);
+        //sorted
+        integers.stream().sorted().forEach(System.out::println);
+        System.out.println();
+        List<User> users = User.getUsers();
+        //com.java.base.characteristic.jdk8.entry.User cannot be cast to java.lang.Comparable 需要实现 Comparable
+//        users.stream().sorted().forEach(System.out::println);
+        //sorted(Comparator)
+        //定制排序
+        users.stream().sorted((o1,o2)->o1.getName().length()-o2.getName().length()).forEach(System.out::println);
     }
 }
