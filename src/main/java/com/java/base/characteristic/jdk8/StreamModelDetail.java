@@ -44,6 +44,8 @@ public class StreamModelDetail {
 
         终止操作
             匹配与查找(allMatch()--anyMatch()--noneMatch()--findFirst()--findAny())
+            归约(reduce)
+            收集(collect(Collector)=>List/Set/Map===>Collectors)
      */
 
 
