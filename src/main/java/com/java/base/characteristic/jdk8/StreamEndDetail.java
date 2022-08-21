@@ -1,8 +1,8 @@
 /*
- * Copyright (c) luoZhiMin 2022.8.20.10.17.13
+ * Copyright (c) luoZhiMin 2022.8.21.2.51.14
  */
 
-package com.java.base;
+package com.java.base.characteristic.jdk8;
 
 import com.java.base.characteristic.jdk8.entry.User;
 import org.junit.jupiter.api.Test;
