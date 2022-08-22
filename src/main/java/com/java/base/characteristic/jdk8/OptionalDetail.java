@@ -71,6 +71,20 @@ public class OptionalDetail {
 //        return user.getName();
         return Optional.ofNullable(user.getName()).orElse("");
     }
+
+    @Test
+    void test_03(){
+        String hello ="hello";
+        //of要求对象不可以为空
+        Optional<String> optional = Optional.of(hello);
+        System.out.println(optional.get());
+        System.out.println();
+        //ofNullable(T t)封装数据赋值给Optional 不要求参数非空
+        Optional<String> stringOptional = Optional.ofNullable(hello);
+        //如果非空 则返回t1
+        String hi = stringOptional.orElse("hi");
+        System.out.println(hi);
+    }
 }
 
 
