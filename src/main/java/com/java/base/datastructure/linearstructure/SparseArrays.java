@@ -7,8 +7,13 @@ package com.java.base.datastructure.linearstructure;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,6 +39,8 @@ public class SparseArrays {
         稀疏数组 (行=>变量值+1 列=3)
             row     col     value
             行       列   多少个有效值
+
+            用稀疏数组保存数据，主要是为了节省磁盘空间，优化 IO 读写性能
      */
 
     /**
@@ -45,6 +52,11 @@ public class SparseArrays {
      * 列
      */
     private static final int column = 11;
+
+    /**
+     * 存储路径
+     */
+    private static final String fileName ="/Users/luozhimin/Desktop/File/daily";
 
     /*
         在写完的基础上 将稀疏数组保存到磁盘上，比如 map.data
@@ -75,9 +87,15 @@ public class SparseArrays {
         //为稀疏数组赋值
         transformSparseArrays(chessBoards,sparseArray);
         //可以保存到磁盘
-        System.out.println("稀疏数组赋值完成");
+        System.out.println("稀疏数组赋值完成 存储磁盘开始");
+        saveSparseArraysToFile(sparseArray);
+        System.out.println("磁盘读取");
+        sparseArray = readFile();
+        System.out.println("读取完成 输出");
         showChessBoards(sparseArray);
+
         System.out.println("准备还原二维数组");
+        //可以读取磁盘
         //稀疏数组第一行
         int[][] newChessBoards = new int[sparseArray[0][0]][sparseArray[0][1]];
         //赋值
@@ -154,15 +172,96 @@ public class SparseArrays {
 
 
     @SneakyThrows
-    private void saveSparseArraysToFile(int [][] sparseArrays,String fileName){
+    private void saveSparseArraysToFile(int[][] sparseArrays){
         //判断目录是否存在 去创建
         File file = new File(fileName);
         if (!file.exists()) {
             file.mkdirs();
         }
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-//        fileOutputStream.write(sparseArrays);
-        fileOutputStream.flush();
-        fileOutputStream.close();
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(Paths.get(fileName + "/map.data")));
+        //int 数组 准备转换 byte 数组
+        for (int[] chessBoard : sparseArrays) {
+            for (int row : chessBoard) {
+                writer.write(row + "\t");
+            }
+            writer.write("\n");
+        }
+        //可以深度转换 deep
+
+        writer.flush();
+        writer.close();
+    }
+
+    @SneakyThrows
+    private int[][] readFile(){
+        File file = new File(fileName + "/map.data");
+        if (!file.exists()) {
+            //不存在返回一个空数组
+            return new int[][]{};
+        }
+
+        InputStreamReader reader = new InputStreamReader(Files.newInputStream(Paths.get(fileName + "/map.data")));
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String line;
+        int[][] sparseArrays = null;
+        int count = 0;
+        while ((line = bufferedReader.readLine())!=null){
+            if (count==0){
+                sparseArrays = new int[Integer.parseInt(line.split("\t")[2])+1][3];
+            }
+            sparseArrays[count][0] = Integer.parseInt(line.split("\t")[0]);
+            sparseArrays[count][1] = Integer.parseInt(line.split("\t")[1]);
+            sparseArrays[count][2] = Integer.parseInt(line.split("\t")[2]);
+            ++count;
+        }
+        return sparseArrays;
+    }
+
+    private byte[] intArrayToByteArray(int[][] numberArray){
+        //开辟byte数组  int 4个字节 byte 1个字节 无符号255
+
+        //位运算
+//        List<byte[]> byteList = new ArrayList<>();
+//        for (int[] ints : numberArray) {
+//            byte[] bytes = new byte[ints.length*4];
+//            int curing = 0;
+//            for (int j = 0, k = 0; j < ints.length; j++, k += 4) {
+//                curing = ints[j];
+//                bytes[k] = (byte) ((curing >> 24) & 0b11111111);//右移4位，与1作与运算
+//                bytes[k + 1] = (byte) ((curing >> 16) & 0b11111111);
+//                bytes[k + 2] = (byte) ((curing >> 8) & 0b11111111);
+//                bytes[k + 3] = (byte) ((curing) & 0b11111111);
+//            }
+//            System.out.println(Arrays.toString(bytes));
+//            byteList.add(bytes);
+//        }
+        //需要开辟新的数组 复制 读取 二维数组
+//        byteList.forEach(b-> System.out.println(Arrays.toString(b)));
+        //api 运算 对象地址
+        return Arrays.toString(numberArray).getBytes();
+    }
+
+
+    /**
+     * 测试数组转换
+     */
+    @Test
+    void intArrayToByteArray(){
+        int[][] array = new int[4][4];
+        array[0][0] = 2;
+        array[1][0] = 3;
+        System.out.println(array.length);
+//        showChessBoards(array);
+//        System.out.println(Arrays.toString(Arrays.deepToString(array).getBytes(StandardCharsets.UTF_8)));
+        byte[] bytes = intArrayToByteArray(array);
+        System.out.println(Arrays.toString(bytes));
+        for (int[] ints : array) {
+            for (int anInt : ints) {
+                byte byteValue = (byte) anInt;
+                System.out.print(byteValue+"\t");
+            }
+            System.out.println();
+        }
+        System.out.println(0xff);//1515 f+f*16
     }
 }
