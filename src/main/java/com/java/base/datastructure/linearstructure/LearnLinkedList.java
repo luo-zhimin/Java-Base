@@ -46,11 +46,26 @@ public class LearnLinkedList {
 
         //按照编号像加
         singleLinkedList.sortNoAddNode(node3);
-        singleLinkedList.sortNoAddNode(node3);
+        singleLinkedList.sortNoAddNode(node2);
         singleLinkedList.sortNoAddNode(node1);
+
+        singleLinkedList.showNode();
+
+        System.out.println();
+
+        //修改节点
+        singleLinkedList.update(new SingleLinkedList.HeroNode(4,"关羽","关二爷"));
 
         //显示
         singleLinkedList.showNode();
+
+        System.out.println();
+
+        //删除节点
+        singleLinkedList.delete(1);
+
+        singleLinkedList.showNode();
+
     }
 
 }
@@ -123,10 +138,77 @@ class SingleLinkedList{
             return;
         }
 
-        //插入列表
+        //插入列表 插入下一个节点中
         node.next = temp.next;
         temp.next=node;
     }
+
+    /**
+     * 修改节点 编号不可以修改
+     * @param node 节点
+     */
+    public void update(HeroNode node){
+        if (head.next==null){
+            System.out.println("链表为空");
+            return;
+        }
+        //根据编号 找到修改的节点
+        HeroNode temp = head.next;
+        boolean flag = false;//表示是否找到
+        while (true){
+            //链表遍历完
+            if (temp==null){
+                break;
+            }
+            if (temp.no==node.no){
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        //找到
+        if (flag){
+            temp.name = node.name;
+            temp.nickedName = node.nickedName;
+            return;
+        }
+
+        System.out.println("没有找到编号为"+node.no+"的节点\n");
+    }
+
+    /**
+     * 删除节点
+     * 找到需要删除的前一个节点
+     * 改next的指向 (他(待删除)的下一个节点)
+     * @param no 编号
+     */
+    public void delete(int no){
+        //被删除的节点 无引用 会被gc回收掉
+        HeroNode temp = head;
+        boolean flag = false;//表示是否找到
+        while (true) {
+            //链表遍历完
+            if (temp.next == null) {
+                break;
+            }
+            if (temp.next.no==no){
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        //找到
+        if (flag){
+            //改next的指向 (他(待删除)的下一个节点) 把改删除节点的引用改掉
+            temp.next = temp.next.next;
+            return;
+        }
+
+        System.out.println("无法删除，没有找到编号为"+no+"的节点\n");
+    }
+
 
     /**
      * 显示所有的元素
