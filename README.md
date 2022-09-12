@@ -1,6 +1,6 @@
 ### Java-Base
-
-    java 变量、结构控制、多线程、集合、泛型、反射、file、socket、mysql....
+- java 变量、结构控制、多线程、集合、泛型、反射、file、socket、mysql....
+- 数据结构(dataStructure)--[数组 队列(数组模拟) 链表]
 
 <hr>
     
@@ -18,6 +18,7 @@
   > 5.满汉楼（文本）（mysql->druid+apache utils）-> manHanBuilding <br><br>
   > 6.regex 新增regex参考docx文档(2022-08-11) resource->docx <br><br>
   > 7.java8(新特性) characteristic->(lambda/function/方法引用/stream/optional/日期API...) <br><br>
+  > 8.数据结构(dataStructure) <br><br>
 
 [//]: # (  > 8.2022/08/23数据结构算法开始 )
 
