@@ -68,6 +68,18 @@ public class LearnLinkedList {
 
     }
 
+    @Test
+    void groundTest(){
+        //创建节点
+        SingleLinkedList.HeroNode node1 = new SingleLinkedList.HeroNode(1,"宋江","及时雨");
+        SingleLinkedList.HeroNode node2 = new SingleLinkedList.HeroNode(2,"宋江","及时雨");
+        //加入
+        new SingleLinkedList().add(node1);
+        new SingleLinkedList().add(node2);
+
+        int liveLength = InterviewQuestions.daily.getLiveLength();
+        System.out.println("有效节点 "+ liveLength+" 个");
+    }
 }
 
 /**
@@ -83,8 +95,7 @@ class SingleLinkedList{
      */
 
     //初始化一个头节点 不存放具体数据
-    private HeroNode head = new HeroNode(0,"","");
-
+    public static HeroNode head = new HeroNode(0,"","");
 
     /**
      * 添加节点到单向列表--第一种方法在添加英雄时，直接添加到链表的尾部
@@ -265,4 +276,45 @@ class SingleLinkedList{
                     '}';
         }
     }
+}
+
+/**
+ * 面试题
+ */
+class InterviewQuestions{
+
+    /**
+     * 平常  求单链表中有效节点的个数 (如果是带头结点的链表，需求不统计头节点)
+     */
+    static class daily {
+
+        /**
+         * 带头节点链表统计有效节点个数
+         * @return 有效个数
+         */
+        public static int getLiveLength() {
+
+            int length = 0;
+            SingleLinkedList.HeroNode temp = SingleLinkedList.head;
+            while (true) {
+                //空链表
+                if (temp.next == null) {
+                    break;
+                }
+                if (temp.next != null) {
+                    length++;
+                }
+                temp = temp.next;
+            }
+            return length;
+        }
+    }
+
+    /**
+     * 百度
+     */
+    static class BaiDu{
+
+    }
+
 }
