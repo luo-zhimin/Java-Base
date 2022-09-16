@@ -34,20 +34,18 @@ public class LearnLinkedList {
     @Test
     void testSingLinkedList(){
         //创建节点
-        SingleLinkedList.HeroNode node1 = new SingleLinkedList.HeroNode(1,"宋江","及时雨");
-        SingleLinkedList.HeroNode node2 = new SingleLinkedList.HeroNode(2,"吴用","智多星");
-        SingleLinkedList.HeroNode node3 = new SingleLinkedList.HeroNode(3,"林冲","豹子头");
+        SingleLinkedList singleLinkedList = singleLinkedList();
 
         //创建列表 -> 加入节点
-        SingleLinkedList singleLinkedList = new SingleLinkedList();
+//        SingleLinkedList singleLinkedList = new SingleLinkedList();
 //        singleLinkedList.add(node1);
 //        singleLinkedList.add(node2);
 //        singleLinkedList.add(node3);
 
         //按照编号像加
-        singleLinkedList.sortNoAddNode(node3);
-        singleLinkedList.sortNoAddNode(node2);
-        singleLinkedList.sortNoAddNode(node1);
+//        singleLinkedList.sortNoAddNode(node3);
+//        singleLinkedList.sortNoAddNode(node2);
+//        singleLinkedList.sortNoAddNode(node1);
 
         singleLinkedList.showNode();
 
@@ -80,6 +78,23 @@ public class LearnLinkedList {
         int liveLength = InterviewQuestions.daily.getLiveLength();
         System.out.println("有效节点 "+ liveLength+" 个");
     }
+
+    @Test
+    void baidu(){
+        singleLinkedList();
+        System.out.println(InterviewQuestions.XinLang.findLastNodeByIndex(SingleLinkedList.getHead(),3));
+    }
+
+    public static SingleLinkedList singleLinkedList (){
+        SingleLinkedList.HeroNode node1 = new SingleLinkedList.HeroNode(1,"宋江","及时雨");
+        SingleLinkedList.HeroNode node2 = new SingleLinkedList.HeroNode(2,"吴用","智多星");
+        SingleLinkedList.HeroNode node3 = new SingleLinkedList.HeroNode(3,"林冲","豹子头");
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        singleLinkedList.sortNoAddNode(node3);
+        singleLinkedList.sortNoAddNode(node2);
+        singleLinkedList.sortNoAddNode(node1);
+        return singleLinkedList;
+    }
 }
 
 /**
@@ -96,6 +111,10 @@ class SingleLinkedList{
 
     //初始化一个头节点 不存放具体数据
     public static HeroNode head = new HeroNode(0,"","");
+
+    public static HeroNode getHead() {
+        return head;
+    }
 
     /**
      * 添加节点到单向列表--第一种方法在添加英雄时，直接添加到链表的尾部
@@ -284,7 +303,8 @@ class SingleLinkedList{
 class InterviewQuestions{
 
     /**
-     * 平常  求单链表中有效节点的个数 (如果是带头结点的链表，需求不统计头节点)
+     * 平常 <br>
+     * 求单链表中有效节点的个数 (如果是带头结点的链表，需求不统计头节点)
      */
     static class daily {
 
@@ -315,6 +335,39 @@ class InterviewQuestions{
      */
     static class BaiDu{
 
+    }
+
+    /**
+     * 新浪<br>
+     * 查找单链表中的倒数第 k 个结点
+     */
+    static class XinLang{
+        /*
+            接收head节点 和 index(倒数第n个节点)
+            先把链表重头到尾 遍历
+            先得到有效节点个数
+            遍历 查找[size(有效数组长度)-index]
+         */
+        public static SingleLinkedList.HeroNode findLastNodeByIndex(SingleLinkedList.HeroNode node, int index){
+            //空链表
+            if (node.next==null){
+                return null;
+            }
+            //第一个遍历得到列表的长度(节点的个数)
+            int size = daily.getLiveLength();
+            //第二次遍历到 size-index 就是倒数第n个节点
+            //check index
+            if (index<=0 || index>size){
+                System.out.println("index="+index+" size="+size);
+                return null;
+            }
+            //辅助变量
+            SingleLinkedList.HeroNode temp = node.next;
+            for (int i = 0; i < size-index; i++) {
+                temp = temp.next;
+            }
+            return temp;
+        }
     }
 
 }
