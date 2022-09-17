@@ -85,6 +85,16 @@ public class LearnLinkedList {
         System.out.println(InterviewQuestions.XinLang.findLastNodeByIndex(SingleLinkedList.getHead(),3));
     }
 
+    @Test
+    void tencent(){
+        SingleLinkedList singleLinkedList = singleLinkedList();
+        System.out.println("source~~~");
+        singleLinkedList.showNode();
+        System.out.println("reserve~~~");
+        InterviewQuestions.Tencent.reversal(SingleLinkedList.getHead());
+        singleLinkedList.showNode();
+    }
+
     public static SingleLinkedList singleLinkedList (){
         SingleLinkedList.HeroNode node1 = new SingleLinkedList.HeroNode(1,"宋江","及时雨");
         SingleLinkedList.HeroNode node2 = new SingleLinkedList.HeroNode(2,"吴用","智多星");
@@ -370,4 +380,41 @@ class InterviewQuestions{
         }
     }
 
+    /**
+     * 腾讯 <br>
+     * 单链表反转
+     */
+    static class Tencent{
+
+        /**
+         * 链表反转
+         * @param headNode 头节点 <br><br>
+         * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1663411809969-bd84850d-2fd4-4dad-a236-3d1bd3c4fcd8.png">
+         */
+        public static void reversal(SingleLinkedList.HeroNode headNode){
+            //如果是空链表 或者 链表只有一个节点不需要反转
+            if (headNode.next==null || headNode.next.next==null){
+                return;
+            }
+            //定义一个辅助变量 来反转 原来的链表
+            SingleLinkedList.HeroNode currentNode = headNode.next;
+            //指向当前节点的下个节点 (单链表) 不然节点就会断链 currentNode
+            SingleLinkedList.HeroNode next = null;
+            //定义一个反转节点
+            SingleLinkedList.HeroNode reverseNode = new SingleLinkedList.HeroNode(0, "", "");
+            //遍历原始节点 从头到尾 把节点从currentNode里面摘出 放到 reverseNode的最前端 需要节点关联
+            while (currentNode!=null){
+                //临时保留currentNode的当前节点的下一个节点
+                next = currentNode.next;
+                //将currentNode的下个节点指向 新的链表的最前端
+                currentNode.next = reverseNode.next; // 反转
+                //将current连接到新的链表上 !!!!成环
+                reverseNode.next = currentNode;
+                //后移动
+                currentNode = next;
+            }
+            //连接 将 head.next 指向 reverse.next
+            headNode.next = reverseNode.next;
+        }
+    }
 }
