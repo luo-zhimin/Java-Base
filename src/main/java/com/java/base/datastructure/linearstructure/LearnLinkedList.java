@@ -6,6 +6,8 @@ package com.java.base.datastructure.linearstructure;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Stack;
+
 /**
  * Created by IntelliJ IDEA.
  * 线性结构 - 链表
@@ -63,24 +65,32 @@ public class LearnLinkedList {
         singleLinkedList.delete(1);
 
         singleLinkedList.showNode();
-
     }
 
     @Test
     void groundTest(){
         //创建节点
-        SingleLinkedList.HeroNode node1 = new SingleLinkedList.HeroNode(1,"宋江","及时雨");
-        SingleLinkedList.HeroNode node2 = new SingleLinkedList.HeroNode(2,"宋江","及时雨");
+        SingleLinkedList.HeroNode node1 = new SingleLinkedList.HeroNode(4,"孙悟空","齐天大圣");
+        SingleLinkedList.HeroNode node2 = new SingleLinkedList.HeroNode(5,"猪八戒","天蓬元帅");
         //加入
-        new SingleLinkedList().add(node1);
-        new SingleLinkedList().add(node2);
+        SingleLinkedList firstNode = new SingleLinkedList();
+        firstNode.add(node1);
+        firstNode.add(node2);
 
         int liveLength = InterviewQuestions.daily.getLiveLength();
         System.out.println("有效节点 "+ liveLength+" 个");
+
+        SingleLinkedList secondNode = singleLinkedList();
+
+        firstNode.node();
+        System.out.println();
+        secondNode.node();
+        //最好不要用头节点 自己 返回一个节点 不要使用 静态 共享数据
+        InterviewQuestions.daily.margeNode(firstNode.head, secondNode.head);
     }
 
     @Test
-    void baidu(){
+    void xinLang(){
         singleLinkedList();
         System.out.println(InterviewQuestions.XinLang.findLastNodeByIndex(SingleLinkedList.getHead(),3));
     }
@@ -93,6 +103,13 @@ public class LearnLinkedList {
         System.out.println("reserve~~~");
         InterviewQuestions.Tencent.reversal(SingleLinkedList.getHead());
         singleLinkedList.showNode();
+    }
+
+    @Test
+    void baidu(){
+        singleLinkedList();
+        //stack 特点 先进后出
+        InterviewQuestions.BaiDu.showReverseNodes(SingleLinkedList.getHead());
     }
 
     public static SingleLinkedList singleLinkedList (){
@@ -270,6 +287,9 @@ class SingleLinkedList{
         }
     }
 
+    public HeroNode node(){
+        return getHead();
+    }
 
     /**
      * 定义节点 每一个HeroNode对象 就是一个节点
@@ -338,13 +358,73 @@ class InterviewQuestions{
             }
             return length;
         }
+
+        public static void margeNode(SingleLinkedList.HeroNode firstNode, SingleLinkedList.HeroNode secondNode){
+            //合并两个有序的单链表，合并之后的链表依然有序
+            //先合并 在排序
+            SingleLinkedList.HeroNode tempNode = firstNode.next;
+            while (true){
+                if (tempNode.next==null) {
+                    break;
+                }
+                tempNode = tempNode.next;
+            }
+            tempNode.next = secondNode.next;
+            System.out.println();
+            //sort
+            while (true) {
+                if (tempNode.next ==null){break;}
+                System.out.println(tempNode);
+                tempNode = tempNode.next;
+            }
+        }
     }
 
     /**
-     * 百度
+     * 百度 <br>
+     * 从尾到头打印单链表【百度，要求方式1：反向遍历(反转+遍历[反转会破坏原来的数据结构])。方式2：Stack栈(先进后出)】
      */
     static class BaiDu{
+        //方式一：(反向遍历)反转 + 遍历 ==> reverse + show
+        //二 栈
+        public static void showReverseNodes(SingleLinkedList.HeroNode node){
+            //空链表
+            if (node.next==null){
+                return;
+            }
+            //创建一个栈 将各个节点加入栈中
+            Stack<SingleLinkedList.HeroNode> heroNodeStack = new Stack<>();
+            SingleLinkedList.HeroNode currentNode = node.next;
+            //将链表的所有节点压入栈中
+            while (currentNode!=null){
+                heroNodeStack.push(currentNode);
+                currentNode = currentNode.next;
+            }
+            //出栈
+            while (heroNodeStack.size()>0){
+                System.out.println(heroNodeStack.pop());
+            }
+        }
 
+        /**
+         * Stack 测试
+         */
+        static class StackDemo{
+
+            public static void main(String[] args) {
+                Stack<String> stack = new Stack<>();
+                //入栈
+                stack.add("jack");
+                stack.add("john");
+                stack.add("switch");
+
+                //出栈
+                while (stack.size()>0){
+                    //pop 就是将栈顶取出
+                    System.out.println(stack.pop());
+                }
+            }
+        }
     }
 
     /**
@@ -357,6 +437,13 @@ class InterviewQuestions{
             先把链表重头到尾 遍历
             先得到有效节点个数
             遍历 查找[size(有效数组长度)-index]
+         */
+
+        /**
+         * 查找倒数的第n个节点
+         * @param node 头节点
+         * @param index 找第几个
+         * @return 找到的节点
          */
         public static SingleLinkedList.HeroNode findLastNodeByIndex(SingleLinkedList.HeroNode node, int index){
             //空链表
