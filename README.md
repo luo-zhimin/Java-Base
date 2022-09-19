@@ -1,6 +1,15 @@
 ### Java-Base
 - java 变量、结构控制、多线程、集合、泛型、反射、file、socket、mysql....
-- 数据结构(dataStructure)--[数组 队列(数组模拟) 链表]
+- 数据结构(dataStructure)
+    - 数组
+        - 稀疏数组
+    - 队列
+        - 数组模拟 
+    - 链表
+        - 单链表
+        - 双向链表
+        - 单向环形链表
+        
 
 <hr>
     
