@@ -144,5 +144,14 @@ public class LearnLinkedList {
         doubleLinkedList.sortNoAddNode(node1);
         doubleLinkedList.showDoubleNodes();
     }
+
+    @Test
+    void JosephTest(){
+        SingleRingLinkedList singleRingLinkedList = new SingleRingLinkedList();
+        //加入5个节点
+        singleRingLinkedList.add(50);
+        //show
+        singleRingLinkedList.showChildren();
+    }
 }
 
