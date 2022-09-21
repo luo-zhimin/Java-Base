@@ -105,9 +105,6 @@ public class LearnLinkedList {
         return singleLinkedList;
     }
 
-
-    //------- 双链表
-
     @Test
     void doubleLinkedListTest(){
         System.out.println("双向链表测试～～");
@@ -149,9 +146,14 @@ public class LearnLinkedList {
     void JosephTest(){
         SingleRingLinkedList singleRingLinkedList = new SingleRingLinkedList();
         //加入5个节点
-        singleRingLinkedList.add(50);
+        singleRingLinkedList.add(5);
         //show
         singleRingLinkedList.showChildren();
+
+        System.out.println();
+
+        //出圈
+        singleRingLinkedList.outOfLoop(1,2,5);
     }
 }
 
