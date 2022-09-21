@@ -5,7 +5,8 @@
 package com.java.base.datastructure.linearstructure.stack;
 
 import lombok.Data;
-import org.junit.jupiter.api.Test;
+
+import java.util.Scanner;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,7 +19,7 @@ public class StackDetail {
     /*
         介绍
             栈的英文为(stack)
-            栈是一个先入后出(FILO-First In Last Out)的有序列表。
+            栈是一个 先入后出 (FILO-First In Last Out)的有序列表。
             栈(stack)是限制线性表中元素的插入和删除只能在线性表的同一端进行的一种特殊线性表。允许插入和删除的 一端，为变化的一端，称为栈顶(Top)，另一端为固定的一端，称为栈底(Bottom)。
             根据栈的定义可知，最先放入栈中元素在栈底，最后放入的元素在栈顶，而删除元素刚好相反，最后放入的元 素最先删除，最先放入的元素最后删除
             图解方式说明出栈(pop)和入栈(push)的概念
@@ -36,9 +37,97 @@ public class StackDetail {
      */
     public void stackPopOrPush(){}
 
-    @Test
-    void testArrayStack(){
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void testArrayStack(){
         System.out.println("数组模拟栈测试～");
+        //创建一个栈
+        ArraySimulationStack stack = new ArraySimulationStack(4);
+        String key ="";
+        boolean loop = true;
+        while (loop){
+            System.out.println("show：显示栈");
+            System.out.println("exit：退出栈");
+            System.out.println("push：入栈");
+            System.out.println("pop：出栈");
+            System.out.print("请输入你的选择：");
+            key = scanner.next();
+            switch (key){
+                case "show":
+                    try {
+                        stack.showStack();
+                    } catch (Exception e) {
+                        System.out.printf("message[%s]\n",e.getMessage());
+                    }
+                    break;
+                case "push":
+                    System.out.print("请输入一个数：");
+                    int value = scanner.nextInt();
+                    stack.push(value);
+                    break;
+                case "pop":
+                    try {
+                        int pop = stack.pop();
+                        System.out.printf("出栈的数据%d\n", pop);
+                    } catch (Exception e) {
+                        System.out.printf("message[%s]\n",e.getMessage());
+                    }
+                    break;
+                case "exit":
+                    loop = false;
+                    System.out.println("程序退出～");
+                    break;
+                default:
+                    System.out.println("类型无处理");
+                    break;
+            }
+        }
+    }
+
+
+    public static void testLinkedListStack(){
+        System.out.println("链表模拟栈测试～");
+        //创建一个栈
+        LinkedSimulationStack stack = new LinkedSimulationStack();
+        String key ="";
+        boolean loop = true;
+        while (loop){
+            System.out.println("show：显示栈");
+            System.out.println("exit：退出栈");
+            System.out.println("push：入栈");
+            System.out.println("pop：出栈");
+            System.out.print("请输入你的选择：");
+            key = scanner.next();
+            switch (key){
+                case "show":
+                    try {
+                        stack.showLinkedListStack();
+                    } catch (Exception e) {
+                        System.out.printf("message[%s]\n",e.getMessage());
+                    }
+                    break;
+                case "push":
+                    System.out.print("请输入一个数：");
+                    int value = scanner.nextInt();
+                    stack.push(new LinkedSimulationStack.SNode(value));
+                    break;
+                case "pop":
+                    stack.pop();
+                    break;
+                case "exit":
+                    loop = false;
+                    System.out.println("程序退出～");
+                    break;
+                default:
+                    System.out.println("类型无处理");
+                    break;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+//        testArrayStack();
+        testLinkedListStack();
     }
 }
 
@@ -108,6 +197,95 @@ class ArraySimulationStack{
         }
         for (int i = top; i >=0; i--) {
             System.out.printf("stack[%d]=%d\n",i,stack[i]);
+        }
+    }
+}
+
+/**
+ * 链表模拟栈
+ * 先入后出
+ */
+@Data
+class LinkedSimulationStack{
+
+    private SNode head = new SNode(-1);
+
+    public Boolean isEmpty(){
+        return head.next==null;
+    }
+
+    public void push(SNode node){
+        SNode current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = node;
+    }
+
+    public void pop(){
+        if (isEmpty()){
+            System.out.println("栈空～");
+            return;
+        }
+        //需要反转 先入后出
+        SNode current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+
+        System.out.printf("出栈[%s]\n",current.getNum());
+        //需要移除当前节点
+        deleteNode(current.num);
+    }
+
+    private void deleteNode(int key){
+        if (isEmpty()){
+            System.out.println("栈空～");
+            return;
+        }
+        //找到要删除节点的前一个
+        SNode current = head;
+        boolean flag = false;
+        while (true){
+            if (current.next==null){
+                break;
+            }
+            if (current.next.num == key){
+                flag = true;
+                break;
+            }
+            current = current.next;
+        }
+
+        if (flag){
+            current.next = current.next.next;
+            return;
+        }
+
+        System.out.printf("没有找到节点[%s]无法删除",key);
+    }
+
+    public void showLinkedListStack(){
+        if (isEmpty()){
+            System.out.println("栈空～");
+            return;
+        }
+        SNode current = head.next;
+        while (current != null) {
+            System.out.printf("栈中[%s]\n", current.getNum());
+            current = current.next;
+        }
+    }
+
+
+    @Data
+    static class SNode{
+        private int num;
+
+        private SNode next;
+
+        public SNode(int num) {
+            this.num = num;
         }
     }
 }
