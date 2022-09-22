@@ -17,9 +17,11 @@ public class Calculator {
 
     /*
         表达式
-            中缀
+            前缀 -- 波兰式 没有括号的算术表达式
 
-            后缀
+            中缀 -- 通用的算术或者逻辑公式
+
+            后缀 -- 逆波兰式 严格从左到右(不包含括号)
 
         逆波兰计算器
 
@@ -30,6 +32,7 @@ public class Calculator {
      * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1663817444394-8c0d548a-d28f-4baa-b101-cb6005061145.png">
      */
     private void infixExpression(String expression) {
+        //todo 去判断是否当前值是否有括号包裹 从左括号找到右 依次计算
         //完成表达式运算
 //        String expression = "3+2*6-2";
         //数栈 存放数字
@@ -44,6 +47,8 @@ public class Calculator {
         int result = 0;
         //将每次扫描的char保存到ch里
         char ch = ' ';
+        //定义变量进行拼接 多位数
+        String keepNumber = "";
         //循环扫描
         while (index!=expression.length()) {
             //依次扫描得到 expression 里面的每一个字符
@@ -74,7 +79,17 @@ public class Calculator {
                 }
             }else {
                 //数栈 --> char 需要转换 int
-                numberStack.push(ch-'0');
+//                numberStack.push(ch-'0');
+                //当处理多位数时候 不可以发现就入栈 处理数时 需要再往后看一位是否是符号
+                keepNumber += ch;
+                //是否是最后一位
+                if (index==expression.length()-1){
+                    numberStack.push(Integer.parseInt(keepNumber));
+                }else if (numberStack.isOperation(expression.substring(index+1,index+2).charAt(0))){
+                    numberStack.push(Integer.parseInt(keepNumber));
+                    //清空keepNumber
+                    keepNumber = "";
+                }
             }
             //让index+1 判断 是否 扫描到 expression 最后
             index ++;
@@ -92,6 +107,12 @@ public class Calculator {
             num1 = numberStack.pop();
             num2 = numberStack.pop();
             operation = operationStack.pop();
+            if (operationStack.getTop()<=expression.length()-1 && operationStack.getTop()!=-1){
+                if (operationStack.peek()=='-') {
+                    //如果符号栈中的下一个符号是 - 则数栈第一个数 加上符号进行运算
+                    num1 = -num1;
+                }
+            }
             result = numberStack.calculation(num1, num2, operation);
             //把运算结果入数栈
             System.out.println("while result = "+result);
@@ -103,8 +124,10 @@ public class Calculator {
 
     @Test
     void calculation(){
-        //3+2*6-2  7+2*6-4/2+8*3-1(计算有问题) -9 =>
-        infixExpression("3+2*6-2");
+        //3+2*6-2  300+2*6-2 7*2*2-5+1-5+3-4
+        // ==> 7+2*6-4/2+8*3-1(计算有问题) -9 =>(后面的数值大)
+        // 7 + 12 - 2 + 24 -1 如果式 - 就取前一个数字进行计算 算作一个整体 3-2*6+2
+        infixExpression("3-2*6+2");
     }
 
 }
@@ -120,9 +143,12 @@ class ArrayStack extends ArraySimulationStack{
      */
     public int priority(int operation) {
         if (operation == '*' || operation == '/') {
+            return 2;
+        }
+        if (operation == '-') {
             return 1;
         }
-        if (operation == '+' || operation == '-') {
+        if (operation == '+') {
             return 0;
         }
         return -1;
