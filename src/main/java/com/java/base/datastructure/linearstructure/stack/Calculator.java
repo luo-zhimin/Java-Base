@@ -6,6 +6,11 @@ package com.java.base.datastructure.linearstructure.stack;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * Created by IntelliJ IDEA.
  * 栈 实现 综合计算器
@@ -17,24 +22,26 @@ public class Calculator {
 
     /*
         表达式
-            前缀 -- 波兰式 没有括号的算术表达式
+            前缀 -- 波兰表达式 没有括号的算术表达式(右到左扫描)
+                [- * + 3 1 4 2]
 
-            中缀 -- 通用的算术或者逻辑公式
+            中缀 -- 通用的算术或者逻辑公式 [3+1*4-2]
 
-            后缀 -- 逆波兰式 严格从左到右(不包含括号)
+            后缀 -- 逆波兰表达式 严格从左到右(不包含括号)
 
         逆波兰计算器
 
      */
 
     /**
-     * 中缀<br>
+     * 中缀<br><br>
      * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1663817444394-8c0d548a-d28f-4baa-b101-cb6005061145.png">
      */
     private void infixExpression(String expression) {
         //todo 去判断是否当前值是否有括号包裹 从左括号找到右 依次计算
         //完成表达式运算
 //        String expression = "3+2*6-2";
+        //maxSize 可以使用正则计算 也可以使用表达式的 length/2 在模拟里面 拓展grow()可以 进行 自动拓展
         //数栈 存放数字
         ArrayStack numberStack = new ArrayStack(10);
         //符号栈 存放运算符号
@@ -97,9 +104,9 @@ public class Calculator {
 
         //输出数栈
         numberStack.showStack();
-        System.out.println();
+        System.out.println("数栈结束～");
         operationStack.showStack();
-        System.out.println();
+        System.out.println("符号栈结束～");
 
         //扫描完毕 需要清栈 运算 符号栈里同一级别
         while (!operationStack.isEmpty()){
@@ -119,7 +126,7 @@ public class Calculator {
             numberStack.push(result);
         }
 
-        System.out.printf("表达式[%s] 计算结束 result[%d]",expression,numberStack.pop());
+        System.out.printf("表达式[%s] 计算结束 result[%d]\n",expression,numberStack.pop());
     }
 
     @Test
@@ -129,6 +136,69 @@ public class Calculator {
         // 7 + 12 - 2 + 24 -1 如果式 - 就取前一个数字进行计算 算作一个整体 3-2*6+2
         infixExpression("3-2*6+2");
     }
+
+    /**
+     * 后缀表达式 - 逆波兰表达式<br><br>
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1663901394345-16d1d16e-7936-4795-95d2-d4b94969ccc3.png">
+     */
+    public void postFixExpression(String suffixExpression){
+        //输入一个逆波兰表达式(后缀表达式)，使用栈(Stack), 计算其结果
+        //支持小括号和多位数整数 只支持对整数的计算
+        //定义一个逆波兰表达式
+        //(3+4)*5-6  3 4 + 5 * 6 -
+//        String suffixExpression = "3 4 + 5 * 6 - ";
+        //先将 表达式 装入 ArrayList里面
+        //ArrayList => stack
+        List<String> expressions = getExpressions(suffixExpression);
+        System.out.printf("expressions {%s}",expressions);
+        int result = calculation(expressions);
+        System.out.printf("表达式[%s],最终结果计算结果是[%s]\n",suffixExpression ,result);
+    }
+
+    /**
+     * 将逆波兰表达式 放入 arrayList
+     */
+    public List<String> getExpressions(String suffixExpression){
+        String[] suffixes = suffixExpression.split(" ");
+        return new ArrayList<>(Arrays.asList(suffixes));
+    }
+
+    /**
+     * 逆波兰表达式的计算
+     */
+    public int calculation(List<String> expressions){
+        //创建一个栈 只需要一个栈
+        Stack<String> stack = new Stack<>();
+        //遍历list
+        expressions.forEach(expression->{
+            //正则表达式 取出数字
+            if (expression.matches("\\d+")){
+                //多位数匹配 入栈
+                stack.push(expression);
+            }else {
+                //符号 pop出俩个数字 运算 并且 在入栈 次顶 栈顶
+                int num1 = Integer.parseInt(stack.pop());
+                int num2 = Integer.parseInt(stack.pop());
+                int result = ArrayStack.calculation(num1,num2,expression.charAt(0));
+                //结果入栈
+                System.out.printf("逆波兰表达式计算[%s]\n",result);
+                stack.push(result+"");
+            }
+        });
+        return Integer.parseInt(stack.pop());
+    }
+
+
+    @Test
+    void postFixExpressionTest(){
+        //(3+4)*5-6
+        postFixExpression("3 4 + 5 * 6 - ");//29
+        //(30+4)*5-6
+        postFixExpression("30 4 + 5 * 6 - ");//164
+        //4*5-8+60+8/2 => 76  4 5 * 8 - 60 + 8 2 / +
+        postFixExpression("4 5 * 8 - 60 + 8 2 / + ");
+    }
+
 
 }
 class ArrayStack extends ArraySimulationStack{
@@ -142,16 +212,20 @@ class ArrayStack extends ArraySimulationStack{
      * @param operation 操作符号
      */
     public int priority(int operation) {
-        if (operation == '*' || operation == '/') {
-            return 2;
+        int value;
+        switch (operation) {
+            case '*':
+            case '/':
+                value = 2;
+                break;
+            case '+':
+            case '-':
+                value = 1;
+                break;
+            default:
+                value = -1;
         }
-        if (operation == '-') {
-            return 1;
-        }
-        if (operation == '+') {
-            return 0;
-        }
-        return -1;
+        return value;
     }
 
     /**
@@ -169,7 +243,7 @@ class ArrayStack extends ArraySimulationStack{
      * @param operation 运算符
      * @return 结果
      */
-    public int calculation(int num1,int num2,int operation){
+    public static int calculation(int num1,int num2,int operation){
         int result = 0;
         switch (operation){
             case '+':
