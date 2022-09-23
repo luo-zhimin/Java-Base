@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+import static com.java.base.datastructure.linearstructure.stack.ArrayStack.priority;
+
 /**
  * Created by IntelliJ IDEA.
  * 栈 实现 综合计算器
@@ -66,7 +68,7 @@ public class Calculator {
                 if (!operationStack.isEmpty()) {
                     //不为空需要判断 栈里面和当前符号的优先级  如果符号栈有操作符，就进行比较,如果当前的操作符的优先级小于或者等于栈中的操作符, 就需要从数栈中 pop 出两个数
                     //在从符号栈中 pop 出一个符号，进行运算，将得到结果，入数栈，然后将当前的操作符入符 号栈
-                    if (operationStack.priority(ch) <= operationStack.priority(operationStack.peek())) {
+                    if (priority(ch) <= priority(operationStack.peek())) {
                         //todo 例如 当前符号是 + stack里面是 *
                         num1 = numberStack.pop();
                         num2 = numberStack.pop();
@@ -199,7 +201,116 @@ public class Calculator {
         postFixExpression("4 5 * 8 - 60 + 8 2 / + ");
     }
 
+    /*
+        中缀表达式转换为后缀表达式
+            初始化两个栈：运算符栈  和储存中间结果的 数栈 ；
+            从左至右扫描中缀表达式；
+            遇到操作数时，将其压 数栈；
+            遇到运算符时，比较其与 符号栈 栈顶运算符的优先级：
+               如果 符号栈 为空，或栈顶运算符为左括号“(”，则直接将此运算符入栈；
+               否则，若优先级比栈顶运算符的高，也将运算符压入 符号栈；
+               否则，将 符号栈 栈顶的运算符弹出并压入到 数栈 中，再次转到(4-1)与 符号栈 中新的栈顶运算符相比较；
+            遇到括号时：
+               如果是左括号“(”，则直接压入 符号栈
+               如果是右括号“)”，则依次弹出 符号栈 栈顶的运算符，并压入 s2，直到遇到左括号为止，此时将这一对括号丢弃
+            重复步骤 2 至 5，直到表达式的最右边
+            将 符号栈 中剩余的运算符依次弹出并压入 数栈
+            依次弹出 数栈 中的元素并输出，结果的逆序即为中缀表达式对应的后缀表达式
+     */
 
+    /**
+     * 中缀表达式转换为后缀表达式 1+((2+3)×4)-5  <br>
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1663905521230-ecf53232-6c6c-4f4e-b449-3ce752de92d3.png">
+     */
+    public void infixExpressionTransformSuffixExpression(String expression){
+        //1+((2+3)×4)-5  1 2 3 + 4 * + 5 -
+        //因为直接对字符串扫描不方便 所以先将字符串转换为 list
+        //中缀表达式
+        List<String> expressions = getInfixExpressions(expression);
+//        System.out.println("中缀表达式 = "+expressions);// [1, +, (, (, 20, +, 30, ), ×, 4, ), -, 5]
+        List<String> suffixExpressions = transformSuffixExpression(expressions);
+//        System.out.println("后缀表达式 = "+suffixExpressions);
+        //进行计算
+        int result = calculation(suffixExpressions);
+        System.out.printf("中缀表达式 {%s} 逆波兰表达式 {%s} 计算得出[%d]\n",expression,suffixExpressions,result);
+    }
+
+    /**
+     * 将字符串转换成为 中缀表达式 List
+     * @param expression 表达式
+     * @return 中缀表达式 List
+     */
+    private List<String> getInfixExpressions(String expression){
+        //遍历的索引
+        int index = 0;
+        //遍历的每一个字符
+        char ch;
+        List<String> expressions = new ArrayList<>();
+        String str = "";
+        do {
+            //需要考虑多位数 ==> [^\\d] 如果是符号 直接加入
+            if ((ch = expression.charAt(index)) < 48 || (ch = expression.charAt(index)) > 56){
+                expressions.add(ch+"");
+                index++;
+            }else {
+                //清空
+                str = "";
+                while (index<expression.length() && (ch = expression.charAt(index)) >= 48 && (ch = expression.charAt(index)) <= 56){
+                    str+=ch;
+                    index ++;
+                }
+                expressions.add(str);
+            }
+        }while (index!=expression.length());
+        return expressions;
+    }
+
+    private List<String> transformSuffixExpression(List<String> infixExpressionList){
+        //创建符号栈
+        Stack<String> symbolStack = new Stack<>();
+        //因为numberStack 没有 pop 操作 而且后面还需要逆序输出 直接使用 list 替换
+        List<String> numberList = new ArrayList<>();
+        infixExpressionList.forEach(expression->{
+            //如果是一个数字就加入
+            if (expression.matches("\\d+")){
+                numberList.add(expression);
+            }else if (expression.equals("(")){
+                symbolStack.push(expression);
+            }else if (expression.equals(")")){
+                //如果是右括号“)”，则依次弹出 s1 栈顶的运算符，并压入 s2，直到遇到左括号为止，此时将这一对括号丢弃
+                while (!symbolStack.peek().equals("(")){
+                    numberList.add(symbolStack.pop());
+                }
+                //")"括号丢弃
+                symbolStack.pop();
+            }else {
+                //遇到运算符时，比较其与 符号栈 栈顶运算符的优先级：
+                //如果 符号栈 为空，或栈顶运算符为左括号“(”，则直接将此运算符入栈；
+                //(当前符号)优先级大于等于栈顶的，若优先级比栈顶运算符的高，将运算符压入 符号栈；
+
+                //(当前符号)优先级小于等于栈顶的，将 符号栈 栈顶的运算符弹出并压入到 数栈 中，再次转到(4-1)与 s1 中新的栈顶运算符相比较
+                while (symbolStack.size() != 0 && priority(symbolStack.peek().charAt(0)) >= priority(expression.charAt(0))){
+                    numberList.add(symbolStack.pop());
+                }
+                //将当前符号压入栈中
+                symbolStack.push(expression);
+            }
+        });
+        //将 符号栈 中剩余的运算符依次弹出并压入 数栈
+        while (symbolStack.size()!=0){
+            numberList.add(symbolStack.pop());
+        }
+        //因为存放到list中所以正常输出就是逆波兰表达式
+        return numberList;
+    }
+
+    @Test
+    void transform(){
+        //便于分隔
+//        String expression ="1 + ( ( 2 + 3 ) * 4 ) - 5 ";
+        infixExpressionTransformSuffixExpression("1+((20+30)*4)-5");
+//        System.out.println(getInfixExpressions("1+((20+30)×4)-5"));
+    }
 }
 class ArrayStack extends ArraySimulationStack{
 
@@ -211,7 +322,7 @@ class ArrayStack extends ArraySimulationStack{
      * 返回运算符的优先级 优先级使用数字表示
      * @param operation 操作符号
      */
-    public int priority(int operation) {
+    public static int priority(int operation) {
         int value;
         switch (operation) {
             case '*':
@@ -222,7 +333,12 @@ class ArrayStack extends ArraySimulationStack{
             case '-':
                 value = 1;
                 break;
+            case '(':
+            case ')':
+                value = 0;
+                break;
             default:
+                System.out.println("该符号暂时无处理～～");
                 value = -1;
         }
         return value;
