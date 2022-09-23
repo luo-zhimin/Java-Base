@@ -1,8 +1,8 @@
 /*
- * Copyright (c) luoZhiMin 2022.8.28.9.59.37
+ * Copyright (c) luoZhiMin 2022.9.23.9.52.49
  */
 
-package com.java.base.datastructure.linearstructure;
+package com.java.base.datastructure.linearstructure.queues;
 
 import java.util.Arrays;
 import java.util.Scanner;

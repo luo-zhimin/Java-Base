@@ -1,8 +1,8 @@
 /*
- * Copyright (c) luoZhiMin 2022.8.28.9.59.23
+ * Copyright (c) luoZhiMin 2022.9.23.9.52.56
  */
 
-package com.java.base.datastructure.linearstructure;
+package com.java.base.datastructure.linearstructure.array;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
