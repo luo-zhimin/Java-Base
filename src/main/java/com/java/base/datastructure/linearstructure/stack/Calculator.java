@@ -17,8 +17,7 @@ import static com.java.base.datastructure.linearstructure.stack.ArrayStack.prior
  * Created by IntelliJ IDEA.
  * 栈 实现 综合计算器
  * @Author : 镜像
- * @create 2022/9/21 22:56 <br><br>
- *
+ * @create 2022/9/21 22:56
  */
 public class Calculator {
 
@@ -216,6 +215,10 @@ public class Calculator {
             重复步骤 2 至 5，直到表达式的最右边
             将 符号栈 中剩余的运算符依次弹出并压入 数栈
             依次弹出 数栈 中的元素并输出，结果的逆序即为中缀表达式对应的后缀表达式
+
+            完整计算器需要
+                多位数，支持小数 (下面的int->double就好)
+                兼容处理, 过滤任何空白字符，包括空格、制表符、换页符
      */
 
     /**
@@ -285,9 +288,6 @@ public class Calculator {
                 symbolStack.pop();
             }else {
                 //遇到运算符时，比较其与 符号栈 栈顶运算符的优先级：
-                //如果 符号栈 为空，或栈顶运算符为左括号“(”，则直接将此运算符入栈；
-                //(当前符号)优先级大于等于栈顶的，若优先级比栈顶运算符的高，将运算符压入 符号栈；
-
                 //(当前符号)优先级小于等于栈顶的，将 符号栈 栈顶的运算符弹出并压入到 数栈 中，再次转到(4-1)与 s1 中新的栈顶运算符相比较
                 while (symbolStack.size() != 0 && priority(symbolStack.peek().charAt(0)) >= priority(expression.charAt(0))){
                     numberList.add(symbolStack.pop());
@@ -306,8 +306,7 @@ public class Calculator {
 
     @Test
     void transform(){
-        //便于分隔
-//        String expression ="1 + ( ( 2 + 3 ) * 4 ) - 5 ";
+        //输入中缀表达式
         infixExpressionTransformSuffixExpression("1+((20+30)*4)-5");
 //        System.out.println(getInfixExpressions("1+((20+30)×4)-5"));
     }
@@ -385,5 +384,14 @@ class ArrayStack extends ArraySimulationStack{
      */
     public int peek(){
         return getStack()[getTop()];
+    }
+
+    /**
+     * 替换所有的空白符号
+     * @param value 值
+     * @return 替换后的值
+     */
+    public String replaceAllBlank(String value){
+        return value.replaceAll("\\s+","");
     }
 }
