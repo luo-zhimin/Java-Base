@@ -13,7 +13,9 @@
       - 入门模拟(链表/数组)
       - 中缀表达式
       - 后缀表达式(逆波兰表达式)
-
+    - 递归
+      - 迷宫问题
+      - 八皇后
 <hr>
     
 ### 数据结构算法路线
@@ -22,15 +24,15 @@
 <hr>
 
 ### 功能描述 
-  - 1.file流的分析 
+  - 1.IO流的分析 
     - 字节流
     - 字符流
     - 包装流
     - 节点流
     - 转换流<br><br>
   - 2.坦克大战（java awt+OOP+thread+file）<br><br>
-  - 3.(多用户即时通讯系统) 实现了发送离线发送文件 私聊 新闻推送等 使用了socket(tcp)+thread+oop+file -> socketProject<br><br> 
-  - 4.mysql (基础查询(curd)->函数->索引->多表->事务.....) -> resource -> mysql <br><br>
+  - 3.(多用户即时通讯系统) 实现了发送离线发送文件 私聊 新闻推送等 使用了socket(tcp)+thread+oop+file<br><br> 
+  - 4.mysql (基础查询(curd)->函数->索引->多表->事务.....) <br><br>
   - 5.满汉楼（文本）（mysql->druid+apache utils）-> manHanBuilding <br><br>
   - 6.regex 新增 regex 参考docx文档(2022-08-11) 
     - resource -> docx <br><br>
