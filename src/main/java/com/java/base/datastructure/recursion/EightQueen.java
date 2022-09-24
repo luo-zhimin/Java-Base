@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
- * 递归 - 八皇后 - 暴力解法(后面bfs优化) -- 最好画图
+ * 递归 - 八皇后 - 暴力解法(后面dfs优化) -- 最好画图
  * @Author : 镜像
  * @create 2022/9/24 23:13
  */
@@ -42,7 +42,10 @@ public class EightQueen {
     void queen8(){
         //开始放置
         //时间复杂度数高
+        long start = System.currentTimeMillis();
         addQueen(0);//14ms
+        long end = System.currentTimeMillis();
+        System.out.println("耗时 = "+(end-start)+"ms 解法 "+queens.size());
         showQueen();
         System.out.printf("%d皇后一共有%d种解法\n",max,count);//92x
         System.out.printf("判断冲突的个数是%d",judgeCount);//15720
