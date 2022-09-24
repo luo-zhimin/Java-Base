@@ -72,7 +72,7 @@ public class Calculator {
                         num1 = numberStack.pop();
                         num2 = numberStack.pop();
                         operation = operationStack.pop();
-                        result = numberStack.calculation(num1, num2, operation);
+                        result = ArrayStack.calculation(num1, num2, operation);
                         //把运算结果入数栈
                         numberStack.push(result);
                         //当前符号入符号栈
@@ -121,7 +121,7 @@ public class Calculator {
                     num1 = -num1;
                 }
             }
-            result = numberStack.calculation(num1, num2, operation);
+            result = ArrayStack.calculation(num1, num2, operation);
             //把运算结果入数栈
             System.out.println("while result = "+result);
             numberStack.push(result);
