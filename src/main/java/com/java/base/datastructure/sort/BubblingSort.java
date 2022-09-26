@@ -89,7 +89,6 @@ public class BubblingSort {
         String beforeSortTime = formatter.format(LocalDateTime.now());
         System.out.println(beforeSortTime);
 
-        //第一次
 
         //排序
         long start = System.currentTimeMillis();
