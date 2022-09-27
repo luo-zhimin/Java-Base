@@ -73,10 +73,12 @@ public class InsertSort {
 
          */
 
+        int insertValue;
+        int insertIndex;
         //代码简化
         for (int i = 1; i < arr.length; i++) {
-            int insertValue = arr[i];
-            int insertIndex = i-1;//arr[1] 和 arr[0]
+            insertValue = arr[i];
+            insertIndex = i-1;//arr[1] 和 arr[0]
             //为insertValue 找到插入的位置 待插入数还没有找到插入位置
             while (insertIndex>=0 && insertValue < arr[insertIndex]){
                 //后移
@@ -85,7 +87,10 @@ public class InsertSort {
                 insertIndex--;
             }
             //找到插入位置 insertIndex + 1  ==> (因为上面insertIndex--)
-            arr[insertIndex+1] = insertValue;
+            //judge set
+            if (insertIndex+1 != i) {//优化
+                arr[insertIndex + 1] = insertValue;
+            }
         }
     }
 }
