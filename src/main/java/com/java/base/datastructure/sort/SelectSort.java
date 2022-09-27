@@ -16,8 +16,8 @@ public class SelectSort {
 
     /*
         选择排序（select sorting）也是一种简单的排序方法。它的基本思想是：第一次从 arr[0]~arr[n-1]中选取最小值， 与 arr[0]交换，第二次从 arr[1]~arr[n-1]中选取最小值，
-        与 arr[1]交换，第三次从 arr[2]~arr[n-1]中选取最小值，与 arr[2] 交换，…，第 i 次从 arr[i-1]~arr[n-1]中选取最小值，与 arr[i-1]交换，…, 第 n-1 次从 arr[n-2]~arr[n-1]中选取最小值，
-        与 arr[n-2]交换，总共通过 n-1 次，得到一个按排序码从小到大排列的有序序列。
+        与 arr[1]交换，第三次从 arr[2]~arr[n-1]中选取最小值，与 arr[2] 交换，…，第 i 次从 arr[i-1]~arr[n-1]中选取最小值，与 arr[i-1]交换，…,总共通过 i-1 次，
+        得到一个按排序码从小到大排列的有序序列。
      */
 
     @Test
@@ -31,8 +31,8 @@ public class SelectSort {
         long start = System.currentTimeMillis();
         selectSort(arr);
         long end = System.currentTimeMillis();
-//        System.out.println("排序后="+Arrays.toString(arr));
         System.out.println("消耗时间 "+(end-start)+" ms");//1559
+//        System.out.println("排序后="+Arrays.toString(arr));
     }
 
 
@@ -82,7 +82,10 @@ public class SelectSort {
 //        System.out.println("2轮后=" + Arrays.toString(arr));
         // ..... O(n^2)
         for (int j = 0; j < arr.length - 1; j++) {
+            //假设
+            //当前最小值所在的索引
             int minIndex = j;
+            //当前最小值的值
             int min = arr[j];
             for (int i = j + 1; i < arr.length; i++) {
                 if (min > arr[i]) {//说明假定值不是最小
@@ -92,9 +95,9 @@ public class SelectSort {
                 }
             }
             if (minIndex != j) {
-                //进行交换 最小值放到 arr[1]
-                arr[minIndex] = arr[j];
-                arr[j] = min;
+                //进行交换 第 i 次从 arr[i-1]~arr[n-1]中选取最小值，与 arr[i-1]交换
+                arr[minIndex] = arr[j];//被交换的值(大的)
+                arr[j] = min;//交换过去的值(小)
             }
 //            System.out.println(j + 1 + "轮后=" + Arrays.toString(arr));
         }

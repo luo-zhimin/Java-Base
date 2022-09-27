@@ -21,4 +21,10 @@ public class SortDemo {
      * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1664082219766-a636084f-dc8e-4e50-8ffd-a42b42fb15cb.png">
      */
     private void sortGroup(){}
+
+    /*
+        8w条数据测试消耗时间
+        冒泡 8.8s 选择 1.5s 插入 0.4s
+        插入 < 选择 < 冒泡
+     */
 }
