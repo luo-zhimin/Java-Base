@@ -95,7 +95,7 @@ public class EightQueen {
             queens.add(queen);
             return;
         }
-        //开始放置 依次放入 并判断是否冲突
+        //开始放置 依次放入 并判断是否冲突 时间复杂度 O(n8)n的8次幂
         for (int i = 0; i < max; i++) {
             //放置当前皇后 放到该行的第一列
             queen[n] = i;
