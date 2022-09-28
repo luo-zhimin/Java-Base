@@ -23,10 +23,7 @@ public class SelectSort {
     @Test
     void sort(){
 //        int[] arr = {101, 34, 119, 1};
-        int[] arr = new int[80000];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) (Math.random()*80000);
-        }
+        int[] arr = SortDemo.getManyArr();
 //        System.out.println("排序前="+Arrays.toString(arr));
         long start = System.currentTimeMillis();
         selectSort(arr);

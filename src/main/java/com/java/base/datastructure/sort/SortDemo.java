@@ -27,4 +27,14 @@ public class SortDemo {
         冒泡 8.8s 选择 1.5s 插入 0.4s
         插入 < 选择 < 冒泡
      */
+
+
+
+    public static int[] getManyArr(){
+        int[] arr = new int[80000];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (int) (Math.random()*80000);
+        }
+        return arr;
+    }
 }
