@@ -6,8 +6,6 @@ package com.java.base.datastructure.sort;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 /**
  * Created by IntelliJ IDEA.
  * 快排 - 冒泡的优化
@@ -27,14 +25,14 @@ public class Quicksort {
      */
     @Test
     void sort(){
-        int[] arr = {-9,78,0,23,0,1,-567,70};
-//        int[] arr = SortDemo.getManyArr();
+//        int[] arr = {-9,78,0,23,0,1,-567,70};
+        int[] arr = SortDemo.getManyArr();
         long start = System.currentTimeMillis();
 //        System.out.printf("排序前 %s\n", Arrays.toString(arr));
         quickSort(arr,0,arr.length-1);//
         long end = System.currentTimeMillis();
         System.out.println("消耗时间 "+(end-start)+" ms");
-        System.out.printf("排序后 %s\n", Arrays.toString(arr));
+//        System.out.printf("排序后 %s\n", Arrays.toString(arr));
     }
 
     /**
@@ -54,11 +52,11 @@ public class Quicksort {
         //目的是 把大约大于 pivot的值 放到右面 否则放到左边
         while (left < right) {
             //在pivot的左边一直找 找到大于等于 pivot的值 退出
-            while (arr[left] <= pivot) {
+            while (arr[left] < pivot) {
                 left += 1;
             }
             //找到小于等于pivot值 退出
-            while (arr[right] >= pivot) {
+            while (arr[right] > pivot) {
                 right-=1;
             }
 
@@ -73,10 +71,10 @@ public class Quicksort {
 
             //如果交换完后 发现 pivot == arr[left] left--
             if (arr[left] == pivot) {
-                left -= 1;
+                right -= 1;
             }
             if (arr[right] == pivot) {
-                right += 1;
+                left += 1;
             }
         }
 
@@ -91,6 +89,7 @@ public class Quicksort {
             quickSort(arr, leftIndex, right);
         }
 
+        //右递归
         if (rightIndex > left) {
             quickSort(arr, left, rightIndex);
         }
