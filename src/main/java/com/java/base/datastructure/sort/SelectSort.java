@@ -23,10 +23,7 @@ public class SelectSort {
     @Test
     void sort(){
 //        int[] arr = {101, 34, 119, 1};
-        int[] arr = new int[80000];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) (Math.random()*80000);
-        }
+        int[] arr = SortDemo.getManyArr();
 //        System.out.println("排序前="+Arrays.toString(arr));
         long start = System.currentTimeMillis();
         selectSort(arr);
@@ -67,7 +64,7 @@ public class SelectSort {
 //        min = arr[1];
 //        for (int i = 2; i < arr.length; i++) {
 //            if (min > arr[i]) {//说明假定值不是最小
-//                //重置最小值
+//                //重置最小值gi
 //                min = arr[i];
 //                minIndex = i;
 //            }
@@ -81,12 +78,14 @@ public class SelectSort {
 //
 //        System.out.println("2轮后=" + Arrays.toString(arr));
         // ..... O(n^2)
+        int minIndex;
+        int min;
         for (int j = 0; j < arr.length - 1; j++) {
             //假设
             //当前最小值所在的索引
-            int minIndex = j;
+            minIndex = j;
             //当前最小值的值
-            int min = arr[j];
+            min = arr[j];
             for (int i = j + 1; i < arr.length; i++) {
                 if (min > arr[i]) {//说明假定值不是最小
                     //重置最小值

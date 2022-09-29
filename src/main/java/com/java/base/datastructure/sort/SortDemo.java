@@ -24,7 +24,21 @@ public class SortDemo {
 
     /*
         8w条数据测试消耗时间
-        冒泡 8.8s 选择 1.5s 插入 0.4s
-        插入 < 选择 < 冒泡
+        冒泡 8.8s
+        选择 1.5s
+        插入 0.4s
+        希尔 0.02s(12ms) -> 移位
+
+        希尔 < 插入 < 选择 < 冒泡
      */
+
+
+
+    public static int[] getManyArr(){
+        int[] arr = new int[80000];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (int) (Math.random()*80000);
+        }
+        return arr;
+    }
 }

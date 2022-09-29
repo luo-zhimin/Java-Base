@@ -17,15 +17,16 @@ public class InsertSort {
     /*
         插入排序（Insertion Sorting）的基本思想是：把n个待排序的元素看成为 一个有序表 和 一个无序表 ，开始时 有序表中只包含一个元素，无序表中包含有n-1 个元素，
         排序过程中每次从无序表中取出第一个元素，把它的排序码依次与有序表元素的排序码进行比较，将它插入到有序表中的适当位置，使之成为新的有序表。
+
+        存在的问题
+            比如 arr = {2,3,4,5,6,1} 需要向前插入n-1次
+            当需要插入的数是较小的数时，后移的次数明显增多，对效率有影响
      */
 
     @Test
     void sort(){
 //        int[] arr = {101, 34, 119, 1,-1,88};
-        int[] arr = new int[80000];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) (Math.random()*80000);
-        }
+        int[] arr = SortDemo.getManyArr();
 
         long start = System.currentTimeMillis();
 //        System.out.printf("排序前 %s\n", Arrays.toString(arr));
@@ -73,10 +74,12 @@ public class InsertSort {
 
          */
 
+        int insertValue;
+        int insertIndex;
         //代码简化
         for (int i = 1; i < arr.length; i++) {
-            int insertValue = arr[i];
-            int insertIndex = i-1;//arr[1] 和 arr[0]
+            insertValue = arr[i];
+            insertIndex = i-1;//arr[1] 和 arr[0]
             //为insertValue 找到插入的位置 待插入数还没有找到插入位置
             while (insertIndex>=0 && insertValue < arr[insertIndex]){
                 //后移
@@ -85,7 +88,10 @@ public class InsertSort {
                 insertIndex--;
             }
             //找到插入位置 insertIndex + 1  ==> (因为上面insertIndex--)
-            arr[insertIndex+1] = insertValue;
+            //judge set
+            if (insertIndex+1 != i) {//优化
+                arr[insertIndex + 1] = insertValue;
+            }
         }
     }
 }

@@ -80,10 +80,7 @@ public class BubblingSort {
         */
 
         //批量生成数据
-        int[] ints = new int[80000];
-        for (int i = 0; i < ints.length; i++) {
-            ints[i] = (int) (Math.random()*80000);
-        }
+        int[] ints = SortDemo.getManyArr();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:ss:mm");
         String beforeSortTime = formatter.format(LocalDateTime.now());
