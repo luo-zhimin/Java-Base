@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Created by IntelliJ IDEA.
- * 快排 - 冒泡的优化
+ * 快排 - 冒泡的优化 - n越大越好
  * @Author : 镜像
  * @create 2022/9/29 14:31
  */
@@ -65,6 +65,7 @@ public class Quicksort {
                 break;
             }
 
+            //交换
             temp = arr[left];
             arr[left] = arr[right];
             arr[right] = temp;
@@ -73,12 +74,13 @@ public class Quicksort {
             if (arr[left] == pivot) {
                 right -= 1;
             }
+
             if (arr[right] == pivot) {
                 left += 1;
             }
         }
 
-        //如果left==right 需要left++ right --
+        //如果left==right 需要left++ right -- 不然会堆栈溢出
         if (left == right) {
             left += 1;
             right -= 1;
