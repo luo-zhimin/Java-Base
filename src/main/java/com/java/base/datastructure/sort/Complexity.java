@@ -69,6 +69,7 @@ public class Complexity {
      * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1664096743818-823eb393-83db-4831-9f41-9f1f3d614fb8.png"><br>
      * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1664096798373-8774f42d-cddf-4819-96cf-752b87b94954.png"><br>
      * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1664112222641-57952b08-4dcf-41c5-aeae-e5176a3d4e3a.png"><br>
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1664535678002-1a805fa0-f164-4fc9-a9d2-9c125b53d57e.png"><br>
      */
     private void time(){}
 
