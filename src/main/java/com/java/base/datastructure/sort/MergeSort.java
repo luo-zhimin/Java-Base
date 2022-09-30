@@ -83,20 +83,20 @@ public class MergeSort {
         //2.把剩余数据的一边的数据 依次全部填充到临时数组
         //左边
         while (l<=middle){
-            //有值 要close 到 temp中
+            //有值 要clone 到 temp中
             temp[tempIndex] = array[l];
             tempIndex+=1;
             l+=1;
         }
 
         while (r<=right){
-            //有值 要close 到 temp中
+            //有值 要clone 到 temp中
             temp[tempIndex] = array[r];
             tempIndex+=1;
             r+=1;
         }
 
-        //3.将temp close 到 array里面
+        //3.将temp clone 到 array里面
         //并不是每一次是所有的元素
         tempIndex = 0;
         int tempLeft = left;
