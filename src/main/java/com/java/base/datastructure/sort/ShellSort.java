@@ -28,8 +28,8 @@ public class ShellSort {
      */
     @Test
     void sort(){
-//        int[] arr = {8,9,1,7,2,3,5,4,6,0};
-        int[] arr = SortDemo.getManyArr();
+        int[] arr = {8,9,1,7,2,3,5,4,6,0};
+//        int[] arr = SortDemo.getManyArr();
 
         long start = System.currentTimeMillis();
 //        System.out.printf("排序前 %s\n", Arrays.toString(arr));
@@ -107,6 +107,7 @@ public class ShellSort {
                 index = i;
                 //值
                 temp = arr[index];
+                //例如 length 10 m第一次 5 index 5 就是 arr[0] arr[5] 比较 .....  m 是步长 也是 多少组
                 if (arr[index] < arr[index - m]) {
                     while (index - m >= 0 && temp < arr[index - m]) {
                         arr[index] = arr[index-m];

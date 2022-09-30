@@ -39,7 +39,6 @@ public class SortDemo {
      */
 
 
-
     public static int[] getManyArr(){
         int[] arr = new int[80000];
         for (int i = 0; i < arr.length; i++) {
@@ -47,4 +46,32 @@ public class SortDemo {
         }
         return arr;
     }
+
+
+    /*
+        常用排序算法总结和对比
+
+        不稳定
+          选择 快排 希尔 堆
+        稳定
+          冒泡 插入 基数 归并  (计数 桶)
+
+          稳定：如果 a 原本在 b 前面，而 a=b，排序之后 a 仍然在 b 的前面；
+          不稳定：如果 a 原本在 b 的前面，而 a=b，排序之后 a 可能会出现在 b 的后面；
+          内排序：所有排序操作都在内存中完成；
+          外排序：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行；
+          时间复杂度： 一个算法执行所耗费的时间。
+          空间复杂度：运行完一个程序所需内存的大小。
+          n: 数据规模
+          k: “桶”的个数
+          In-place: 不占用额外内存
+          Out-place: 占用额外内存
+     */
+
+    /**
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1664112222641-57952b08-4dcf-41c5-aeae-e5176a3d4e3a.png"> <br>
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1664535678002-1a805fa0-f164-4fc9-a9d2-9c125b53d57e.png">
+     */
+    private void show(){}
+
 }

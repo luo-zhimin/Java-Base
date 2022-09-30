@@ -79,6 +79,8 @@ public class RadixSort {
             //按照桶的顺序取值
             int index =0;
             //遍历每一个桶
+//            for (int k = bucketElementCounts.length-1; k >= 0; k--) { //从大到小
+            //从小到大
             for (int k = 0; k < bucketElementCounts.length; k++) {
                 //如果桶中有数据 才放入到源数组
                 if (bucketElementCounts[k]!=0){
