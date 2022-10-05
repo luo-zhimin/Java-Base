@@ -26,6 +26,9 @@ public class HashTableDemo {
 
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1664979871907-fd59f3bc-43d0-446a-b93e-baaeb4bad702.png"">
+     */
     @Test
     void hash(){
 //        Hashtable
