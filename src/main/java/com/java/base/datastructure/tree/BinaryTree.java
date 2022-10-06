@@ -38,12 +38,28 @@ public class BinaryTree {
         }
     }
 
+    public HeroNode beforeSearch(int orderNo){
+        if (this.root!=null){
+            return this.root.beforeSearch(orderNo);
+        }else {
+            return null;
+        }
+    }
+
     //中序遍历
     private void middleShow(){
         if (this.root!=null){
             this.root.middleShow();
         }else {
             System.out.println("为空 无法遍历");
+        }
+    }
+
+    public HeroNode middleSearch(int orderNo){
+        if (this.root!=null){
+            return this.root.middleSearch(orderNo);
+        }else {
+            return null;
         }
     }
 
@@ -56,6 +72,18 @@ public class BinaryTree {
         }
     }
 
+    public HeroNode afterSearch(int orderNo){
+        if (this.root!=null){
+            return this.root.afterSearch(orderNo);
+        }else {
+            return null;
+        }
+    }
+
+    /**
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1665049469115-89a137ca-f7e9-4454-a4dd-caa63e27f8a3.png"><br>
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1665066203479-503aa3a7-be9d-4237-a879-d2afda89579f.png">
+     */
     @Test
     void treeTest(){
         //创建树
@@ -85,6 +113,27 @@ public class BinaryTree {
         System.out.println();
         System.out.println("后序遍历");
         binaryTree.afterShow();//2 1 3 4 (2,5,4,3,1)
+
+        System.out.println();
+        System.out.println("前序查找");//查找4次
+        HeroNode heroNode = binaryTree.beforeSearch(5);
+        if (heroNode!=null){
+            System.out.println("找到 " + heroNode);
+        }
+
+        System.out.println();
+        System.out.println("中序查找");//查找3次
+        heroNode = binaryTree.middleSearch(5);
+        if (heroNode!=null){
+            System.out.println("找到 " + heroNode);
+        }
+
+        System.out.println();
+        System.out.println("后序查找");//查找2次
+        heroNode = binaryTree.middleSearch(5);
+        if (heroNode!=null){
+            System.out.println("找到 " + heroNode);
+        }
     }
 }
 
@@ -123,6 +172,35 @@ class HeroNode{
         }
     }
 
+    /**
+     * 前序查找
+     * @param orderNo 编号
+     * @return 返回找到的节点 不然 返回空
+     */
+    public HeroNode beforeSearch(int orderNo){
+        System.out.println("~~~");
+        //比较当前节点是不是
+        if (this.no==orderNo){
+            return this;
+        }
+        //左递归 要找到返回
+        HeroNode node = null;
+        if (this.left!=null){
+            node = this.left.beforeSearch(orderNo);
+        }
+
+        if (node!=null){
+            return node;
+        }
+
+        if (this.right!=null){
+            node = this.right.beforeSearch(orderNo);
+        }
+
+        return node;
+    }
+
+
     //中序遍历 左 - 父  -右
     public void middleShow(){
         //左子树递归
@@ -135,6 +213,23 @@ class HeroNode{
         if (this.right!=null){
             this.right.middleShow();
         }
+    }
+
+    public HeroNode middleSearch(int orderNo){
+        HeroNode node = null;
+        if (this.left!=null){
+            node = this.left.middleSearch(orderNo);
+        }
+        if(node!=null){
+            return node;
+        }
+        if (this.no == orderNo){
+            return this;
+        }
+        if (this.right!=null){
+            node = this.right.middleSearch(orderNo);
+        }
+        return node;
     }
 
     //后序遍历  左 - 右 - 父
@@ -152,4 +247,30 @@ class HeroNode{
         //输出当前节点
         System.out.println(this);
     }
+
+    public HeroNode afterSearch(int orderNo){
+        HeroNode node = null;
+        if (this.left!=null){
+            node = this.left.afterSearch(orderNo);
+        }
+
+        if(node!=null){
+            return node;
+        }
+
+        //右子树递归
+        if (this.right!=null){
+            node = this.right.afterSearch(orderNo);
+        }
+
+        if(node!=null){
+            return node;
+        }
+
+        if (this.no == orderNo){
+            return this;
+        }
+        return node;
+    }
+
 }
