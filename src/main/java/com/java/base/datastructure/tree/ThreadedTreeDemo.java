@@ -27,9 +27,7 @@ public class ThreadedTreeDemo {
            right 指向的是右子树，也可能是指向后继节点，比如 ① 节点 right 指向的是右子树，而 ⑩ 节点的 right 指向 的是后继节点
      */
 
-    /**
-     * <img src="">
-     */
+
     @Test
     void tree(){
         //创建树
@@ -62,6 +60,17 @@ public class ThreadedTreeDemo {
 
         //原来的进行处理 会出现死循环
         tree.threadMiddleShow();
+
+        /*
+            System.out.println();
+            tree.threadBeforeNodes();
+            System.out.println(node4.getNo()+"前驱节点是=>"+node5.getLeft());//3
+            System.out.println(node4.getNo()+"后继节点是=>"+node5.getRight());//1
+            System.out.println();
+            //前序遍历
+            tree.threadBeforeShow();// 1 3 8 10 6 14
+
+         */
     }
 }
 @Data
@@ -74,6 +83,11 @@ class ThreadedTree{
     public void threadNodes(){
         this.threadNodes(root);
     }
+
+    public void threadBeforeNodes(){
+        this.threadBeforeNodes(root);
+    }
+
 
     /**
      * 进行线索化 中序 <br><br>
@@ -142,6 +156,70 @@ class ThreadedTree{
             node = node.getRight();
         }
     }
+
+    private void threadBeforeNodes(HeroNode node){
+        //对节点进行线索化
+        if (node==null){
+            System.out.println("树为空~~无法线索化");
+            return;
+        }
+
+        //开始线索化
+        //中 - 左 - 右
+
+        //中
+        //先处理当前节点的前驱节点
+        if (node.getLeft()==null){
+            //没有左子节点 需要进行线索化 指向他的前驱节点
+            node.setLeft(pre);
+            //修改当前节点的左指针的类型
+            node.setLeftType(1);
+        }
+
+        //后继节点处理
+        if (pre != null && pre.getRight() == null) {
+            //前驱节点的右指针类型指向当前节点
+            pre.setRight(node.getRight());
+            pre.setRightType(1);
+        }
+
+        //每处理一个节点后 让当前节点是一个节点的前驱节点!!! todo
+        pre=node;
+
+        //左子树处理
+        if (node.getLeft()!=null){
+            threadBeforeNodes(node.getLeft());
+        }
+
+        //右
+        if (node.getRight()!=null){
+            threadBeforeNodes(node.getRight());
+        }
+    }
+
+    public void threadBeforeShow(){
+        //定义一个变量 存储 当前 变量 从 root 开始
+        HeroNode node = root;
+        while (node!=null){
+            //打印当前节点
+            System.out.println(node);
+
+            //循环找到leftType=1的节点 第一个找到的是8 pre==>null 后面随着循环 而变化
+            while (node.getLeftType()==0){
+                node = node.getLeft();
+            }
+
+            //如果当前节点的指针指向是后继节点 就一直输出
+            while (node.getRightType()==1){
+                //获取当前节点的后继节点
+                node = node.getRight();
+                System.out.println(node);
+            }
+            //替换遍历得节点
+            node = node.getRight();
+        }
+    }
+
 
     //前序遍历
     private void beforeShow(){
