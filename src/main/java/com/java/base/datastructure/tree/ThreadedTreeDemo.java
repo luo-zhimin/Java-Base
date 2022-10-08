@@ -52,25 +52,31 @@ public class ThreadedTreeDemo {
         System.out.println("线索化测试～～");
         tree.setRoot(root);
 
-        tree.threadNodes();//8 3 10 1 14 6
+//        tree.threadNodes();//8 3 10 1 14 6
+//
+//        //10号节点测试
+//        System.out.println(node5.getNo()+"前驱节点是=>"+node5.getLeft());//3
+//        System.out.println(node5.getNo()+"后继节点是=>"+node5.getRight());//1
+//
+//        //原来的进行处理 会出现死循环
+//        tree.threadMiddleShow();
 
-        //10号节点测试
-        System.out.println(node5.getNo()+"前驱节点是=>"+node5.getLeft());//3
-        System.out.println(node5.getNo()+"后继节点是=>"+node5.getRight());//1
+//        System.out.println();
+//        tree.threadBeforeNodes();
+//        System.out.println(node4.getNo() + "前驱节点是=>" + node4.getLeft());//3
+//        System.out.println(node4.getNo() + "后继节点是=>" + node4.getRight());//10
+//        System.out.println();
+//        //前序遍历
+//        tree.threadBeforeShow();// 1 3 8 10 6 14
 
-        //原来的进行处理 会出现死循环
-        tree.threadMiddleShow();
 
-        /*
-            System.out.println();
-            tree.threadBeforeNodes();
-            System.out.println(node4.getNo()+"前驱节点是=>"+node5.getLeft());//3
-            System.out.println(node4.getNo()+"后继节点是=>"+node5.getRight());//1
-            System.out.println();
-            //前序遍历
-            tree.threadBeforeShow();// 1 3 8 10 6 14
-
-         */
+        System.out.println();
+        tree.threadAfterNodes();
+        System.out.println(node5.getNo() + "前驱节点是=>" + node5.getLeft());//8
+        System.out.println(node5.getNo() + "后继节点是=>" + node5.getRight());//3
+        System.out.println();
+        //后序遍历
+        tree.threadAfterShow();// 8 10 3 14 6 1
     }
 }
 @Data
@@ -80,6 +86,8 @@ class ThreadedTree{
     //为了实现线索化需要借助指针 pre 总是保留前一个节点
     private HeroNode pre;
 
+    private HeroNode parent;
+
     public void threadNodes(){
         this.threadNodes(root);
     }
@@ -88,6 +96,9 @@ class ThreadedTree{
         this.threadBeforeNodes(root);
     }
 
+    public void threadAfterNodes(){
+        this.threadAfterNodes(root);
+    }
 
     /**
      * 进行线索化 中序 <br><br>
@@ -165,8 +176,6 @@ class ThreadedTree{
         }
 
         //开始线索化
-        //中 - 左 - 右
-
         //中
         //先处理当前节点的前驱节点
         if (node.getLeft()==null){
@@ -176,10 +185,10 @@ class ThreadedTree{
             node.setLeftType(1);
         }
 
-        //后继节点处理
-        if (pre != null && pre.getRight() == null) {
+        //后继节点处理 !!! 必须要加 pre.getLeft ! = node 不然会死循环
+        if (pre != null && pre.getRight() == null && pre.getLeft()!=node) {
             //前驱节点的右指针类型指向当前节点
-            pre.setRight(node.getRight());
+            pre.setRight(node);
             pre.setRightType(1);
         }
 
@@ -187,7 +196,7 @@ class ThreadedTree{
         pre=node;
 
         //左子树处理
-        if (node.getLeft()!=null){
+        if (node.getLeftType()==0){
             threadBeforeNodes(node.getLeft());
         }
 
@@ -207,6 +216,7 @@ class ThreadedTree{
             //循环找到leftType=1的节点 第一个找到的是8 pre==>null 后面随着循环 而变化
             while (node.getLeftType()==0){
                 node = node.getLeft();
+                System.out.println(node);
             }
 
             //如果当前节点的指针指向是后继节点 就一直输出
@@ -215,18 +225,93 @@ class ThreadedTree{
                 node = node.getRight();
                 System.out.println(node);
             }
+
+            //处理最后一个节点 没有前也不是后继节点
+            if (node.getLeftType()==0 && node.getRightType()==0){
+                node = node.getRight()!=null ? node.getRight() : node.getLeft();
+                System.out.println(node);
+            }
+
             //替换遍历得节点
             node = node.getRight();
         }
     }
 
+    private void threadAfterNodes(HeroNode node){
+        //对节点进行线索化
+        if (node==null){
+//            System.out.println("树为空~~无法线索化");
+            return;
+        }
 
-    //前序遍历
-    private void beforeShow(){
-        if (this.root!=null){
-            this.root.beforeShow();
-        }else {
-            System.out.println("为空 无法遍历");
+        //开始线索化 左 - 右 - 中
+        //中
+        //左子树处理
+        if (node.getLeftType()==0){
+            threadAfterNodes(node.getLeft());
+        }
+
+        //右
+        if (node.getRight()!=null){
+            threadAfterNodes(node.getRight());
+        }
+
+        //先处理当前节点的前驱节点
+        if (node.getLeft()==null){
+            //没有左子节点 需要进行线索化 指向他的前驱节点
+            node.setLeft(pre);
+            //修改当前节点的左指针的类型
+            node.setLeftType(1);
+        }
+
+        //后继节点处理 !!! 必须要加 pre.getLeft ! = node 不然会死循环
+        if (pre != null && pre.getRight() == null) {
+            //前驱节点的右指针类型指向当前节点
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+
+        //每处理一个节点后 让当前节点是一个节点的前驱节点!!! todo
+        pre=node;
+    }
+
+    public void threadAfterShow() {
+        //定义一个变量 存储 当前 变量 从 root 开始
+        HeroNode node = root;
+
+        //先找到最左节点
+        while (node != null && node.getLeftType() == 0) {
+            node = node.getLeft();
+        }
+
+        //如果当前节点的指针指向是后继节点 就一直输出
+        while (node != null) {
+            if (node.getRightType() == 1) {
+                //线索化的直接打印
+                System.out.println(node);
+                pre = node;
+                //获取当前节点的后继节点
+                node = node.getRight();
+            } else {
+                //未被线索化结点，其实是一个子树的根节点
+                //如果当前结点后继是上一结点,即右子树回调的直接打印
+                if (node.getRight() == pre) {
+                    System.out.println(node);
+                    //如果是树的根节点直接·退出
+                    if (node == root) {
+                        return;
+                    }
+                    pre = node;
+                    //重置为父节点
+                    node = root;
+                }else {
+                    //左子树回调的则不会有死循环的风险，直接左线索遍历
+                    node = node.getRight();
+                    while(node!=null && node.getLeftType()==0){
+                        node = node.getLeft();
+                    }
+                }
+            }
         }
     }
 
@@ -238,29 +323,11 @@ class ThreadedTree{
         }
     }
 
-    //中序遍历
-    public void middleShow(){
-        if (this.root!=null){
-            this.root.middleShow();
-        }else {
-            System.out.println("为空 无法遍历");
-        }
-    }
-
     public HeroNode middleSearch(int orderNo){
         if (this.root!=null){
             return this.root.middleSearch(orderNo);
         }else {
             return null;
-        }
-    }
-
-    //后序遍历
-    private void afterShow(){
-        if (this.root!=null){
-            this.root.afterShow();
-        }else {
-            System.out.println("为空 无法遍历");
         }
     }
 
