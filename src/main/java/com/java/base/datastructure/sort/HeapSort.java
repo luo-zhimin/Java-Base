@@ -104,6 +104,6 @@ public class HeapSort {
             }
         }
         //for结束后 最大值就是堆顶
-        arr[index] = temp;//将temp值放到最后
+        arr[index] = temp;//将temp值放到了调整后的位置
     }
 }
