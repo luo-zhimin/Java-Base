@@ -84,7 +84,8 @@ public class BinarySortTree {
             }
         }else if (targetNode.right!=null && targetNode.left!=null){
             //左右子树 replace
-            targetNode.value = delRightTreeMin(targetNode.right);
+//            targetNode.value = delRightTreeMin(targetNode.right);
+            targetNode.value = delLeftTreeMax(targetNode.left);
         }else {
             //一颗 子树
             //如果要删除的节点 有左 父节点的左面
@@ -103,6 +104,9 @@ public class BinarySortTree {
                         parentNode.right = targetNode.right;
                     }
                 }
+            }else {
+                //需要判断是target的左还是右
+                root = targetNode.right != null ? targetNode.right : targetNode.left;
             }
         }
     }
@@ -122,9 +126,21 @@ public class BinarySortTree {
         return target.value;
     }
 
+    private int delLeftTreeMax(BinarySortTreeNode node){
+        BinarySortTreeNode temp = node;
+        while (temp.right!=null){
+            temp = temp.right;
+        }
+        delete(temp.value);
+        return temp.value;
+    }
+
+    /**
+     * <img src="https://cdn.nlark.com/yuque/0/2022/png/27601787/1665418841020-2e50e45e-cd7c-44f3-8705-84bec68bef2a.png">
+     */
     @Test
     void tree(){
-        int[] arr = {7, 3, 10, 12, 5, 1, 9,4};
+        int[] arr = {7, 3, 10, 12, 5, 1, 9,4,2};
         BinarySortTree tree = new BinarySortTree();
         for (int j : arr) {
             tree.add(new BinarySortTreeNode(j));
@@ -135,8 +151,15 @@ public class BinarySortTree {
         tree.delete(2);
         //有一个节点
         tree.delete(4);
+        tree.delete(5);
         //俩个节点
         tree.delete(7);
+        tree.delete(3);
+        tree.delete(9);
+        tree.delete(12);
+
+        tree.delete(1);
+        tree.delete(10);
         System.out.println();
 
         tree.middleShow();
