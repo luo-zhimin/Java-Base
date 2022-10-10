@@ -28,9 +28,9 @@ public class HuffmanCoding {
     @Test
     void coding(){
 
-        String content = "i like java , do you like a java";
+        String content = "my name is jack,nice to meet you,I am fan,Thank you";
         byte[] contentBytes = content.getBytes();
-//        System.out.println("待处理前 = >"+Arrays.toString(contentBytes));
+//        System.out.println("待处理前 = >"+Arrays.toString(contentBytes)+" "+contentBytes.length);
 //        System.out.printf("待处理前[%d]\n",contentBytes.length);//40
 //        List<TreeNode> nodes = getNodes(contentBytes);
 ////        System.out.println("nodes = > "+nodes);
@@ -43,6 +43,82 @@ public class HuffmanCoding {
 
         byte[] huffmanZip = huffmanZip(contentBytes);
         System.out.println(Arrays.toString(huffmanZip)+" "+huffmanZip.length);
+        byte[] sourceByte = decode(codeMap, huffmanZip);
+//        System.out.println("sourceByte -> "+Arrays.toString(sourceByte)+" "+sourceByte.length);
+        System.out.println(new String(sourceByte));
+    }
+
+    /**
+     * @param huffmanCodeMap huffman 编码表
+     * @param huffmanCodes huffman 压缩后的数组
+     * @return 原始byte[]
+     */
+    private byte[] decode(Map<Byte,String> huffmanCodeMap,byte[] huffmanCodes){
+        //先得到huffmanCodes对应的字符串 101011000....
+        StringBuilder stringBuilder = new StringBuilder();
+        //将byte[]转化成二进制字符串
+        for (int i = 0; i < huffmanCodes.length; i++) {
+            //判断是否是最后一个字节
+            boolean flag = (i==huffmanCodes.length-1);
+            stringBuilder.append(byteToBitString(!flag, huffmanCodes[i]));
+        }
+//        System.out.println("decode = > "+stringBuilder +" "+stringBuilder.length());
+        //转换 按照指定编码 解码 把huffman 编码表 进行交换
+        Map<String,Byte> decodeMap = new HashMap<>();
+        huffmanCodeMap.forEach((k,v)-> decodeMap.put(v,k));
+        //System.out.println("decodeMap - > "+decodeMap);
+        List<Byte> bytes = new ArrayList<>();
+        for (int i = 0; i < stringBuilder.length();) {
+            int count = 1;//计数器
+            boolean flag = true;
+            Byte b = null;
+            while (flag){
+                String key;
+                //取出一个字符 二进制 字符
+                if (i+count>stringBuilder.length()){
+                    key = stringBuilder.substring(i)+1;
+                }else {
+                   key = stringBuilder.substring(i, i + count);//i不动 count++ 直到匹配到字符
+                }
+
+                b=decodeMap.get(key);
+                if (b==null){
+                   count++;
+                }else {
+                    flag = false;
+                }
+            }
+            bytes.add(b);
+            //让 i 移动到count
+            i+=count;
+        }
+        byte[] b = new byte[bytes.size()];
+        for (int i = 0; i < b.length; i++) {
+            b[i] = bytes.get(i);
+        }
+        return b;
+    }
+
+    /**
+     * 数据解压 将huffman byte[] -> 重新转成huffman code 对应的二进制
+     * 将byte 转化成 二进制 string
+     * @param flag true 需要补高位 false 不需要 最后一个字节不需要补高位
+     * @param b byte
+     * @return 返回二进制补码
+     */
+    private String byteToBitString(boolean flag,byte b){
+        int temp = b;
+        if (flag){
+            temp |= 256;// 按位与 进制内容
+        }
+
+        String str = Integer.toBinaryString(temp);//返回的是二进制的补码
+//        System.out.println("str = >" +str);
+        //正数 需要补高位
+        if (flag) {
+            return str.substring(str.length() - 8);
+        }
+        return str;
     }
 
 
@@ -61,7 +137,6 @@ public class HuffmanCoding {
         return zip(bytes, huffmanCodes);
     }
 
-
     /**
      * 将字符串对应的byte[] 通过生成的huffman编码表 返回一个压缩后的byte[]
      * @param huffmanCodes huffman编码集合
@@ -75,8 +150,8 @@ public class HuffmanCoding {
         for (byte b : bytes) {
             stringBuilder.append(huffmanCodes.get(b));
         }
-//        System.out.println(stringBuilder+" "+stringBuilder.length());
-        //将字符串转换成 byte[] 101010001011111....
+        System.out.println("huffman -> "+stringBuilder+" "+stringBuilder.length());
+        //将字符串转换成 byte[] 10101000 1011111....
         //统计返回的长度
         //todo
         int len;
