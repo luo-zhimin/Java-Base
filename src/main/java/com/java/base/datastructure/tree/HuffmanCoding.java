@@ -4,8 +4,15 @@
 
 package com.java.base.datastructure.tree;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -20,6 +27,10 @@ public class HuffmanCoding {
         前缀编码
         赫夫曼编码是无损处理方案
         赫夫曼树根据排序方法不同，也可能不太一样，这样对应的赫夫曼编码也不完全一样，但是 wpl 是 一样的，都是最小的, 最后生成的赫夫曼编码的长度是一样
+
+        如果文件本身就是经过压缩处理的，那么使用赫夫曼编码再压缩效率不会有明显变化, 比如视频,ppt 等等文件 [举例压一个 .ppt]
+        赫夫曼编码是按字节来处理的，因此可以处理所有的文件(二进制文件、文本文件) [举例压一个.xml 文件]
+        如果一个文件中的内容，重复的数据不多，压缩效果也不会很明显.
      */
 
     /**
@@ -47,6 +58,66 @@ public class HuffmanCoding {
 //        System.out.println("sourceByte -> "+Arrays.toString(sourceByte)+" "+sourceByte.length);
         System.out.println(new String(sourceByte));
     }
+
+    @Test
+    void file(){
+//        String src="/Users/luozhimin/Desktop/File/picture/daily/cat.jpg";
+//        String target = "/Users/luozhimin/Desktop/File/picture/daily/smallCat.zip";
+        String target="/Users/luozhimin/Desktop/File/picture/daily/smallCat.jpg";
+        String src = "/Users/luozhimin/Desktop/File/picture/daily/smallCat.zip";
+//        zipFile(src,target);
+        unZip(src,target);
+    }
+
+
+    /**
+     * 解压文件
+     * @param src 待解压文件
+     * @param target 输出目录
+     */
+    @SneakyThrows
+    private void unZip(String src,String target){
+        ObjectInputStream objectInputStream = new ObjectInputStream(Files.newInputStream(Paths.get(src)));
+        FileOutputStream outputStream = new FileOutputStream(target);
+        byte[] huffmanBytes = (byte[]) objectInputStream.readObject();
+        Map<Byte,String> huffmanMap = (Map<Byte, String>) objectInputStream.readObject();
+        //解码
+        byte[] decode = decode(huffmanMap, huffmanBytes);
+        outputStream.write(decode);
+        objectInputStream.close();
+        outputStream.close();
+    }
+
+    /**
+     * 压缩文件
+     * @param src 源文件
+     * @param target 目标文件
+     */
+    @SneakyThrows
+    private void zipFile(String src,String target){
+//        FileInputStream inputStream = new FileInputStream(src);
+        FileOutputStream outputStream = new FileOutputStream(target);
+        InputStream inputStream = Files.newInputStream(Paths.get(src));
+        //创建一个和源文件大小一样的数组
+        byte[] b = new byte[inputStream.available()];
+        //读取
+        inputStream.read(b);
+        //获取文件对应的huffman表
+        byte[] huffmanBytes = huffmanZip(b);
+        //为了恢复文件使用
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        objectOutputStream.writeObject(huffmanBytes);
+        //写入huffman编码
+        objectOutputStream.writeObject(codeMap);
+//        int read;
+//        while ((read=inputStream.read(b))!=-1){
+//            outputStream.write(b,0,read);
+//        }
+        inputStream.close();
+        outputStream.close();
+        objectOutputStream.close();
+    }
+
 
     /**
      * @param huffmanCodeMap huffman 编码表
@@ -121,7 +192,6 @@ public class HuffmanCoding {
         return str;
     }
 
-
     /**
      * 处理 压缩 huffman
      * @param bytes 原始数组
@@ -150,7 +220,7 @@ public class HuffmanCoding {
         for (byte b : bytes) {
             stringBuilder.append(huffmanCodes.get(b));
         }
-        System.out.println("huffman -> "+stringBuilder+" "+stringBuilder.length());
+        //System.out.println("huffman -> "+stringBuilder+" "+stringBuilder.length());
         //将字符串转换成 byte[] 10101000 1011111....
         //统计返回的长度
         //todo

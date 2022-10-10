@@ -57,8 +57,9 @@
         - 线索化二叉树
       - 应用
         - 堆排序(完全二叉树)
+        - huffman tree(wpl)
+        - huffman coding
 
-[//]: # (        - )
 <hr>
     
 ### 数据结构算法路线
