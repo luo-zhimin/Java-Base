@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
- * 赫夫曼树
+ * 赫夫曼树 - WPL
  * @Author : 镜像
  * @create 2022/10/9 15:16
  */

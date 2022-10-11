@@ -59,6 +59,7 @@
         - 堆排序(完全二叉树)
         - huffman tree(wpl)
         - huffman coding
+        - 二叉排序树(delete)
 
 <hr>
     

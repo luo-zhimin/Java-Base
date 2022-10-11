@@ -21,7 +21,11 @@ public class BinarySortTree {
 
     private BinarySortTreeNode root;
 
-    private void add(BinarySortTreeNode node){
+    public BinarySortTreeNode getRoot() {
+        return root;
+    }
+
+    public void add(BinarySortTreeNode node){
         if (root==null){
             root = node;
             return;
@@ -29,7 +33,7 @@ public class BinarySortTree {
         root.add(node);
     }
 
-    private void middleShow(){
+    public void middleShow(){
         if (root!=null){
             root.middleShow();
             return;
@@ -37,21 +41,21 @@ public class BinarySortTree {
         System.out.println("树为空 不可以操作～～");
     }
 
-    private BinarySortTreeNode search(int value){
+    public BinarySortTreeNode search(int value){
         if (root==null){
             return null;
         }
         return root.search(value);
     }
 
-    private BinarySortTreeNode searchParent(int value){
+    public BinarySortTreeNode searchParent(int value){
         if (root==null){
             return null;
         }
         return root.searchParent(value);
     }
 
-    private void delete(int value){
+    public void delete(int value){
         //3种
         if (root==null){
             return;
@@ -252,6 +256,24 @@ class BinarySortTreeNode{
         }
     }
 
+
+    public int treeHeight(){
+        return Math.max(left == null ? 0 : left.treeHeight(), right == null ? 0 : right.treeHeight())+1;
+    }
+
+    public int leftHeight(){
+        if (left==null){
+            return 0;
+        }
+        return left.treeHeight();
+    }
+
+    public int rightHeight(){
+        if (right==null){
+            return 0;
+        }
+        return right.treeHeight();
+    }
 
     @Override
     public String toString() {
