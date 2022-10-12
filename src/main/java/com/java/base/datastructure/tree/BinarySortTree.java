@@ -257,6 +257,10 @@ class BinarySortTreeNode{
     }
 
 
+    /**
+     * 不包含根节点
+     * @return 层树
+     */
     public int treeHeight(){
         return Math.max(left == null ? 0 : left.treeHeight(), right == null ? 0 : right.treeHeight())+1;
     }
