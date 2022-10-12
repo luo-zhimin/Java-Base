@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Created by IntelliJ IDEA.
- * 顺序存储二叉树
+ * 顺序存储二叉树(完全二叉树)
  * @Author : 镜像
  * @create 2022/10/7 17:08
  */
