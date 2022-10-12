@@ -46,7 +46,8 @@ public class SelfBinaryTreeDemo {
     void rotateTree(){
         //没有进行左右旋转前 left 3 right 1 ->add 后 会出现 left 1 right 3 ❌
         //需要进行左右旋转
-        int[] arr = {10, 11, 7, 6, 8, 9};
+//        int[] arr = {10, 11, 7, 6, 8, 9};
+        int[] arr = {2,1,6,5,7,3};
 
         //当符号右旋转的条件时
         //如果它的左子树的右子树高度大于它的左子树的高度
@@ -68,6 +69,7 @@ public class SelfBinaryTreeDemo {
         System.out.println("tree height = > "+tree.getRoot().treeHeight());//4
         System.out.println("tree left height = > "+tree.getRoot().leftHeight());//1
         System.out.println("tree right height = > "+tree.getRoot().rightHeight());//3
+        System.out.println("root = > "+tree.getRoot().value);
     }
 }
 
@@ -81,46 +83,30 @@ class SelfNode extends BinarySortTreeNode{
         super(value);
     }
 
-    /**
-     * 左旋转
-     */
-    private void leftRotate(){
-        //先处理右 - > 左
-        //创建新的节点 根节点的值
-        SelfNode node = new SelfNode(value);
-        //把新的节点的左子树 设置成当前节点的左子树
-        node.left = left;
-        //右 -> 当前节点的右子树的左子树
-        node.right = right.left;
-        //当前节点的值 替换 右子节点的值
-        value = right.value;
-        //把当前节点的右子树 设置成 右子树的右子树
-        right = right.right;
-        //左 -> 设置成当前节点
-        left = node;
-    }
-
-    /**
-     * 右旋转
-     */
-    private void rightRotate(){
-        //先处理左边 - > 右边
-        SelfNode node = new SelfNode(value);
-        node.right = right;
-        node.left = left.right;
-        value = left.value;
-        left = left.left;
-        right = node;
-    }
-
-    public void add(BinarySortTreeNode node){
+    public void add(BinarySortTreeNode node) {
         super.add(node);
-        if (rightHeight()-leftHeight()>1){
-            //左旋转
-            leftRotate();
-        }else if (leftHeight()-rightHeight()>1){
+        if (rightHeight() - leftHeight() > 1) {
+            //如果它的右子树的左子树高度大于它的右子树的高度
+            if (right != null && right.leftHeight() > right.rightHeight()) {
+                right.rightRotate();
+                //左旋转
+                leftRotate();
+            } else {
+                leftRotate();
+            }
+            return;
+        }
+        if (leftHeight() - rightHeight() > 1) {
             //右旋转
-            rightRotate();
+            //如果它的左子树的右子树高度大于它的左子树的高度 - 左->右
+            if (left != null && left.rightHeight() > left.leftHeight()) {
+                //左节点 左旋转
+                left.leftRotate();
+                //当前节点右旋转
+                rightRotate();
+            } else {
+                rightRotate();
+            }
         }
     }
 }

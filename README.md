@@ -60,6 +60,8 @@
         - huffman tree(wpl)
         - huffman coding
         - 二叉排序树(delete)
+        - 平衡二叉树(AVL树-旋转)
+      - 多路查找树 
 
 <hr>
     

@@ -285,4 +285,37 @@ class BinarySortTreeNode{
                 "value=" + value +
                 '}';
     }
+
+
+    /**
+     * 左旋转
+     */
+    public void leftRotate(){
+        //先处理右 - > 左
+        //创建新的节点 根节点的值
+        SelfNode node = new SelfNode(value);
+        //把新的节点的左子树 设置成当前节点的左子树
+        node.left = left;
+        //右 -> 当前节点的右子树的左子树
+        node.right = right.left;
+        //当前节点的值 替换 右子节点的值
+        value = right.value;
+        //把当前节点的右子树 设置成 右子树的右子树
+        right = right.right;
+        //左 -> 设置成当前节点
+        left = node;
+    }
+
+    /**
+     * 右旋转
+     */
+    public void rightRotate(){
+        //先处理左边 - > 右边
+        SelfNode node = new SelfNode(value);
+        node.right = right;
+        node.left = left.right;
+        value = left.value;
+        left = left.left;
+        right = node;
+    }
 }
