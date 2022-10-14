@@ -1,8 +1,8 @@
 /*
- * Copyright (c) luoZhiMin 2022.10.13.6.31.9
+ * Copyright (c) luoZhiMin 2022.10.14.5.51.27
  */
 
-package com.java.base.datastructure.graph;
+package com.java.base.datastructure.nonlinearstructure.graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
