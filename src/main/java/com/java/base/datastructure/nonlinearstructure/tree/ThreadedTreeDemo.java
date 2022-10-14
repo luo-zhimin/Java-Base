@@ -1,8 +1,8 @@
 /*
- * Copyright (c) luoZhiMin 2022.10.7.9.2.50
+ * Copyright (c) luoZhiMin 2022.10.14.5.50.41
  */
 
-package com.java.base.datastructure.tree;
+package com.java.base.datastructure.nonlinearstructure.tree;
 
 import lombok.Data;
 import org.junit.jupiter.api.Test;

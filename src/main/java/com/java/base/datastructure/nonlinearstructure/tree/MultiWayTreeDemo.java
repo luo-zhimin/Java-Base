@@ -1,8 +1,8 @@
 /*
- * Copyright (c) luoZhiMin 2022.10.13.4.0.35
+ * Copyright (c) luoZhiMin 2022.10.14.5.50.41
  */
 
-package com.java.base.datastructure.tree;
+package com.java.base.datastructure.nonlinearstructure.tree;
 
 /**
  * Created by IntelliJ IDEA.
