@@ -23,10 +23,21 @@ public class DynamicPrograming {
         动态规划算法与分治算法类似，其基本思想也是将待求解问题分解成若干个子问题，先求解子问题，然后从这 些子问题的解得到原问题的解。
         与分治法不同的是，适合于用动态规划求解的问题，经分解得到子问题往往不是互相独立的。 ( 即下一个子 阶段的求解是建立在上一个子阶段的解的基础上，进行进一步的求解 )
         动态规划可以通过填表的方式来逐步推进，得到最优解
+
+        01 背包 和完全背包(完全背包指的是：每种物品都有无限件可用)
+
+        完全背包 max计算需要修改 商品无限放
+
+        01背包 v[i][j]=Math.max(v[i-1][j], value[i]+v[i-1][j-weight[i]])
+        无限背包 v[i][j]=Math.max(v[i-1][j], value[i]+v[i][j-weight[i]])
+
+        完全背包和0/1背包最大区别就是在 v[i][j-w[i]]，意味着来到本层，我们还是可以取当前层的物品
+
      */
 
     @Test
     void bagProgram(){
+        //01 背包
         //物品 价值 对应 关系表
         int[] weight = {1,4,3};
         int[] value = {1500,3000,2000};
@@ -56,6 +67,7 @@ public class DynamicPrograming {
         //动态规划  公式 ->进行 不处理第一行 第一列
         for (int i = 1; i < v.length; i++) {
             for (int j = 1; j < v[0].length; j++) {
+
                 //公式
                 if (weight[i-1]>j){//because index begin 1
                     v[i][j]=v[i-1][j];
@@ -63,6 +75,7 @@ public class DynamicPrograming {
                     //从1开始 所以下标需要-1
                     //v[i][j]=Math.max(v[i-1][j], value[i-1]+v[i-1][j-weight[i-1]]);
                     //需要查看记录 修改 max
+                    //j-weight[i-1] 当前剩余背包大小 v[i-1][j] 当前商品最大价值
                     if (v[i-1][j]<value[i-1]+v[i-1][j-weight[i-1]]){
                         v[i][j] = value[i-1]+v[i-1][j-weight[i-1]];
                         //record
