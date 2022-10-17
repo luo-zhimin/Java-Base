@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 /**
  * Created by IntelliJ IDEA.
- * 动态规划
+ * 动态规划-DP
  * @Author : 镜像
  * @create 2022/10/15 19:58
  */
