@@ -70,6 +70,7 @@ public class PropertiesBase {
         Properties properties = new Properties();
         //加载指定的配置文件
         properties.load(new FileReader(PropertiesBase.class.getResource("/test.properties").getFile()));
+        properties.load(new FileReader(PropertiesBase.class.getResource("/tank/bomb_1.gif").getFile()));
         //显示-把毽子对显示到控制台
         properties.list(System.out);
         //指定得到 read
